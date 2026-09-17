@@ -1,5 +1,5 @@
 /* =========================================================
-   MurMur Mobile
+   MurMur MOBILE
    ========================================================= */
 
 * {
@@ -10,31 +10,55 @@ html,
 body {
     width: 100%;
     height: 100%;
+}
+
+html {
+    overflow: hidden;
+}
+
+body {
     margin: 0;
+    background: #18191c;
+    color: #eeeeee;
+    font-family: Arial, sans-serif;
+    font-weight: 600;
     overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
-body.chat-body {
-    width: 100vw;
-    height: 100dvh;
-    overflow: hidden;
+button,
+input {
+    font-family: inherit;
 }
 
-.chat-app {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    position: relative;
+button {
+    -webkit-tap-highlight-color: transparent;
 }
 
 
 /* =========================================================
-   Hide Desktop Sidebar
+   Main Layout
+   ========================================================= */
+
+.chat-app {
+    width: 100vw;
+    height: 100dvh;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #18191c;
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   Desktop Sidebar
+   Hidden on mobile
    ========================================================= */
 
 .app-sidebar {
-    display: none;
+    display: none !important;
 }
 
 
@@ -45,85 +69,276 @@ body.chat-body {
 .conversation-sidebar {
     width: 100%;
     height: 100%;
-    min-width: 0;
+    min-height: 0;
+    flex: 1;
+    background: #202125;
+    border: none;
     display: flex;
     flex-direction: column;
-    position: relative;
-}
-
-
-/* =========================================================
-   Header
-   ========================================================= */
-
-.conversation-header {
-    height: 64px;
-    min-height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 18px;
-}
-
-.conversation-header h2 {
-    margin: 0;
-    font-size: 22px;
-}
-
-.new-chat-button {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    font-size: 25px;
-}
-
-
-/* =========================================================
-   Messages Panel
-   ========================================================= */
-
-#messagesPanel {
-    flex: 1;
-    min-height: 0;
     overflow: hidden;
 }
 
 
 /* =========================================================
-   Conversation List
+   Conversation Header
    ========================================================= */
 
-#conversationListView {
+.conversation-header {
     width: 100%;
-    height: 100%;
+    height: 62px;
+    min-height: 62px;
+    padding: 0 16px;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #303137;
+    flex-shrink: 0;
 }
 
+.conversation-header h2 {
+    margin: 0;
+    color: #f2f2f2;
+    font-size: 19px;
+    font-weight: 900;
+    letter-spacing: -0.3px;
+}
+
+
+/* =========================================================
+   New Chat Button
+   ========================================================= */
+
+.new-chat-button {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #3a3b41;
+    border-radius: 11px;
+    background: #292a2f;
+    color: #eeeeee;
+    font-size: 24px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+        transform 0.15s ease,
+        background 0.15s ease;
+}
+
+.new-chat-button:active {
+    transform: scale(0.93);
+    background: #36373d;
+}
+
+
+/* =========================================================
+   Conversation Search
+   ========================================================= */
+
 .conversation-search {
-    padding: 8px 16px 12px;
+    width: 100%;
+    padding: 11px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    flex-shrink: 0;
 }
 
 .conversation-search input {
     width: 100%;
-    height: 44px;
-    border-radius: 12px;
+    height: 42px;
     padding: 0 14px;
-    font-size: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 11px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.045);
+    color: white;
+    font-size: 14px;
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
-.conversations-list {
-    flex: 1;
-    overflow-y: auto;
-    padding-bottom: 80px;
+.conversation-search input::placeholder {
+    color: rgba(255, 255, 255, 0.38);
 }
+
+.conversation-search input:focus {
+    background: rgba(255, 255, 255, 0.065);
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow:
+        0 0 0 3px rgba(255, 255, 255, 0.035);
+}
+
+
+/* =========================================================
+   Conversations List
+   ========================================================= */
+
+.conversations-list {
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 6px 7px 76px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.conversations-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.conversations-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.conversations-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.10);
+    border-radius: 999px;
+}
+
+
+/* =========================================================
+   Conversation Item
+   ========================================================= */
 
 .conversation-item {
     width: 100%;
     min-height: 72px;
-    padding: 10px 16px;
     display: flex;
     align-items: center;
+    gap: 12px;
+    padding: 10px 11px;
+    margin-bottom: 3px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition:
+        background 0.15s ease,
+        transform 0.1s ease;
+}
+
+.conversation-item:active {
+    transform: scale(0.985);
+    background: rgba(255, 255, 255, 0.055);
+}
+
+
+/* =========================================================
+   Conversation Avatar
+   ========================================================= */
+
+.conversation-avatar {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    min-height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.13),
+            rgba(255, 255, 255, 0.045)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 18px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.conversation-avatar-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+
+/* =========================================================
+   Conversation Information
+   ========================================================= */
+
+.conversation-info {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.conversation-top-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.conversation-top-row strong {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.conversation-time {
+    flex-shrink: 0;
+    color: rgba(255, 255, 255, 0.38);
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   Conversation Bottom Row
+   ========================================================= */
+
+.conversation-bottom-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.conversation-last-message {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: rgba(255, 255, 255, 0.48);
+    font-size: 13px;
+    line-height: 18px;
+}
+
+
+/* =========================================================
+   Unread Badge
+   ========================================================= */
+
+.conversation-unread {
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.88);
+    color: #111;
+    font-size: 10px;
+    font-weight: 700;
+    flex-shrink: 0;
 }
 
 
@@ -133,44 +348,68 @@ body.chat-body {
 
 .empty-conversations {
     flex: 1;
-    padding: 30px 24px;
-    text-align: center;
-    justify-content: center;
+    width: 100%;
+    display: none;
     align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 40px 25px 100px;
+    text-align: center;
+}
+
+.empty-icon {
+    width: 54px;
+    height: 54px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 26px;
+    font-weight: 300;
 }
 
 .empty-conversations h3 {
-    font-size: 21px;
+    margin: 0 0 7px;
+    color: white;
+    font-size: 17px;
+    font-weight: 700;
 }
 
 .empty-conversations p {
-    max-width: 320px;
-    line-height: 1.5;
+    max-width: 280px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.42);
+    font-size: 13px;
+    line-height: 19px;
 }
 
 
 /* =========================================================
-   Friends
+   Start Conversation Button
    ========================================================= */
 
-#friendsPanel {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-    padding-bottom: 80px;
+.start-chat-button,
+.empty-chat-button {
+    margin-top: 18px;
+    min-height: 44px;
+    padding: 0 18px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
 }
 
-.friends-count {
-    padding: 18px;
-}
-
-#friendsList {
-    width: 100%;
-}
-
-.friend-list-item {
-    min-height: 70px;
-    padding: 10px 16px;
+.start-chat-button:active,
+.empty-chat-button:active {
+    transform: scale(0.97);
+    background: rgba(255, 255, 255, 0.13);
 }
 
 
@@ -179,164 +418,419 @@ body.chat-body {
    ========================================================= */
 
 .chat-main {
-    position: absolute;
+    position: fixed;
     inset: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100dvh;
+    display: none;
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            #35363b 0%,
+            #303136 45%,
+            #2c2d31 100%
+        );
     z-index: 20;
-    background: inherit;
+    overflow: hidden;
 }
 
 
 /* =========================================================
-   Main Messages View
+   Mobile Chat Open
    ========================================================= */
 
-#messagesView {
-    width: 100%;
-    height: 100%;
+body.mobile-chat-open .chat-main {
+    display: block !important;
+}
+
+body.mobile-chat-open .mobile-navigation,
+body.mobile-chat-open .user-panel {
+    display: none !important;
 }
 
 
 /* =========================================================
-   Hide Main Welcome
+   Mobile Friends Open
+   ========================================================= */
+
+body.mobile-friends-open .chat-main {
+    display: block !important;
+}
+
+
+/* =========================================================
+   Main View
+   ========================================================= */
+
+.main-view {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =========================================================
+   Empty Main Chat
    ========================================================= */
 
 .empty-chat {
-    display: none;
-}
-
-
-/* =========================================================
-   Mobile PssPss
-   ========================================================= */
-
-.main-psspss {
     width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background: inherit;
+    max-width: 420px;
+    padding: 30px;
+    text-align: center;
 }
 
-
-/* =========================================================
-   PssPss Header
-   ========================================================= */
-
-.main-psspss-header {
-    height: 64px;
-    min-height: 64px;
+.empty-chat-icon {
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 21px;
+    border: 1px solid #48494f;
+    border-radius: 18px;
+    background: #393a40;
+    color: #aaa;
     display: flex;
     align-items: center;
-    padding: 0 12px;
-    gap: 10px;
+    justify-content: center;
+    font-size: 27px;
+    font-weight: 900;
 }
 
-.main-psspss-back {
-    width: 42px;
-    height: 42px;
-    flex-shrink: 0;
+.empty-chat h1 {
+    margin: 0;
+    color: #f0f0f0;
     font-size: 25px;
-    border: 0;
-    background: transparent;
+    font-weight: 900;
+    letter-spacing: -0.7px;
 }
 
-.main-psspss-avatar {
-    width: 42px;
-    height: 42px;
-    min-width: 42px;
-    border-radius: 50%;
-    overflow: hidden;
-}
-
-.main-psspss-user {
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.main-psspss-user strong,
-.main-psspss-user span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.empty-chat p {
+    margin: 10px 0 22px;
+    color: #7c7d83;
+    font-size: 14px;
 }
 
 
 /* =========================================================
-   Messages
-   ========================================================= */
-
-.main-psspss-messages {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-    padding: 12px;
-    -webkit-overflow-scrolling: touch;
-}
-
-
-/* =========================================================
-   Message Input
-   ========================================================= */
-
-.main-psspss-input {
-    width: 100%;
-    min-height: 64px;
-    padding: 8px 10px;
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    padding-bottom: calc(8px + env(safe-area-inset-bottom));
-}
-
-.main-psspss-input input {
-    flex: 1;
-    min-width: 0;
-    height: 46px;
-    border-radius: 23px;
-    padding: 0 16px;
-    font-size: 16px;
-}
-
-.main-psspss-input button {
-    height: 46px;
-    min-width: 70px;
-    border-radius: 23px;
-}
-
-
-/* =========================================================
-   Friends Search
+   Friends View
    ========================================================= */
 
 .friends-view {
     width: 100%;
     height: 100%;
-    padding: 24px 18px;
+    padding: 24px 17px 90px;
     overflow-y: auto;
+    animation: slideUp 0.25s ease;
 }
 
 .friends-view-header h1 {
-    font-size: 26px;
+    margin: 0;
+    color: #f2f2f2;
+    font-size: 27px;
+    font-weight: 900;
+    letter-spacing: -0.7px;
 }
 
+.friends-view-header p {
+    margin: 8px 0 22px;
+    color: #7d7e84;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   Friend Search
+   ========================================================= */
+
 .friend-search {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 9px;
 }
 
 .friend-search input {
     width: 100%;
-    height: 48px;
-    font-size: 16px;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid #46474d;
+    border-radius: 11px;
+    outline: none;
+    background: #25262a;
+    color: #eeeeee;
+    font-size: 14px;
+}
+
+.friend-search input:focus {
+    border-color: #777980;
+    background: #292a2f;
+}
+
+.friend-search input::placeholder {
+    color: #6d6e74;
 }
 
 .friend-search button {
     width: 100%;
-    height: 48px;
+    height: 46px;
+    border: none;
+    border-radius: 11px;
+    background: #eeeeee;
+    color: #292a2f;
+    font-size: 14px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.friend-search button:active {
+    transform: scale(0.98);
+    background: #ffffff;
+}
+
+
+/* =========================================================
+   Friend Search Result
+   ========================================================= */
+
+.friend-search-result {
+    width: 100%;
+    min-height: 68px;
+    margin-top: 16px;
+    padding: 13px;
+    border: 1px solid #3f4046;
+    border-radius: 12px;
+    background: #292a2e;
+    display: none;
+    align-items: center;
+    gap: 12px;
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.friend-search-result.visible {
+    display: flex;
+}
+
+.search-result-icon {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border: 1px solid #4a4b51;
+    border-radius: 50%;
+    background: #3a3b40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #cccccc;
+    font-weight: 900;
+}
+
+.friend-search-result div:last-child {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.friend-search-result strong {
+    color: #eeeeee;
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.friend-search-result span {
+    margin-top: 3px;
+    color: #777980;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   Friends Panel
+   ========================================================= */
+
+.friends-panel {
+    width: 100%;
+    padding: 18px 0;
+    overflow-y: auto;
+}
+
+.friends-count {
+    margin-bottom: 14px;
+    color: #85868c;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.friends-count strong {
+    color: #eeeeee;
+    font-weight: 900;
+}
+
+.add-friend-link {
+    margin-top: 12px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #999aa0;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   Friend List
+   ========================================================= */
+
+.friend-list-item {
+    width: 100%;
+    min-height: 64px;
+    margin-bottom: 7px;
+    padding: 10px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background: #25262b;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.friend-list-item:active {
+    background: #2c2d32;
+    transform: scale(0.99);
+}
+
+.friend-list-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.friend-list-info strong {
+    overflow: hidden;
+    color: #eeeeee;
+    font-size: 14px;
+    font-weight: 900;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.friend-list-info span {
+    margin-top: 3px;
+    overflow: hidden;
+    color: #777980;
+    font-size: 11px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   Friend Avatar
+   ========================================================= */
+
+.friend-avatar {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.friend-avatar-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+}
+
+
+/* =========================================================
+   Friend Requests
+   ========================================================= */
+
+.friend-requests {
+    margin-bottom: 18px;
+    padding: 13px;
+    border: 1px solid #3a3b41;
+    border-radius: 13px;
+    background: #292a2f;
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.friend-requests h3 {
+    margin: 0 0 11px;
+    color: #eeeeee;
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.friend-request {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.friend-request-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.friend-request-info strong {
+    color: #eeeeee;
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.friend-request-info span {
+    margin-top: 3px;
+    color: #777980;
+    font-size: 11px;
+}
+
+.friend-request-actions {
+    display: flex;
+    gap: 7px;
+    margin-top: 10px;
+}
+
+.accept-friend-button,
+.decline-friend-button {
+    min-height: 36px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.accept-friend-button {
+    border: none;
+    background: #eeeeee;
+    color: #25262a;
+}
+
+.decline-friend-button {
+    border: 1px solid #414249;
+    background: #303137;
+    color: #aaa;
+}
+
+.request-count {
+    margin: 10px 0 0;
+    color: #6f7076;
+    font-size: 10px;
 }
 
 
@@ -348,25 +842,582 @@ body.chat-body {
     position: fixed;
     left: 0;
     right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 68px;
-    min-height: 68px;
-    z-index: 100;
+    bottom: 64px;
+    min-height: 58px;
+    padding: 8px 12px;
+    background: #1a1b1e;
+    border-top: 1px solid #303137;
     display: flex;
     align-items: center;
-    padding: 8px 14px;
-    padding-bottom: calc(8px + env(safe-area-inset-bottom));
+    gap: 10px;
+    z-index: 90;
+}
+
+.user-avatar {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border: 1px solid #45464c;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #303137;
+    color: #dddddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.user-avatar-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
 }
 
 .user-details {
     flex: 1;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
 }
 
+.user-details strong {
+    overflow: hidden;
+    color: #dddddd;
+    font-size: 12px;
+    font-weight: 900;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.user-details span {
+    margin-top: 3px;
+    color: #66676d;
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   Settings
+   ========================================================= */
+
 .settings-button {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: none;
+    border-radius: 9px;
+    background: transparent;
+    color: #777980;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.settings-button:active {
+    background: #292a2f;
+}
+
+.settings-button img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    display: block;
+}
+
+
+/* =========================================================
+   Mobile Navigation
+   ========================================================= */
+
+.mobile-navigation {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 64px;
+
+    padding:
+        6px
+        max(6px, env(safe-area-inset-left))
+        max(6px, env(safe-area-inset-right))
+        max(6px, env(safe-area-inset-bottom));
+
+    background: #151619;
+    border-top: 1px solid #303137;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    z-index: 100;
+}
+
+.mobile-navigation button {
+    flex: 1;
+    height: 50px;
+    max-width: 150px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: transparent;
+    color: #777980;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-navigation button:active {
+    transform: scale(0.95);
+}
+
+.mobile-navigation button.active {
+    background: rgba(255, 255, 255, 0.08);
+    color: #eeeeee;
+}
+
+.mobile-navigation img {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   PssPss Conversation View
+   ========================================================= */
+
+.psspss-view {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: transparent;
+}
+
+.psspss-view.hidden {
+    display: none;
+}
+
+
+/* =========================================================
+   PssPss Header
+   ========================================================= */
+
+.psspss-header {
+    height: 62px;
+    min-height: 62px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.psspss-back-button {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.045);
+    color: rgba(255, 255, 255, 0.75);
+
+    font-size: 23px;
+    cursor: pointer;
+}
+
+.psspss-back-button:active {
+    background: rgba(255, 255, 255, 0.09);
+}
+
+
+/* =========================================================
+   PssPss Header Avatar
+   ========================================================= */
+
+.psspss-header-avatar {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.psspss-header-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* =========================================================
+   PssPss Header Info
+   ========================================================= */
+
+.psspss-header-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.psspss-header-info strong {
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.psspss-header-info span {
+    color: rgba(255, 255, 255, 0.38);
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   Main PssPss
+   ========================================================= */
+
+.main-psspss {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.main-psspss.hidden {
+    display: none !important;
+}
+
+
+/* =========================================================
+   Main PssPss Header
+   ========================================================= */
+
+.main-psspss-header {
+    height: 62px;
+    min-height: 62px;
+
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 8px 12px;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.07);
+}
+
+.main-psspss-back {
+    display: flex;
+
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 10px;
+
+    background:
+        rgba(255, 255, 255, 0.045);
+
+    color:
+        rgba(255, 255, 255, 0.75);
+
+    font-size: 23px;
+    cursor: pointer;
+}
+
+.main-psspss-back:active {
+    background:
+        rgba(255, 255, 255, 0.09);
+}
+
+
+/* =========================================================
+   Main PssPss Avatar
+   ========================================================= */
+
+.main-psspss-avatar {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background:
+        rgba(255, 255, 255, 0.07);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    color:
+        rgba(255, 255, 255, 0.6);
+
+    font-weight: 600;
+}
+
+.main-psspss-avatar img,
+.main-psspss-avatar-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+}
+
+
+/* =========================================================
+   Main PssPss User
+   ========================================================= */
+
+.main-psspss-user {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.main-psspss-user strong {
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.main-psspss-user span {
+    color:
+        rgba(255, 255, 255, 0.38);
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   Messages
+   ========================================================= */
+
+.main-psspss-messages {
+    flex: 1;
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    padding: 15px 12px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+.main-psspss-messages::-webkit-scrollbar {
+    width: 4px;
+}
+
+.main-psspss-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.main-psspss-messages::-webkit-scrollbar-thumb {
+    background:
+        rgba(255, 255, 255, 0.10);
+    border-radius: 999px;
+}
+
+
+/* =========================================================
+   Message Bubbles
+   ========================================================= */
+
+.main-psspss-messages
+.psspss-message {
+
+    max-width: 82%;
+
+    padding:
+        10px 13px;
+
+    border-radius: 14px;
+
+    font-size: 14px;
+    line-height: 20px;
+
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.main-psspss-messages
+.psspss-message.sent {
+
+    align-self: flex-end;
+
+    background:
+        rgba(255, 255, 255, 0.10);
+
+    color: white;
+
+    border-bottom-right-radius: 4px;
+}
+
+.main-psspss-messages
+.psspss-message.received {
+
+    align-self: flex-start;
+
+    background:
+        rgba(255, 255, 255, 0.055);
+
+    color:
+        rgba(255, 255, 255, 0.85);
+
+    border-bottom-left-radius: 4px;
+}
+
+
+/* =========================================================
+   Message Input
+   ========================================================= */
+
+.main-psspss-input {
+
+    min-height: 68px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding:
+        10px 10px
+        max(10px, env(safe-area-inset-left))
+        max(10px, env(safe-area-inset-right));
+
+    border-top:
+        1px solid rgba(255, 255, 255, 0.07);
+
+    background:
+        rgba(24, 25, 28, 0.55);
+}
+
+.main-psspss-input input {
+
+    flex: 1;
+    min-width: 0;
+
+    height: 44px;
+
+    padding:
+        0 13px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 11px;
+
+    outline: none;
+
+    background:
+        rgba(255, 255, 255, 0.045);
+
+    color: white;
+
+    font-size: 14px;
+}
+
+.main-psspss-input input:focus {
+
+    border-color:
+        rgba(255, 255, 255, 0.15);
+
+    background:
+        rgba(255, 255, 255, 0.06);
+}
+
+.main-psspss-input input::placeholder {
+
+    color:
+        rgba(255, 255, 255, 0.35);
+}
+
+.main-psspss-input button {
+
     width: 44px;
     height: 44px;
+
+    flex-shrink: 0;
+
+    padding: 0;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.10);
+
+    border-radius: 11px;
+
+    background:
+        rgba(255, 255, 255, 0.08);
+
+    color: white;
+
+    font-size: 18px;
+
+    cursor: pointer;
+}
+
+.main-psspss-input button:active {
+
+    transform: scale(0.94);
+
+    background:
+        rgba(255, 255, 255, 0.13);
 }
 
 
@@ -375,55 +1426,339 @@ body.chat-body {
    ========================================================= */
 
 .new-chat-modal {
+
     position: fixed;
     inset: 0;
-    z-index: 500;
+
     display: flex;
     align-items: flex-end;
     justify-content: center;
+
+    background:
+        rgba(0, 0, 0, 0.65);
+
+    z-index: 9999;
+
+    padding: 0;
 }
 
-.new-chat-box {
-    width: 100%;
-    max-height: 85dvh;
-    border-radius: 20px 20px 0 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-
-.new-chat-header {
-    min-height: 60px;
-    padding: 12px 16px;
-}
-
-.new-chat-subtitle {
-    padding: 0 16px;
-}
-
-.new-chat-friends-list {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-}
-
-.new-chat-footer {
-    padding: 12px 16px;
-    padding-bottom: calc(12px + env(safe-area-inset-bottom));
-}
-
-.start-new-chat-button {
-    width: 100%;
-    height: 48px;
+.new-chat-modal.hidden {
+    display: none;
 }
 
 
 /* =========================================================
-   Hide Desktop PssPss View
+   Mobile Bottom Sheet
    ========================================================= */
 
-#pssPssView {
-    display: none;
+.new-chat-box {
+
+    width: 100%;
+    max-width: 600px;
+
+    max-height: 88dvh;
+
+    display: flex;
+    flex-direction: column;
+
+    background:
+        #18181c;
+
+    color: #ffffff;
+
+    border:
+        1px solid #303036;
+
+    border-bottom: none;
+
+    border-radius:
+        20px 20px 0 0;
+
+    box-shadow:
+        0 -15px 50px rgba(0, 0, 0, 0.5);
+
+    overflow: hidden;
+
+    animation:
+        mobileSheetUp 0.22s ease;
+}
+
+
+/* =========================================================
+   Modal Header
+   ========================================================= */
+
+.new-chat-header {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding:
+        18px 18px 10px;
+}
+
+.new-chat-header h2 {
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.new-chat-close {
+
+    width: 42px;
+    height: 42px;
+
+    border: none;
+    border-radius: 10px;
+
+    background:
+        rgba(255, 255, 255, 0.05);
+
+    color: #ffffff;
+
+    font-size: 27px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    padding: 0;
+}
+
+.new-chat-close:active {
+
+    background:
+        rgba(255, 255, 255, 0.10);
+
+    transform: scale(0.94);
+}
+
+
+/* =========================================================
+   Modal Subtitle
+   ========================================================= */
+
+.new-chat-subtitle {
+
+    margin: 0;
+
+    padding:
+        0 18px 14px;
+
+    color: #a8a8b0;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   Modal Friends
+   ========================================================= */
+
+.new-chat-friends-list {
+
+    padding:
+        0 10px 10px;
+
+    overflow-y: auto;
+
+    min-height: 100px;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+
+/* =========================================================
+   New Chat Friend
+   ========================================================= */
+
+.new-chat-friend {
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+
+    min-height: 64px;
+
+    padding: 10px;
+
+    border-radius: 11px;
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease;
+}
+
+.new-chat-friend:active {
+
+    background:
+        #25252b;
+}
+
+.new-chat-friend.selected {
+
+    background:
+        #30303a;
+}
+
+
+/* =========================================================
+   New Chat Avatar
+   ========================================================= */
+
+.new-chat-friend-avatar {
+
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        #303036;
+
+    color:
+        #ffffff;
+}
+
+.new-chat-friend-avatar img {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* =========================================================
+   New Chat Friend Info
+   ========================================================= */
+
+.new-chat-friend-info {
+
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+}
+
+.new-chat-friend-name {
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.new-chat-friend-username {
+
+    color: #92929a;
+
+    font-size: 12px;
+
+    margin-top: 3px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   Modal Footer
+   ========================================================= */
+
+.new-chat-footer {
+
+    padding:
+        12px 16px
+        max(16px, env(safe-area-inset-right))
+        max(16px, env(safe-area-inset-bottom))
+        max(16px, env(safe-area-inset-left));
+
+    display: flex;
+
+    border-top:
+        1px solid #303036;
+}
+
+.start-new-chat-button {
+
+    width: 100%;
+
+    min-height: 46px;
+
+    border: none;
+
+    padding:
+        0 18px;
+
+    border-radius: 11px;
+
+    background:
+        #ffffff;
+
+    color:
+        #18181c;
+
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.start-new-chat-button:active:not(:disabled) {
+
+    transform: scale(0.98);
+
+    opacity: 0.85;
+}
+
+.start-new-chat-button:disabled {
+
+    opacity: 0.35;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   Modal States
+   ========================================================= */
+
+.new-chat-loading,
+.new-chat-empty,
+.new-chat-error {
+
+    padding:
+        30px 10px;
+
+    text-align: center;
+
+    color:
+        #92929a;
+
+    font-size: 13px;
 }
 
 
@@ -437,27 +1772,146 @@ body.chat-body {
 
 
 /* =========================================================
+   Scrollbars
+   ========================================================= */
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #3d3e44 transparent;
+}
+
+*::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #3d3e44;
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   Animations
+   ========================================================= */
+
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+@keyframes slideIn {
+
+    from {
+        opacity: 0;
+        transform: translateX(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+@keyframes slideUp {
+
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes mobileSheetUp {
+
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================================================
    Small Phones
    ========================================================= */
 
 @media (max-width: 380px) {
 
     .conversation-header {
-        padding: 0 14px;
+        padding: 0 12px;
     }
 
     .conversation-item {
-        padding-left: 12px;
-        padding-right: 12px;
+        min-height: 68px;
+        padding: 8px;
     }
 
-    .main-psspss-input {
-        padding-left: 6px;
-        padding-right: 6px;
+    .conversation-avatar {
+        width: 46px;
+        height: 46px;
+        min-width: 46px;
     }
 
-    .main-psspss-input button {
-        min-width: 62px;
+    .conversation-top-row strong {
+        font-size: 14px;
+    }
+
+    .conversation-last-message {
+        font-size: 12px;
+    }
+
+    .friends-view {
+        padding-left: 13px;
+        padding-right: 13px;
+    }
+
+    .main-psspss-messages
+    .psspss-message {
+        max-width: 86%;
+        font-size: 13px;
+    }
+
+}
+
+
+/* =========================================================
+   Tall / Modern Phones
+   ========================================================= */
+
+@media (min-height: 750px) {
+
+    .mobile-navigation {
+        height: 68px;
+    }
+
+    .user-panel {
+        bottom: 68px;
+    }
+
+    .conversations-list {
+        padding-bottom: 82px;
     }
 
 }
