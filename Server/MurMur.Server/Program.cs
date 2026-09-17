@@ -123,7 +123,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy("MurMurClient", policy =>
     {
         policy
-            .WithOrigins("http://localhost:5500")
+            .WithOrigins(
+                "http://localhost:5500",
+                "https://tangodarkberry-design.github.io")
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();

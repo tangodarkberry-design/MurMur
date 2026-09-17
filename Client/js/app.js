@@ -3,9 +3,173 @@
    ========================================================= */
 
 const MURMUR_SERVER_URL =
-    "http://localhost:5175";
+    "https://guardian-impossible-saint-scripts.trycloudflare.com";
 
 let redirecting = false;
+
+
+/* =========================================================
+   PssPss SignalR Connection
+   ========================================================= */
+
+let pssPssConnection = null;
+
+if (
+    typeof signalR !== "undefined" &&
+    typeof signalR.HubConnectionBuilder !== "undefined"
+) {
+
+    pssPssConnection =
+        new signalR.HubConnectionBuilder()
+            .withUrl(
+                `${MURMUR_SERVER_URL}/psspssHub`
+            )
+            .withAutomaticReconnect()
+            .build();
+
+
+    pssPssConnection.on(
+        "ReceivePssPssMessage",
+        async function (message) {
+
+            console.log(
+                "Received PssPss message:",
+                message
+            );
+
+            if (
+                typeof loadConversations ===
+                "function"
+            ) {
+                await loadConversations();
+            }
+
+            if (
+                typeof currentPssPssUser ===
+                "undefined" ||
+                !currentPssPssUser ||
+                typeof addPssPssMessageBubble !==
+                "function"
+            ) {
+                return;
+            }
+
+            const sender =
+                message.senderUsername.toLowerCase();
+
+            const receiver =
+                message.receiverUsername.toLowerCase();
+
+            const me =
+                username.toLowerCase();
+
+            const other =
+                currentPssPssUser.toLowerCase();
+
+            const isOurConversation =
+                (
+                    sender === me &&
+                    receiver === other
+                )
+                ||
+                (
+                    sender === other &&
+                    receiver === me
+                );
+
+            if (isOurConversation) {
+
+                addPssPssMessageBubble(
+                    message
+                );
+
+                if (
+                    typeof markPssPssAsRead ===
+                    "function"
+                ) {
+                    await markPssPssAsRead(
+                        currentPssPssUser
+                    );
+                }
+            }
+        }
+    );
+
+
+    pssPssConnection.onreconnecting(
+        function (error) {
+
+            console.warn(
+                "PssPss SignalR reconnecting:",
+                error
+            );
+        }
+    );
+
+
+    pssPssConnection.onreconnected(
+        function (connectionId) {
+
+            console.log(
+                "PssPss SignalR reconnected:",
+                connectionId
+            );
+        }
+    );
+
+
+    pssPssConnection.onclose(
+        function (error) {
+
+            console.warn(
+                "PssPss SignalR connection closed:",
+                error
+            );
+        }
+    );
+
+
+    async function startPssPssConnection() {
+
+        if (
+            pssPssConnection.state ===
+            signalR.HubConnectionState.Connected
+        ) {
+            return;
+        }
+
+        try {
+
+            await pssPssConnection.start();
+
+            console.log(
+                "PssPss SignalR connected."
+            );
+
+        } catch (error) {
+
+            console.error(
+                "SignalR connection failed:",
+                error
+            );
+
+            setTimeout(
+                startPssPssConnection,
+                5000
+            );
+        }
+    }
+
+
+    startPssPssConnection();
+
+}
+else {
+
+    console.warn(
+        "SignalR library was not loaded."
+    );
+}
 
 
 /* =========================================================
