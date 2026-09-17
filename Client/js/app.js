@@ -3,7 +3,10 @@
    ========================================================= */
 
 const MURMUR_SERVER_URL =
-    "https://guardian-impossible-saint-scripts.trycloudflare.com";
+    "https://elections-gratis-these-satin.trycloudflare.com";
+
+const SERVER_URL =
+    MURMUR_SERVER_URL;
 
 let redirecting = false;
 
