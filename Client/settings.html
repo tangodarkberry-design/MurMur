@@ -26,7 +26,8 @@
 
             <button
                 class="back-button"
-                onclick="window.location.href='site-pc.html'"
+                id="backToMainButton"
+                type="button"
             >
                 ←
             </button>
@@ -484,6 +485,72 @@ const SERVER_URL =
 
 const username =
     sessionStorage.getItem("murmur_username");
+
+
+    /* =========================================================
+    Device Detection / Back To Main Site
+    ========================================================= */
+
+    function isMobileDevice() {
+
+        const userAgent =
+            navigator.userAgent ||
+            navigator.vendor ||
+            window.opera ||
+            "";
+
+        const mobileUserAgent =
+            /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i
+                .test(userAgent);
+
+        const touchDevice =
+            navigator.maxTouchPoints > 0;
+
+        const smallScreen =
+            window.matchMedia("(max-width: 768px)").matches;
+
+
+        if (mobileUserAgent) {
+            return true;
+        }
+
+
+        if (touchDevice && smallScreen) {
+            return true;
+        }
+
+
+        if (smallScreen) {
+            return true;
+        }
+
+
+        return false;
+    }
+
+
+    const backToMainButton =
+        document.getElementById("backToMainButton");
+
+
+    backToMainButton.addEventListener(
+        "click",
+        function () {
+
+            if (isMobileDevice()) {
+
+                window.location.href =
+                    "site-mob.html";
+
+            } else {
+
+                window.location.href =
+                    "site-pc.html";
+
+            }
+
+        }
+    );
 
 
 /* =========================================================
