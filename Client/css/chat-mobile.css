@@ -36,13 +36,13 @@ button {
     -webkit-tap-highlight-color: transparent;
 }
 
-
 /* =========================================================
    Main Layout
    ========================================================= */
 
 .chat-app {
-    width: 100vw;
+    position: relative;
+    width: 100%;
     height: 100dvh;
     min-height: 100%;
     display: flex;
@@ -51,33 +51,35 @@ button {
     overflow: hidden;
 }
 
-
 /* =========================================================
    Desktop Sidebar
-   Hidden on mobile
    ========================================================= */
 
 .app-sidebar {
     display: none !important;
 }
 
-
 /* =========================================================
    Conversation Sidebar
    ========================================================= */
 
 .conversation-sidebar {
+    position: relative;
     width: 100%;
     height: 100%;
     min-height: 0;
     flex: 1;
-    background: #202125;
-    border: none;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    background: #202125;
+    border: none;
 }
 
+/* Hide conversation sidebar while inside a chat */
+body.mobile-chat-open .conversation-sidebar {
+    display: none !important;
+}
 
 /* =========================================================
    Conversation Header
@@ -91,8 +93,9 @@ button {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #303137;
     flex-shrink: 0;
+    background: #202125;
+    border-bottom: 1px solid #303137;
 }
 
 .conversation-header h2 {
@@ -103,7 +106,6 @@ button {
     letter-spacing: -0.3px;
 }
 
-
 /* =========================================================
    New Chat Button
    ========================================================= */
@@ -111,6 +113,7 @@ button {
 .new-chat-button {
     width: 40px;
     height: 40px;
+    flex-shrink: 0;
     border: 1px solid #3a3b41;
     border-radius: 11px;
     background: #292a2f;
@@ -131,7 +134,6 @@ button {
     background: #36373d;
 }
 
-
 /* =========================================================
    Conversation Search
    ========================================================= */
@@ -139,8 +141,9 @@ button {
 .conversation-search {
     width: 100%;
     padding: 11px 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
     flex-shrink: 0;
+    background: #202125;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .conversation-search input {
@@ -153,6 +156,8 @@ button {
     background: rgba(255, 255, 255, 0.045);
     color: white;
     font-size: 14px;
+    -webkit-appearance: none;
+    appearance: none;
     transition:
         background 0.15s ease,
         border-color 0.15s ease,
@@ -166,10 +171,8 @@ button {
 .conversation-search input:focus {
     background: rgba(255, 255, 255, 0.065);
     border-color: rgba(255, 255, 255, 0.16);
-    box-shadow:
-        0 0 0 3px rgba(255, 255, 255, 0.035);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.035);
 }
-
 
 /* =========================================================
    Conversations List
@@ -181,7 +184,7 @@ button {
     min-height: 0;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 6px 7px 76px;
+    padding: 6px 7px 145px;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -197,7 +200,6 @@ button {
     background: rgba(255, 255, 255, 0.10);
     border-radius: 999px;
 }
-
 
 /* =========================================================
    Conversation Item
@@ -223,7 +225,6 @@ button {
     background: rgba(255, 255, 255, 0.055);
 }
 
-
 /* =========================================================
    Conversation Avatar
    ========================================================= */
@@ -233,24 +234,22 @@ button {
     height: 50px;
     min-width: 50px;
     min-height: 50px;
+    flex-shrink: 0;
     border-radius: 50%;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-
     background:
         linear-gradient(
             135deg,
             rgba(255, 255, 255, 0.13),
             rgba(255, 255, 255, 0.045)
         );
-
     border: 1px solid rgba(255, 255, 255, 0.08);
     color: rgba(255, 255, 255, 0.6);
     font-size: 18px;
     font-weight: 600;
-    flex-shrink: 0;
 }
 
 .conversation-avatar-image {
@@ -259,7 +258,6 @@ button {
     display: block;
     object-fit: cover;
 }
-
 
 /* =========================================================
    Conversation Information
@@ -298,7 +296,6 @@ button {
     white-space: nowrap;
 }
 
-
 /* =========================================================
    Conversation Bottom Row
    ========================================================= */
@@ -321,7 +318,6 @@ button {
     line-height: 18px;
 }
 
-
 /* =========================================================
    Unread Badge
    ========================================================= */
@@ -333,14 +329,13 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.88);
     color: #111;
     font-size: 10px;
     font-weight: 700;
-    flex-shrink: 0;
 }
-
 
 /* =========================================================
    Empty Conversations
@@ -353,7 +348,7 @@ button {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 40px 25px 100px;
+    padding: 40px 25px 145px;
     text-align: center;
 }
 
@@ -387,7 +382,6 @@ button {
     line-height: 19px;
 }
 
-
 /* =========================================================
    Start Conversation Button
    ========================================================= */
@@ -412,7 +406,6 @@ button {
     background: rgba(255, 255, 255, 0.13);
 }
 
-
 /* =========================================================
    Main Area
    ========================================================= */
@@ -420,7 +413,7 @@ button {
 .chat-main {
     position: fixed;
     inset: 0;
-    width: 100vw;
+    width: 100%;
     height: 100dvh;
     display: none;
     background:
@@ -430,10 +423,9 @@ button {
             #303136 45%,
             #2c2d31 100%
         );
-    z-index: 20;
+    z-index: 200;
     overflow: hidden;
 }
-
 
 /* =========================================================
    Mobile Chat Open
@@ -448,7 +440,6 @@ body.mobile-chat-open .user-panel {
     display: none !important;
 }
 
-
 /* =========================================================
    Mobile Friends Open
    ========================================================= */
@@ -457,6 +448,9 @@ body.mobile-friends-open .chat-main {
     display: block !important;
 }
 
+body.mobile-friends-open .mobile-navigation {
+    display: flex !important;
+}
 
 /* =========================================================
    Main View
@@ -465,11 +459,8 @@ body.mobile-friends-open .chat-main {
 .main-view {
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    min-height: 0;
 }
-
 
 /* =========================================================
    Empty Main Chat
@@ -479,6 +470,7 @@ body.mobile-friends-open .chat-main {
     width: 100%;
     max-width: 420px;
     padding: 30px;
+    margin: auto;
     text-align: center;
 }
 
@@ -511,7 +503,6 @@ body.mobile-friends-open .chat-main {
     font-size: 14px;
 }
 
-
 /* =========================================================
    Friends View
    ========================================================= */
@@ -519,8 +510,11 @@ body.mobile-friends-open .chat-main {
 .friends-view {
     width: 100%;
     height: 100%;
-    padding: 24px 17px 90px;
+    min-height: 0;
+    padding: 24px 17px calc(90px + env(safe-area-inset-bottom));
+    overflow-x: hidden;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     animation: slideUp 0.25s ease;
 }
 
@@ -537,7 +531,6 @@ body.mobile-friends-open .chat-main {
     color: #7d7e84;
     font-size: 14px;
 }
-
 
 /* =========================================================
    Friend Search
@@ -560,6 +553,8 @@ body.mobile-friends-open .chat-main {
     background: #25262a;
     color: #eeeeee;
     font-size: 14px;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .friend-search input:focus {
@@ -588,7 +583,6 @@ body.mobile-friends-open .chat-main {
     background: #ffffff;
 }
 
-
 /* =========================================================
    Friend Search Result
    ========================================================= */
@@ -604,8 +598,7 @@ body.mobile-friends-open .chat-main {
     display: none;
     align-items: center;
     gap: 12px;
-    box-shadow:
-        0 8px 20px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .friend-search-result.visible {
@@ -644,7 +637,6 @@ body.mobile-friends-open .chat-main {
     font-size: 11px;
 }
 
-
 /* =========================================================
    Friends Panel
    ========================================================= */
@@ -652,7 +644,7 @@ body.mobile-friends-open .chat-main {
 .friends-panel {
     width: 100%;
     padding: 18px 0;
-    overflow-y: auto;
+    overflow: visible;
 }
 
 .friends-count {
@@ -679,7 +671,6 @@ body.mobile-friends-open .chat-main {
     cursor: pointer;
 }
 
-
 /* =========================================================
    Friend List
    ========================================================= */
@@ -704,6 +695,7 @@ body.mobile-friends-open .chat-main {
 
 .friend-list-info {
     min-width: 0;
+    flex: 1;
     display: flex;
     flex-direction: column;
 }
@@ -726,7 +718,6 @@ body.mobile-friends-open .chat-main {
     text-overflow: ellipsis;
 }
 
-
 /* =========================================================
    Friend Avatar
    ========================================================= */
@@ -736,6 +727,7 @@ body.mobile-friends-open .chat-main {
     height: 44px;
     min-width: 44px;
     min-height: 44px;
+    flex-shrink: 0;
     border-radius: 50%;
     overflow: hidden;
     display: flex;
@@ -753,7 +745,6 @@ body.mobile-friends-open .chat-main {
     border-radius: 50%;
 }
 
-
 /* =========================================================
    Friend Requests
    ========================================================= */
@@ -764,8 +755,7 @@ body.mobile-friends-open .chat-main {
     border: 1px solid #3a3b41;
     border-radius: 13px;
     background: #292a2f;
-    box-shadow:
-        0 8px 20px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .friend-requests h3 {
@@ -783,6 +773,7 @@ body.mobile-friends-open .chat-main {
 
 .friend-request-info {
     min-width: 0;
+    flex: 1;
     display: flex;
     flex-direction: column;
 }
@@ -833,7 +824,6 @@ body.mobile-friends-open .chat-main {
     font-size: 10px;
 }
 
-
 /* =========================================================
    User Panel
    ========================================================= */
@@ -842,7 +832,7 @@ body.mobile-friends-open .chat-main {
     position: fixed;
     left: 0;
     right: 0;
-    bottom: 64px;
+    bottom: calc(64px + env(safe-area-inset-bottom));
     min-height: 58px;
     padding: 8px 12px;
     background: #1a1b1e;
@@ -899,7 +889,6 @@ body.mobile-friends-open .chat-main {
     font-size: 10px;
 }
 
-
 /* =========================================================
    Settings
    ========================================================= */
@@ -929,7 +918,6 @@ body.mobile-friends-open .chat-main {
     display: block;
 }
 
-
 /* =========================================================
    Mobile Navigation
    ========================================================= */
@@ -939,23 +927,18 @@ body.mobile-friends-open .chat-main {
     left: 0;
     right: 0;
     bottom: 0;
-
     width: 100%;
-    height: 64px;
-
+    min-height: 64px;
     padding:
         6px
         max(6px, env(safe-area-inset-left))
         max(6px, env(safe-area-inset-right))
         max(6px, env(safe-area-inset-bottom));
-
     background: #151619;
     border-top: 1px solid #303137;
-
     display: flex;
     align-items: center;
     justify-content: space-around;
-
     z-index: 100;
 }
 
@@ -963,18 +946,13 @@ body.mobile-friends-open .chat-main {
     flex: 1;
     height: 50px;
     max-width: 150px;
-
     border: none;
     border-radius: 12px;
-
     background: transparent;
     color: #777980;
-
     font-size: 12px;
     font-weight: 700;
-
     cursor: pointer;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -995,7 +973,6 @@ body.mobile-friends-open .chat-main {
     object-fit: contain;
 }
 
-
 /* =========================================================
    PssPss Conversation View
    ========================================================= */
@@ -1003,6 +980,7 @@ body.mobile-friends-open .chat-main {
 .psspss-view {
     width: 100%;
     height: 100%;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -1010,9 +988,8 @@ body.mobile-friends-open .chat-main {
 }
 
 .psspss-view.hidden {
-    display: none;
+    display: none !important;
 }
-
 
 /* =========================================================
    PssPss Header
@@ -1025,6 +1002,7 @@ body.mobile-friends-open .chat-main {
     align-items: center;
     gap: 10px;
     padding: 8px 12px;
+    flex-shrink: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
@@ -1032,17 +1010,13 @@ body.mobile-friends-open .chat-main {
     width: 42px;
     height: 42px;
     flex-shrink: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border: none;
     border-radius: 10px;
-
     background: rgba(255, 255, 255, 0.045);
     color: rgba(255, 255, 255, 0.75);
-
     font-size: 23px;
     cursor: pointer;
 }
@@ -1050,7 +1024,6 @@ body.mobile-friends-open .chat-main {
 .psspss-back-button:active {
     background: rgba(255, 255, 255, 0.09);
 }
-
 
 /* =========================================================
    PssPss Header Avatar
@@ -1060,17 +1033,14 @@ body.mobile-friends-open .chat-main {
     width: 40px;
     height: 40px;
     min-width: 40px;
-
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-
     overflow: hidden;
     border-radius: 50%;
-
     background: rgba(255, 255, 255, 0.07);
     border: 1px solid rgba(255, 255, 255, 0.08);
-
     color: rgba(255, 255, 255, 0.6);
     font-size: 14px;
     font-weight: 600;
@@ -1082,13 +1052,13 @@ body.mobile-friends-open .chat-main {
     object-fit: cover;
 }
 
-
 /* =========================================================
    PssPss Header Info
    ========================================================= */
 
 .psspss-header-info {
     min-width: 0;
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -1108,7 +1078,6 @@ body.mobile-friends-open .chat-main {
     font-size: 11px;
 }
 
-
 /* =========================================================
    Main PssPss
    ========================================================= */
@@ -1116,6 +1085,7 @@ body.mobile-friends-open .chat-main {
 .main-psspss {
     width: 100%;
     height: 100%;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -1125,7 +1095,6 @@ body.mobile-friends-open .chat-main {
     display: none !important;
 }
 
-
 /* =========================================================
    Main PssPss Header
    ========================================================= */
@@ -1133,46 +1102,32 @@ body.mobile-friends-open .chat-main {
 .main-psspss-header {
     height: 62px;
     min-height: 62px;
-
     display: flex;
     align-items: center;
     gap: 9px;
-
     padding: 8px 12px;
-
-    border-bottom:
-        1px solid rgba(255, 255, 255, 0.07);
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .main-psspss-back {
     display: flex;
-
     width: 42px;
     height: 42px;
-
     flex-shrink: 0;
-
     align-items: center;
     justify-content: center;
-
     border: none;
     border-radius: 10px;
-
-    background:
-        rgba(255, 255, 255, 0.045);
-
-    color:
-        rgba(255, 255, 255, 0.75);
-
+    background: rgba(255, 255, 255, 0.045);
+    color: rgba(255, 255, 255, 0.75);
     font-size: 23px;
     cursor: pointer;
 }
 
 .main-psspss-back:active {
-    background:
-        rgba(255, 255, 255, 0.09);
+    background: rgba(255, 255, 255, 0.09);
 }
-
 
 /* =========================================================
    Main PssPss Avatar
@@ -1182,24 +1137,15 @@ body.mobile-friends-open .chat-main {
     width: 42px;
     height: 42px;
     min-width: 42px;
-
+    flex-shrink: 0;
     border-radius: 50%;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     overflow: hidden;
-
-    background:
-        rgba(255, 255, 255, 0.07);
-
-    border:
-        1px solid rgba(255, 255, 255, 0.08);
-
-    color:
-        rgba(255, 255, 255, 0.6);
-
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.6);
     font-weight: 600;
 }
 
@@ -1212,7 +1158,6 @@ body.mobile-friends-open .chat-main {
     display: block;
 }
 
-
 /* =========================================================
    Main PssPss User
    ========================================================= */
@@ -1222,6 +1167,7 @@ body.mobile-friends-open .chat-main {
     flex-direction: column;
     gap: 2px;
     min-width: 0;
+    flex: 1;
 }
 
 .main-psspss-user strong {
@@ -1234,11 +1180,9 @@ body.mobile-friends-open .chat-main {
 }
 
 .main-psspss-user span {
-    color:
-        rgba(255, 255, 255, 0.38);
+    color: rgba(255, 255, 255, 0.38);
     font-size: 11px;
 }
-
 
 /* =========================================================
    Messages
@@ -1247,16 +1191,12 @@ body.mobile-friends-open .chat-main {
 .main-psspss-messages {
     flex: 1;
     min-height: 0;
-
     display: flex;
     flex-direction: column;
     gap: 7px;
-
     padding: 15px 12px;
-
     overflow-y: auto;
     overflow-x: hidden;
-
     -webkit-overflow-scrolling: touch;
 }
 
@@ -1269,478 +1209,311 @@ body.mobile-friends-open .chat-main {
 }
 
 .main-psspss-messages::-webkit-scrollbar-thumb {
-    background:
-        rgba(255, 255, 255, 0.10);
+    background: rgba(255, 255, 255, 0.10);
     border-radius: 999px;
 }
-
 
 /* =========================================================
    Message Bubbles
    ========================================================= */
 
-.main-psspss-messages
-.psspss-message {
-
+.main-psspss-messages .psspss-message {
     max-width: 82%;
-
-    padding:
-        10px 13px;
-
+    padding: 10px 13px;
     border-radius: 14px;
-
     font-size: 14px;
     line-height: 20px;
-
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
 
-.main-psspss-messages
-.psspss-message.sent {
-
+.main-psspss-messages .psspss-message.sent {
     align-self: flex-end;
-
-    background:
-        rgba(255, 255, 255, 0.10);
-
+    background: rgba(255, 255, 255, 0.10);
     color: white;
-
     border-bottom-right-radius: 4px;
 }
 
-.main-psspss-messages
-.psspss-message.received {
-
+.main-psspss-messages .psspss-message.received {
     align-self: flex-start;
-
-    background:
-        rgba(255, 255, 255, 0.055);
-
-    color:
-        rgba(255, 255, 255, 0.85);
-
+    background: rgba(255, 255, 255, 0.055);
+    color: rgba(255, 255, 255, 0.85);
     border-bottom-left-radius: 4px;
 }
-
 
 /* =========================================================
    Message Input
    ========================================================= */
 
 .main-psspss-input {
-
     min-height: 68px;
-
     display: flex;
     align-items: center;
     gap: 8px;
-
     padding:
-        10px 10px
-        max(10px, env(safe-area-inset-left))
-        max(10px, env(safe-area-inset-right));
-
-    border-top:
-        1px solid rgba(255, 255, 255, 0.07);
-
-    background:
-        rgba(24, 25, 28, 0.55);
+        10px
+        max(10px, env(safe-area-inset-right))
+        calc(10px + env(safe-area-inset-bottom))
+        max(10px, env(safe-area-inset-left));
+    flex-shrink: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    background: rgba(24, 25, 28, 0.92);
 }
 
 .main-psspss-input input {
-
     flex: 1;
     min-width: 0;
-
     height: 44px;
-
-    padding:
-        0 13px;
-
-    border:
-        1px solid rgba(255, 255, 255, 0.08);
-
+    padding: 0 13px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 11px;
-
     outline: none;
-
-    background:
-        rgba(255, 255, 255, 0.045);
-
+    background: rgba(255, 255, 255, 0.045);
     color: white;
-
     font-size: 14px;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .main-psspss-input input:focus {
-
-    border-color:
-        rgba(255, 255, 255, 0.15);
-
-    background:
-        rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.06);
 }
 
 .main-psspss-input input::placeholder {
-
-    color:
-        rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.35);
 }
 
 .main-psspss-input button {
-
     width: 44px;
     height: 44px;
-
     flex-shrink: 0;
-
     padding: 0;
-
-    border:
-        1px solid rgba(255, 255, 255, 0.10);
-
+    border: 1px solid rgba(255, 255, 255, 0.10);
     border-radius: 11px;
-
-    background:
-        rgba(255, 255, 255, 0.08);
-
+    background: rgba(255, 255, 255, 0.08);
     color: white;
-
     font-size: 18px;
-
     cursor: pointer;
 }
 
 .main-psspss-input button:active {
-
     transform: scale(0.94);
-
-    background:
-        rgba(255, 255, 255, 0.13);
+    background: rgba(255, 255, 255, 0.13);
 }
-
 
 /* =========================================================
    New PssPss Modal
    ========================================================= */
 
 .new-chat-modal {
-
     position: fixed;
     inset: 0;
-
     display: flex;
     align-items: flex-end;
     justify-content: center;
-
-    background:
-        rgba(0, 0, 0, 0.65);
-
+    background: rgba(0, 0, 0, 0.65);
     z-index: 9999;
-
     padding: 0;
 }
 
 .new-chat-modal.hidden {
-    display: none;
+    display: none !important;
 }
-
 
 /* =========================================================
    Mobile Bottom Sheet
    ========================================================= */
 
 .new-chat-box {
-
     width: 100%;
     max-width: 600px;
-
     max-height: 88dvh;
-
     display: flex;
     flex-direction: column;
-
-    background:
-        #18181c;
-
+    background: #18181c;
     color: #ffffff;
-
-    border:
-        1px solid #303036;
-
+    border: 1px solid #303036;
     border-bottom: none;
-
-    border-radius:
-        20px 20px 0 0;
-
-    box-shadow:
-        0 -15px 50px rgba(0, 0, 0, 0.5);
-
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -15px 50px rgba(0, 0, 0, 0.5);
     overflow: hidden;
-
-    animation:
-        mobileSheetUp 0.22s ease;
+    animation: mobileSheetUp 0.22s ease;
 }
-
 
 /* =========================================================
    Modal Header
    ========================================================= */
 
 .new-chat-header {
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    padding:
-        18px 18px 10px;
+    padding: 18px 18px 10px;
+    flex-shrink: 0;
 }
 
 .new-chat-header h2 {
-
     margin: 0;
-
     color: #ffffff;
-
     font-size: 20px;
     font-weight: 800;
 }
 
 .new-chat-close {
-
     width: 42px;
     height: 42px;
-
     border: none;
     border-radius: 10px;
-
-    background:
-        rgba(255, 255, 255, 0.05);
-
+    background: rgba(255, 255, 255, 0.05);
     color: #ffffff;
-
     font-size: 27px;
     line-height: 1;
-
     cursor: pointer;
-
     padding: 0;
 }
 
 .new-chat-close:active {
-
-    background:
-        rgba(255, 255, 255, 0.10);
-
+    background: rgba(255, 255, 255, 0.10);
     transform: scale(0.94);
 }
-
 
 /* =========================================================
    Modal Subtitle
    ========================================================= */
 
 .new-chat-subtitle {
-
     margin: 0;
-
-    padding:
-        0 18px 14px;
-
+    padding: 0 18px 14px;
     color: #a8a8b0;
-
     font-size: 13px;
 }
-
 
 /* =========================================================
    Modal Friends
    ========================================================= */
 
 .new-chat-friends-list {
-
-    padding:
-        0 10px 10px;
-
+    padding: 0 10px 10px;
     overflow-y: auto;
-
     min-height: 100px;
-
     -webkit-overflow-scrolling: touch;
 }
-
 
 /* =========================================================
    New Chat Friend
    ========================================================= */
 
 .new-chat-friend {
-
     display: flex;
     align-items: center;
     gap: 12px;
-
     width: 100%;
-
     min-height: 64px;
-
     padding: 10px;
-
     border-radius: 11px;
-
     color: #ffffff;
-
     cursor: pointer;
-
-    transition:
-        background 0.15s ease;
+    transition: background 0.15s ease;
 }
 
 .new-chat-friend:active {
-
-    background:
-        #25252b;
+    background: #25252b;
 }
 
 .new-chat-friend.selected {
-
-    background:
-        #30303a;
+    background: #30303a;
 }
-
 
 /* =========================================================
    New Chat Avatar
    ========================================================= */
 
 .new-chat-friend-avatar {
-
     width: 46px;
     height: 46px;
-
     flex-shrink: 0;
-
     border-radius: 50%;
-
     overflow: hidden;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    background:
-        #303036;
-
-    color:
-        #ffffff;
+    background: #303036;
+    color: #ffffff;
 }
 
 .new-chat-friend-avatar img {
-
     width: 100%;
     height: 100%;
-
     object-fit: cover;
 }
-
 
 /* =========================================================
    New Chat Friend Info
    ========================================================= */
 
 .new-chat-friend-info {
-
     display: flex;
     flex-direction: column;
-
     min-width: 0;
+    flex: 1;
 }
 
 .new-chat-friend-name {
-
     color: #ffffff;
-
     font-size: 14px;
     font-weight: 700;
-
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
 .new-chat-friend-username {
-
     color: #92929a;
-
     font-size: 12px;
-
     margin-top: 3px;
-
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-
 
 /* =========================================================
    Modal Footer
    ========================================================= */
 
 .new-chat-footer {
-
     padding:
-        12px 16px
+        12px
         max(16px, env(safe-area-inset-right))
         max(16px, env(safe-area-inset-bottom))
         max(16px, env(safe-area-inset-left));
-
     display: flex;
-
-    border-top:
-        1px solid #303036;
+    flex-shrink: 0;
+    border-top: 1px solid #303036;
 }
 
 .start-new-chat-button {
-
     width: 100%;
-
     min-height: 46px;
-
     border: none;
-
-    padding:
-        0 18px;
-
+    padding: 0 18px;
     border-radius: 11px;
-
-    background:
-        #ffffff;
-
-    color:
-        #18181c;
-
+    background: #ffffff;
+    color: #18181c;
     cursor: pointer;
-
     font-size: 14px;
     font-weight: 700;
 }
 
 .start-new-chat-button:active:not(:disabled) {
-
     transform: scale(0.98);
-
     opacity: 0.85;
 }
 
 .start-new-chat-button:disabled {
-
     opacity: 0.35;
-
     cursor: not-allowed;
 }
-
 
 /* =========================================================
    Modal States
@@ -1749,18 +1522,11 @@ body.mobile-friends-open .chat-main {
 .new-chat-loading,
 .new-chat-empty,
 .new-chat-error {
-
-    padding:
-        30px 10px;
-
+    padding: 30px 10px;
     text-align: center;
-
-    color:
-        #92929a;
-
+    color: #92929a;
     font-size: 13px;
 }
-
 
 /* =========================================================
    Hidden
@@ -1769,7 +1535,6 @@ body.mobile-friends-open .chat-main {
 .hidden {
     display: none !important;
 }
-
 
 /* =========================================================
    Scrollbars
@@ -1794,13 +1559,11 @@ body.mobile-friends-open .chat-main {
     border-radius: 10px;
 }
 
-
 /* =========================================================
    Animations
    ========================================================= */
 
 @keyframes fadeIn {
-
     from {
         opacity: 0;
     }
@@ -1810,9 +1573,7 @@ body.mobile-friends-open .chat-main {
     }
 }
 
-
 @keyframes slideIn {
-
     from {
         opacity: 0;
         transform: translateX(-8px);
@@ -1824,9 +1585,7 @@ body.mobile-friends-open .chat-main {
     }
 }
 
-
 @keyframes slideUp {
-
     from {
         opacity: 0;
         transform: translateY(8px);
@@ -1838,9 +1597,7 @@ body.mobile-friends-open .chat-main {
     }
 }
 
-
 @keyframes mobileSheetUp {
-
     from {
         opacity: 0;
         transform: translateY(30px);
@@ -1851,7 +1608,6 @@ body.mobile-friends-open .chat-main {
         transform: translateY(0);
     }
 }
-
 
 /* =========================================================
    Small Phones
@@ -1872,6 +1628,7 @@ body.mobile-friends-open .chat-main {
         width: 46px;
         height: 46px;
         min-width: 46px;
+        min-height: 46px;
     }
 
     .conversation-top-row strong {
@@ -1887,14 +1644,20 @@ body.mobile-friends-open .chat-main {
         padding-right: 13px;
     }
 
-    .main-psspss-messages
-    .psspss-message {
+    .main-psspss-messages .psspss-message {
         max-width: 86%;
         font-size: 13px;
     }
 
-}
+    .main-psspss-header {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
 
+    .main-psspss-user strong {
+        font-size: 14px;
+    }
+}
 
 /* =========================================================
    Tall / Modern Phones
@@ -1903,15 +1666,14 @@ body.mobile-friends-open .chat-main {
 @media (min-height: 750px) {
 
     .mobile-navigation {
-        height: 68px;
+        min-height: 68px;
     }
 
     .user-panel {
-        bottom: 68px;
+        bottom: calc(68px + env(safe-area-inset-bottom));
     }
 
     .conversations-list {
-        padding-bottom: 82px;
+        padding-bottom: 150px;
     }
-
 }
