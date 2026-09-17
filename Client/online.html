@@ -27,32 +27,16 @@
 
     <script>
 
-        function detectDevice() {
+        setTimeout(function () {
 
-            const userAgent = navigator.userAgent.toLowerCase();
+            window.location.href =
+                "site-pc-login.html";
 
-            const isMobile =
-                /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i
-                .test(userAgent);
-
-            if (isMobile) {
-
-                window.location.href = "site-mob-login.html";
-
-            } else {
-
-                window.location.href = "site-pc-login.html";
-
-            }
-        }
-
-        setTimeout(detectDevice, 750);
+        }, 750);
 
     </script>
 
     <script src="js/app.js"></script>
-</body>
-</html>
 
 </body>
 </html>
