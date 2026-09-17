@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
@@ -89,15 +91,73 @@
 
 
         /*
-         * Detect whether the current device
-         * is a phone or tablet.
+         * Detect whether MurMur should use
+         * the mobile or PC interface.
+         *
+         * This checks:
+         *
+         * 1. Phone/tablet user agents
+         * 2. Touch capability
+         * 3. Screen width
+         *
+         * This also works with Firefox Responsive
+         * Design Mode.
          */
 
         function isMobileDevice() {
 
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
-                .test(navigator.userAgent);
+            const userAgent =
+                navigator.userAgent ||
+                navigator.vendor ||
+                window.opera ||
+                "";
 
+            const mobileUserAgent =
+                /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i
+                    .test(userAgent);
+
+
+            const touchDevice =
+                navigator.maxTouchPoints > 0;
+
+
+            const smallScreen =
+                window.matchMedia("(max-width: 768px)").matches;
+
+
+            /*
+             * A real mobile device should always
+             * use the mobile interface.
+             */
+
+            if (mobileUserAgent) {
+                return true;
+            }
+
+
+            /*
+             * Touch + small screen is also treated
+             * as mobile/tablet.
+             */
+
+            if (touchDevice && smallScreen) {
+                return true;
+            }
+
+
+            /*
+             * Small viewport fallback.
+             *
+             * This is particularly useful for
+             * Firefox Responsive Design Mode.
+             */
+
+            if (smallScreen) {
+                return true;
+            }
+
+
+            return false;
         }
 
 
@@ -181,7 +241,7 @@
 
 
                     /*
-                     * Store account information
+                     * Store account information.
                      */
 
                     sessionStorage.setItem(
@@ -197,15 +257,24 @@
 
 
                     /*
-                     * Detect device AFTER login.
+                     * Detect the device AFTER
+                     * successful authentication.
                      */
 
                     const isMobile =
                         isMobileDevice();
 
 
+                    console.log(
+                        "MurMur device:",
+                        isMobile
+                            ? "MOBILE"
+                            : "PC"
+                    );
+
+
                     /*
-                     * First-time password setup
+                     * First-time password setup.
                      */
 
                     if (data.mustChangePassword) {
@@ -227,7 +296,7 @@
 
 
                     /*
-                     * First-time profile setup
+                     * First-time profile setup.
                      */
 
                     if (data.firstStartup) {
@@ -249,7 +318,7 @@
 
 
                     /*
-                     * Normal login
+                     * Normal login.
                      */
 
                     if (isMobile) {
@@ -267,6 +336,12 @@
                 }
 
                 catch (error) {
+
+                    console.error(
+                        "MurMur login error:",
+                        error
+                    );
+
 
                     loginError.textContent =
                         "Unable to connect to the MurMur server.";
