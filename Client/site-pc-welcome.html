@@ -72,23 +72,55 @@
 
     </main>
 
+
     <script>
 
+        /* =========================================================
+           MurMur Server
+           ========================================================= */
+
+        const SERVER_URL =
+            "https://elections-gratis-these-satin.trycloudflare.com";
+
+
+        /* =========================================================
+           Session
+           ========================================================= */
+
         const username =
-            sessionStorage.getItem("murmur_username");
+            sessionStorage.getItem(
+                "murmur_username"
+            );
+
+
+        /* =========================================================
+           Elements
+           ========================================================= */
 
         const welcomeTitle =
-            document.getElementById("welcomeTitle");
+            document.getElementById(
+                "welcomeTitle"
+            );
 
         const passwordForm =
-            document.getElementById("passwordForm");
+            document.getElementById(
+                "passwordForm"
+            );
 
         const passwordError =
-            document.getElementById("passwordError");
+            document.getElementById(
+                "passwordError"
+            );
 
         const submitButton =
-            passwordForm.querySelector("button");
+            passwordForm.querySelector(
+                "button"
+            );
 
+
+        /* =========================================================
+           Check Login
+           ========================================================= */
 
         if (!username) {
 
@@ -104,99 +136,169 @@
         }
 
 
-        passwordForm.addEventListener("submit", async function (event) {
+        /* =========================================================
+           Change Password
+           ========================================================= */
 
-            event.preventDefault();
+        passwordForm.addEventListener(
+            "submit",
+            async function (event) {
 
-            passwordError.textContent = "";
+                event.preventDefault();
 
-            const newPassword =
-                document.getElementById("newPassword").value;
-
-            const confirmPassword =
-                document.getElementById("confirmPassword").value;
-
-
-            if (newPassword !== confirmPassword) {
-
-                passwordError.textContent =
-                    "The passwords do not match.";
-
-                return;
-            }
+                passwordError.textContent = "";
 
 
-            if (newPassword.length < 8) {
+                const newPassword =
+                    document.getElementById(
+                        "newPassword"
+                    ).value;
 
-                passwordError.textContent =
-                    "Password must be at least 8 characters.";
-
-                return;
-            }
-
-
-            submitButton.disabled = true;
-            submitButton.textContent = "Setting password...";
+                const confirmPassword =
+                    document.getElementById(
+                        "confirmPassword"
+                    ).value;
 
 
-            try {
+                /* -------------------------------------------------
+                   Password Match
+                   ------------------------------------------------- */
 
-                const response = await fetch(
-                    `${SERVER_URL}/api/change-password`,,
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-
-                        body: JSON.stringify({
-                            username: username,
-                            newPassword: newPassword
-                        })
-                    }
-                );
-
-
-                const data = await response.json();
-
-
-                if (!response.ok || !data.success) {
+                if (
+                    newPassword !==
+                    confirmPassword
+                ) {
 
                     passwordError.textContent =
-                        data.message ||
-                        "Unable to change your password.";
+                        "The passwords do not match.";
 
                     return;
+
                 }
 
 
-                sessionStorage.removeItem("murmur_username");
+                /* -------------------------------------------------
+                   Password Length
+                   ------------------------------------------------- */
 
-                window.location.href =
-                    "site-pc.html";
+                if (
+                    newPassword.length < 8
+                ) {
+
+                    passwordError.textContent =
+                        "Password must be at least 8 characters.";
+
+                    return;
+
+                }
+
+
+                /* -------------------------------------------------
+                   Disable Button
+                   ------------------------------------------------- */
+
+                submitButton.disabled = true;
+
+                submitButton.textContent =
+                    "Setting password...";
+
+
+                /* -------------------------------------------------
+                   Send Request
+                   ------------------------------------------------- */
+
+                try {
+
+                    const response =
+                        await fetch(
+                            `${SERVER_URL}/api/change-password`,
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body:
+                                    JSON.stringify({
+                                        username:
+                                            username,
+
+                                        newPassword:
+                                            newPassword
+                                    })
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    /* -------------------------------------------------
+                       Server Response
+                       ------------------------------------------------- */
+
+                    if (
+                        !response.ok ||
+                        !data.success
+                    ) {
+
+                        passwordError.textContent =
+                            data.message ||
+                            "Unable to change your password.";
+
+                        return;
+
+                    }
+
+
+                    /* -------------------------------------------------
+                       Password Changed
+                       ------------------------------------------------- */
+
+                    sessionStorage.removeItem(
+                        "murmur_username"
+                    );
+
+
+                    window.location.href =
+                        "site-pc.html";
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Password change failed:",
+                        error
+                    );
+
+                    passwordError.textContent =
+                        "Unable to connect to the MurMur server.";
+
+                }
+
+                finally {
+
+                    submitButton.disabled =
+                        false;
+
+                    submitButton.textContent =
+                        "Set Password";
+
+                }
 
             }
-
-            catch {
-
-                passwordError.textContent =
-                    "Unable to connect to the MurMur server.";
-
-            }
-
-            finally {
-
-                submitButton.disabled = false;
-                submitButton.textContent = "Set Password";
-
-            }
-
-        });
+        );
 
     </script>
 
-     <script src="js/app.js"></script>
+
+    <!-- MurMur global JavaScript -->
+
+    <script src="js/app.js"></script>
 
 </body>
 
