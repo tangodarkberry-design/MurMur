@@ -1,245 +1,60 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-    <title>MurMur</title>
 
-    <!-- MOBILE CSS -->
-    <link rel="stylesheet" href="css/chat-mobile.css">
+<title>MurMur</title>
 
-    <style>
-        /* =========================================================
-           Mobile-only layout helpers
-           ========================================================= */
+<link rel="stylesheet" href="css/chat.css">
+<link rel="stylesheet" href="css/mobile.css">
 
-        .mobile-navigation {
-            display: flex;
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 64px;
-            z-index: 110;
-            align-items: center;
-            justify-content: space-around;
-        }
-
-        .mobile-navigation button {
-            border: none;
-            background: transparent;
-            font: inherit;
-            cursor: pointer;
-            padding: 10px 24px;
-            border-radius: 12px;
-        }
-
-        .mobile-navigation button.active {
-            font-weight: 700;
-        }
-
-        /* Hide bottom UI while actually chatting */
-
-        body.mobile-chat-open .mobile-navigation,
-        body.mobile-chat-open .user-panel {
-            display: none !important;
-        }
-
-        /* Friends full-screen mode */
-
-        body.mobile-friends-open .chat-main {
-            display: block !important;
-        }
-
-        /* Make the mobile chat completely independent */
-
-        body.mobile-chat-open .chat-main {
-            display: block !important;
-        }
-
-        /* Mobile chat */
-
-        .mobile-main-chat {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            background: var(--background, #fff);
-            z-index: 30;
-        }
-
-        .mobile-main-chat-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px;
-            flex-shrink: 0;
-        }
-
-        .mobile-chat-back {
-            width: 40px;
-            height: 40px;
-            border: none;
-            background: transparent;
-            font-size: 26px;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-
-        .mobile-main-chat-user {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            min-width: 0;
-        }
-
-        .mobile-main-chat-avatar {
-            width: 42px;
-            height: 42px;
-            min-width: 42px;
-            border-radius: 50%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .mobile-main-chat-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .mobile-main-chat-info {
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-        }
-
-        .mobile-main-chat-info strong {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .mobile-main-chat-info span {
-            opacity: .65;
-            font-size: 13px;
-        }
-
-        .mobile-main-chat-messages {
-            flex: 1;
-            min-height: 0;
-            overflow-y: auto;
-            padding: 16px;
-        }
-
-        .mobile-main-chat-input {
-            display: flex;
-            gap: 8px;
-            padding: 10px;
-            padding-bottom: calc(10px + env(safe-area-inset-bottom));
-            flex-shrink: 0;
-        }
-
-        .mobile-main-chat-input input {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .mobile-main-chat-input button {
-            flex-shrink: 0;
-        }
-
-        /* Mobile friends */
-
-        .mobile-friends-screen {
-            min-height: 100%;
-            padding: 24px 18px 100px;
-            overflow-y: auto;
-        }
-
-        .mobile-friends-header h1 {
-            margin-bottom: 6px;
-        }
-
-        .mobile-friends-header p {
-            margin-top: 0;
-            opacity: .7;
-        }
-
-        .mobile-friend-search {
-            display: flex;
-            gap: 8px;
-            margin-top: 22px;
-        }
-
-        .mobile-friend-search input {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .mobile-friend-search button {
-            flex-shrink: 0;
-        }
-
-        /* Friends list */
-
-        .mobile-friend-list {
-            margin-top: 24px;
-        }
-
-        /* Make modal sit nicely on phones */
-
-        .new-chat-modal {
-            z-index: 200;
-        }
-
-        .new-chat-box {
-            max-width: calc(100vw - 24px);
-            max-height: 85vh;
-        }
-
-        /* Small phones */
-
-        @media (max-width: 380px) {
-
-            .mobile-main-chat-input button {
-                padding-left: 12px;
-                padding-right: 12px;
-            }
-
-            .mobile-friend-search {
-                flex-direction: column;
-            }
-
-            .mobile-friend-search button {
-                width: 100%;
-            }
-
-        }
-    </style>
 
 </head>
 
-
 <body class="chat-body">
-
 
 <div class="chat-app">
 
-    <!-- =========================================================
-         MOBILE CONVERSATION SCREEN
-         ========================================================= -->
+    <!-- =========================
+         App Sidebar
+         ========================= -->
+
+    <aside class="app-sidebar">
+
+        <div class="app-logo">
+            <img src="assets/MurMurLogo.svg" alt="MurMur">
+        </div>
+
+        <div class="sidebar-divider"></div>
+
+        <button
+            class="sidebar-button active"
+            id="messagesTab"
+            title="Messages"
+        >
+            <img src="assets/ChatsLogo.svg" alt="Messages">
+        </button>
+
+        <button
+            class="sidebar-button"
+            id="friendsTab"
+            title="Friends"
+        >
+            <img src="assets/FriendsLogo.svg" alt="Friends">
+        </button>
+
+    </aside>
+
+
+    <!-- =========================
+         Side Panel
+         ========================= -->
 
     <aside class="conversation-sidebar">
-
-        <!-- Header -->
 
         <div class="conversation-header">
 
@@ -250,8 +65,7 @@
             <button
                 class="new-chat-button"
                 id="newChatButton"
-                title="New PssPss"
-                type="button"
+                title="New conversation"
             >
                 +
             </button>
@@ -259,75 +73,156 @@
         </div>
 
 
-        <!-- =====================================================
-             Messages
-             ===================================================== -->
+    <!-- =========================
+        Messages Panel
+        ========================= -->
 
-        <div id="messagesPanel">
+    <div id="messagesPanel">
 
-            <div id="conversationListView">
+        <!-- =========================
+            Conversation List
+            ========================= -->
 
-                <!-- Search -->
+        <div id="conversationListView">
 
-                <div class="conversation-search">
+            <div class="conversation-search">
 
-                    <input
-                        type="text"
-                        id="conversationSearchInput"
-                        placeholder="Search"
-                        autocomplete="off"
-                    >
-
-                </div>
-
-
-                <!-- Conversations -->
-
-                <div
-                    id="conversationsList"
-                    class="conversations-list"
-                >
-                </div>
-
-
-                <!-- Empty -->
-
-                <div
-                    class="empty-conversations"
-                    id="emptyConversations"
+                <input
+                    type="text"
+                    id="conversationSearchInput"
+                    placeholder="Search"
+                    autocomplete="off"
                 >
 
-                    <div class="empty-icon">
-                        +
-                    </div>
+            </div>
 
-                    <h3>
-                        No conversations
-                    </h3>
 
-                    <p>
-                        Start a conversation with someone
-                        to see them here.
-                    </p>
+            <!-- Conversations -->
 
-                    <button
-                        class="start-chat-button"
-                        id="startChatButton"
-                        type="button"
-                    >
-                        Start a conversation
-                    </button>
+            <div
+                id="conversationsList"
+                class="conversations-list"
+            >
+            </div>
 
+
+            <!-- Empty state -->
+
+            <div
+                class="empty-conversations"
+                id="emptyConversations"
+            >
+
+                <div class="empty-icon">
+                    +
                 </div>
+
+                <h3>
+                    No conversations
+                </h3>
+
+                <p>
+                    Start a conversation with someone
+                    to see them here.
+                </p>
+
+                <button
+                    class="start-chat-button"
+                    id="startChatButton"
+                >
+                    Start a conversation
+                </button>
 
             </div>
 
         </div>
 
 
-        <!-- =====================================================
-             Friends panel
-             ===================================================== -->
+        <!-- =========================
+            PssPss Conversation
+            ========================= -->
+
+        <div
+            id="pssPssView"
+            class="psspss-view hidden"
+        >
+
+            <!-- Header -->
+
+            <div class="psspss-header">
+
+                <button
+                    id="pssPssBackButton"
+                    class="psspss-back-button"
+                    type="button"
+                >
+                    ←
+                </button>
+
+
+                <div
+                    id="pssPssHeaderAvatar"
+                    class="psspss-header-avatar"
+                >
+                    ?
+                </div>
+
+
+                <div class="psspss-header-info">
+
+                    <strong
+                        id="pssPssHeaderName"
+                    >
+                        PssPss
+                    </strong>
+
+                    <span
+                        id="pssPssHeaderUsername"
+                    >
+                        @username
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Messages -->
+
+            <div
+                id="pssPssMessages"
+                class="psspss-messages"
+            >
+            </div>
+
+
+            <!-- Message Input -->
+
+            <div class="psspss-input-area">
+
+                <input
+                    type="text"
+                    id="pssPssInput"
+                    placeholder="Message..."
+                    autocomplete="off"
+                >
+
+                <button
+                    id="pssPssSendButton"
+                    class="psspss-send-button"
+                    type="button"
+                >
+                    Send
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+        <!-- =========================
+             Friends Panel
+             ========================= -->
 
         <div
             id="friendsPanel"
@@ -349,7 +244,6 @@
             <button
                 class="add-friend-link"
                 id="addFriendButton"
-                type="button"
             >
                 Click here to add someone by username
             </button>
@@ -357,16 +251,13 @@
         </div>
 
 
-        <!-- =====================================================
-             User
-             ===================================================== -->
+        <!-- =========================
+             User Panel
+             ========================= -->
 
         <div class="user-panel">
 
-            <div
-                class="user-avatar"
-                id="userAvatar"
-            >
+            <div class="user-avatar" id="userAvatar">
                 ?
             </div>
 
@@ -386,15 +277,12 @@
                 class="settings-button"
                 id="settingsButton"
                 title="Settings"
-                type="button"
                 onclick="window.location.href='settings.html'"
             >
-
                 <img
                     src="assets/SettingsLogo.svg"
                     alt="Settings"
                 >
-
             </button>
 
         </div>
@@ -402,25 +290,133 @@
     </aside>
 
 
-    <!-- =========================================================
-         MAIN MOBILE AREA
-         ========================================================= -->
+    <!-- =========================
+         Main Area
+         ========================= -->
 
     <main class="chat-main">
 
+            <!-- =========================
+                Messages View
+                ========================= -->
 
-        <!-- =====================================================
-             FRIENDS SCREEN
-             ===================================================== -->
+            <div
+                id="messagesView"
+                class="main-view"
+            >
+
+                <!-- Empty state -->
+
+                <div
+                    class="empty-chat"
+                    id="emptyChatState"
+                >
+
+                    <div class="empty-chat-icon">
+                        M
+                    </div>
+
+                    <h1>
+                        Welcome to MurMur
+                    </h1>
+
+                    <p>
+                        Select a PssPss from the list to start chatting.
+                    </p>
+
+                </div>
+
+
+                <!-- PssPss Chat -->
+
+                <div
+                    id="mainPssPss"
+                    class="main-psspss hidden"
+                >
+
+                    <!-- Header -->
+
+                    <div class="main-psspss-header">
+
+                        <button
+                            id="mainPssPssBackButton"
+                            class="main-psspss-back"
+                            type="button"
+                        >
+                            ←
+                        </button>
+
+                        <div
+                            id="mainPssPssAvatar"
+                            class="main-psspss-avatar"
+                        >
+                            ?
+                        </div>
+
+                        <div class="main-psspss-user">
+
+                            <strong
+                                id="mainPssPssName"
+                            >
+                                PssPss
+                            </strong>
+
+                            <span
+                                id="mainPssPssUsername"
+                            >
+                                @username
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Messages -->
+
+                    <div
+                        id="mainPssPssMessages"
+                        class="main-psspss-messages"
+                    ></div>
+
+
+                    <!-- Input -->
+
+                    <div class="main-psspss-input">
+
+                        <input
+                            type="text"
+                            id="mainPssPssInput"
+                            placeholder="Message..."
+                            autocomplete="off"
+                        >
+
+                        <button
+                            id="mainPssPssSendButton"
+                            type="button"
+                        >
+                            Send
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        <!-- =========================
+             Friends Search View
+             ========================= -->
 
         <div
             id="friendsView"
             class="main-view hidden"
         >
 
-            <div class="mobile-friends-screen">
+            <div class="friends-view">
 
-                <div class="mobile-friends-header">
+                <div class="friends-view-header">
 
                     <h1>
                         Add a friend
@@ -432,8 +428,7 @@
 
                 </div>
 
-
-                <div class="mobile-friend-search">
+                <div class="friend-search">
 
                     <input
                         type="text"
@@ -442,144 +437,16 @@
                         autocomplete="off"
                     >
 
-                    <button
-                        id="friendSearchButton"
-                        type="button"
-                    >
+                    <button id="friendSearchButton">
                         Search
                     </button>
 
                 </div>
 
-
                 <div
                     id="friendSearchResult"
                     class="friend-search-result"
                 ></div>
-
-
-                <!-- Existing friends -->
-
-                <div class="mobile-friend-list">
-
-                    <div
-                        id="mobileFriendsList"
-                    ></div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- =====================================================
-             WELCOME SCREEN
-             ===================================================== -->
-
-        <div
-            id="messagesView"
-            class="main-view"
-        >
-
-            <div
-                class="empty-chat"
-                id="emptyChatState"
-            >
-
-                <div class="empty-chat-icon">
-                    M
-                </div>
-
-                <h1>
-                    Welcome to MurMur
-                </h1>
-
-                <p>
-                    Select a PssPss from the list to start chatting.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- =====================================================
-             MOBILE PssPss
-             ===================================================== -->
-
-        <div
-            id="mainPssPss"
-            class="mobile-main-chat hidden"
-        >
-
-            <!-- Header -->
-
-            <div class="mobile-main-chat-header">
-
-                <button
-                    id="mainPssPssBackButton"
-                    class="mobile-chat-back"
-                    type="button"
-                    aria-label="Back"
-                >
-                    ←
-                </button>
-
-
-                <div
-                    id="mainPssPssAvatar"
-                    class="mobile-main-chat-avatar"
-                >
-                    ?
-                </div>
-
-
-                <div class="mobile-main-chat-info">
-
-                    <strong
-                        id="mainPssPssName"
-                    >
-                        PssPss
-                    </strong>
-
-                    <span
-                        id="mainPssPssUsername"
-                    >
-                        @username
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- Messages -->
-
-            <div
-                id="mainPssPssMessages"
-                class="mobile-main-chat-messages"
-            >
-            </div>
-
-
-            <!-- Input -->
-
-            <div class="mobile-main-chat-input">
-
-                <input
-                    type="text"
-                    id="mainPssPssInput"
-                    placeholder="Message..."
-                    autocomplete="off"
-                >
-
-                <button
-                    id="mainPssPssSendButton"
-                    type="button"
-                >
-                    Send
-                </button>
 
             </div>
 
@@ -589,34 +456,9 @@
 
 </div>
 
-
-<!-- =============================================================
-     MOBILE NAVIGATION
-     ============================================================= -->
-
-<nav class="mobile-navigation">
-
-    <button
-        id="mobileMessagesTab"
-        class="active"
-        type="button"
-    >
-        Messages
-    </button>
-
-    <button
-        id="mobileFriendsTab"
-        type="button"
-    >
-        Friends
-    </button>
-
-</nav>
-
-
-<!-- =============================================================
-     NEW PssPss MODAL
-     ============================================================= -->
+<!-- =========================
+     New PssPss Modal
+     ========================= -->
 
 <div
     id="newChatModal"
@@ -651,11 +493,9 @@
             id="newChatFriendsList"
             class="new-chat-friends-list"
         >
-
             <div class="new-chat-loading">
                 Loading friends...
             </div>
-
         </div>
 
 
@@ -677,252 +517,37 @@
 </div>
 
 
-<!-- =============================================================
-     SIGNALR
-     ============================================================= -->
+<!-- =========================
+     JavaScript
+     ========================= -->
+
 
 <script src="https://cdn.jsdelivr.net/npm/@microsoft/signalr@8.0.7/dist/browser/signalr.min.js"></script>
 
-
 <script>
 
-    /* =========================================================
-       SERVER
-       ========================================================= */
-
-    const SERVER_URL =
-        "https://elections-gratis-these-satin.trycloudflare.com";
-
-
-    /* =========================================================
-       CURRENT USER
-       ========================================================= */
-
-    const username =
-        sessionStorage.getItem("murmur_username");
-
-
-    const usernameElement =
-        document.getElementById("currentUsername");
-
-
-    if (username && usernameElement) {
-
-        usernameElement.textContent =
-            username;
-
-    }
-
-
-    /* =========================================================
-       MOBILE NAVIGATION
-       ========================================================= */
-
-    const mobileMessagesTab =
-        document.getElementById(
-            "mobileMessagesTab"
-        );
-
-    const mobileFriendsTab =
-        document.getElementById(
-            "mobileFriendsTab"
-        );
-
-
-    function setMobileMessagesActive() {
-
-        mobileMessagesTab.classList.add(
-            "active"
-        );
-
-        mobileFriendsTab.classList.remove(
-            "active"
-        );
-
-    }
-
-
-    function setMobileFriendsActive() {
-
-        mobileFriendsTab.classList.add(
-            "active"
-        );
-
-        mobileMessagesTab.classList.remove(
-            "active"
-        );
-
-    }
-
-
-    /* =========================================================
-       PANELS
-       ========================================================= */
-
-    const messagesPanel =
-        document.getElementById(
-            "messagesPanel"
-        );
-
-    const friendsPanel =
-        document.getElementById(
-            "friendsPanel"
-        );
-
-    const messagesView =
-        document.getElementById(
-            "messagesView"
-        );
-
-    const friendsView =
-        document.getElementById(
-            "friendsView"
-        );
-
-    const sidePanelTitle =
-        document.getElementById(
-            "sidePanelTitle"
-        );
-
-
-    function showMessages() {
-
-        document.body.classList.remove(
-            "mobile-chat-open"
-        );
-
-        document.body.classList.remove(
-            "mobile-friends-open"
-        );
-
-
-        setMobileMessagesActive();
-
-
-        messagesPanel.classList.remove(
-            "hidden"
-        );
-
-        friendsPanel.classList.add(
-            "hidden"
-        );
-
-
-        messagesView.classList.remove(
-            "hidden"
-        );
-
-        friendsView.classList.add(
-            "hidden"
-        );
-
-
-        sidePanelTitle.textContent =
-            "Messages";
-
-
-        const mainPssPss =
-            document.getElementById(
-                "mainPssPss"
-            );
-
-        if (mainPssPss) {
-
-            mainPssPss.classList.add(
-                "hidden"
-            );
-
-        }
-
-
-        const emptyChatState =
-            document.getElementById(
-                "emptyChatState"
-            );
-
-        if (emptyChatState) {
-
-            emptyChatState.classList.remove(
-                "hidden"
-            );
-
-        }
-
-
-        currentPssPssUser = null;
-
-
-        loadConversations();
-
-    }
-
-
-    function showFriends() {
-
-        document.body.classList.remove(
-            "mobile-chat-open"
-        );
-
-        document.body.classList.add(
-            "mobile-friends-open"
-        );
-
-
-        setMobileFriendsActive();
-
-
-        messagesPanel.classList.add(
-            "hidden"
-        );
-
-        friendsPanel.classList.remove(
-            "hidden"
-        );
-
-
-        messagesView.classList.add(
-            "hidden"
-        );
-
-        friendsView.classList.remove(
-            "hidden"
-        );
-
-
-        sidePanelTitle.textContent =
-            "Friends";
-
-
-        loadFriends();
-        loadFriendRequests();
-
-    }
-
-
-    mobileMessagesTab.addEventListener(
-        "click",
-        showMessages
-    );
-
-
-    mobileFriendsTab.addEventListener(
-        "click",
-        showFriends
-    );
-
-
-    /* =========================================================
-       SIGNALR
-       ========================================================= */
-
-    const pssPssConnection =
-        new signalR.HubConnectionBuilder()
-            .withUrl(
-                `${SERVER_URL}/psspssHub`
-            )
-            .withAutomaticReconnect()
-            .build();
-
+    /* =========================
+       Server
+       ========================= */
+
+
+    const SERVER_URL = "https://elections-gratis-these-satin.trycloudflare.com";
+
+        /* =========================
+        PssPss SignalR
+        ========================= */
+
+        const pssPssConnection =
+            new signalR.HubConnectionBuilder()
+                .withUrl(
+                    `${SERVER_URL}/psspssHub`
+                )
+                .withAutomaticReconnect()
+                .build();
+
+    /* =========================
+    Receive PssPss Message
+    ========================= */
 
     pssPssConnection.on(
         "ReceivePssPssMessage",
@@ -933,15 +558,12 @@
                 message
             );
 
-
             if (!currentPssPssUser) {
 
                 await loadConversations();
 
                 return;
-
             }
-
 
             const sender =
                 message.senderUsername.toLowerCase();
@@ -955,7 +577,6 @@
             const other =
                 currentPssPssUser.toLowerCase();
 
-
             const isOurConversation =
                 (
                     sender === me &&
@@ -967,97 +588,211 @@
                     receiver === me
                 );
 
-
             if (isOurConversation) {
 
+                // Add the message to the open chat.
                 addPssPssMessageBubble(
                     message
                 );
 
-
+                // We're currently viewing this chat,
+                // so the message should immediately be read.
                 await markPssPssAsRead(
                     currentPssPssUser
                 );
 
             } else {
 
+                // Message belongs to another chat.
+                // Refresh the list so its unread badge appears.
                 await loadConversations();
+
+            }
+        }
+    );
+
+        /* =========================
+        Start SignalR
+        ========================= */
+
+        async function startPssPssConnection() {
+
+            try {
+
+                await pssPssConnection.start();
+
+                console.log(
+                    "PssPss SignalR connected."
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "PssPss SignalR connection failed:",
+                    error
+                );
+
+                /*
+                * Try again after a short delay.
+                */
+
+                setTimeout(
+                    startPssPssConnection,
+                    5000
+                );
 
             }
 
         }
-    );
 
 
-    async function startPssPssConnection() {
-
-        try {
-
-            await pssPssConnection.start();
-
-            console.log(
-                "PssPss SignalR connected."
-            );
-
-        } catch (error) {
-
-            console.error(
-                "PssPss SignalR connection failed:",
-                error
-            );
+        startPssPssConnection();
 
 
-            setTimeout(
-                startPssPssConnection,
-                5000
-            );
+    /* =========================
+       Current User
+       ========================= */
 
-        }
+    const username =
+        sessionStorage.getItem("murmur_username");
 
+    const usernameElement =
+        document.getElementById("currentUsername");
+
+    if (username) {
+        usernameElement.textContent = username;
     }
 
 
-    startPssPssConnection();
+    /* =========================
+       Mobile view state
+       ========================= */
+
+    /*
+     * On phone-width screens, mobile.css hides the conversation
+     * list and shows the open chat full-screen (and vice versa)
+     * based on this one class. On desktop widths this class has
+     * no visual effect at all.
+     */
+
+    const chatApp =
+        document.querySelector(".chat-app");
+
+    function openMobileChatView() {
+
+        if (chatApp) {
+            chatApp.classList.add("mobile-chat-open");
+        }
+    }
+
+    function closeMobileChatView() {
+
+        if (chatApp) {
+            chatApp.classList.remove("mobile-chat-open");
+        }
+    }
 
 
-    /* =========================================================
-       FRIEND SEARCH
-       ========================================================= */
+    /* =========================
+       Tabs
+       ========================= */
+
+    const messagesTab =
+        document.getElementById("messagesTab");
+
+    const friendsTab =
+        document.getElementById("friendsTab");
+
+    const messagesPanel =
+        document.getElementById("messagesPanel");
+
+    const friendsPanel =
+        document.getElementById("friendsPanel");
+
+    const messagesView =
+        document.getElementById("messagesView");
+
+    const friendsView =
+        document.getElementById("friendsView");
+
+    const sidePanelTitle =
+        document.getElementById("sidePanelTitle");
+
+
+    function showMessages() {
+
+        messagesTab.classList.add("active");
+        friendsTab.classList.remove("active");
+
+        messagesPanel.classList.remove("hidden");
+        friendsPanel.classList.add("hidden");
+
+        messagesView.classList.remove("hidden");
+        friendsView.classList.add("hidden");
+
+        sidePanelTitle.textContent = "Messages";
+
+        loadConversations();
+    }
+
+
+    function showFriends() {
+
+        friendsTab.classList.add("active");
+        messagesTab.classList.remove("active");
+
+        friendsPanel.classList.remove("hidden");
+        messagesPanel.classList.add("hidden");
+
+        friendsView.classList.remove("hidden");
+        messagesView.classList.add("hidden");
+
+        sidePanelTitle.textContent = "Friends";
+
+        /* Never leave the phone stuck on a full-screen chat
+           while the Friends tab is meant to be showing. */
+        closeMobileChatView();
+
+        loadFriends();
+        loadFriendRequests();
+    }
+
+
+    messagesTab.addEventListener(
+        "click",
+        showMessages
+    );
+
+    friendsTab.addEventListener(
+        "click",
+        showFriends
+    );
+
+
+    /* =========================
+       Friend Search
+       ========================= */
 
     const addFriendButton =
-        document.getElementById(
-            "addFriendButton"
-        );
+        document.getElementById("addFriendButton");
 
     const friendSearchInput =
-        document.getElementById(
-            "friendSearchInput"
-        );
+        document.getElementById("friendSearchInput");
 
     const friendSearchButton =
-        document.getElementById(
-            "friendSearchButton"
-        );
+        document.getElementById("friendSearchButton");
 
     const friendSearchResult =
-        document.getElementById(
-            "friendSearchResult"
-        );
+        document.getElementById("friendSearchResult");
 
 
     function openFriendSearch() {
 
         showFriends();
 
-
-        setTimeout(
-            () => {
-
-                friendSearchInput.focus();
-
-            },
-            150
-        );
+        setTimeout(() => {
+            friendSearchInput.focus();
+        }, 150);
 
     }
 
@@ -1079,25 +814,22 @@
         function (event) {
 
             if (event.key === "Enter") {
-
                 searchForFriend();
-
             }
 
         }
     );
 
 
-    /* =========================================================
-       LOAD FRIENDS
-       ========================================================= */
+    /* =========================
+       Load Friends
+       ========================= */
 
     async function loadFriends() {
 
         if (!username) {
             return;
         }
-
 
         try {
 
@@ -1106,100 +838,84 @@
                     `${SERVER_URL}/api/friends?username=${encodeURIComponent(username)}`
                 );
 
-
             if (!response.ok) {
                 return;
             }
 
-
             const data =
                 await response.json();
-
 
             if (!data.success) {
                 return;
             }
 
-
             const friendCount =
-                document.getElementById(
-                    "friendCount"
-                );
-
+                document.getElementById("friendCount");
 
             const friendsList =
-                document.getElementById(
-                    "friendsList"
-                );
-
+                document.getElementById("friendsList");
 
             friendCount.textContent =
                 data.friends.length;
 
-
             friendsList.innerHTML = "";
 
 
-            data.friends.forEach(
-                friend => {
+            data.friends.forEach(friend => {
 
-                    const friendElement =
-                        document.createElement(
-                            "div"
-                        );
+                const friendElement =
+                    document.createElement("div");
 
-
-                    friendElement.className =
-                        "friend-list-item";
+                friendElement.className =
+                    "friend-list-item";
 
 
-                    const profilePicture =
-                        friend.profilePicture
-                            ? `
-                                <img
-                                    src="${SERVER_URL}${friend.profilePicture}"
-                                    alt="Profile picture"
-                                    class="friend-avatar-image"
-                                >
-                            `
-                            : `
-                                <span>?</span>
-                            `;
+                const profilePicture =
+                    friend.profilePicture
+                        ? `
+                            <img
+                                src="${SERVER_URL}${friend.profilePicture}"
+                                alt="Profile picture"
+                                class="friend-avatar-image"
+                            >
+                        `
+                        : `
+                            <span>?</span>
+                        `;
 
 
-                    friendElement.innerHTML = `
+                friendElement.innerHTML = `
 
-                        <div class="search-result-icon friend-avatar">
+                    <div class="search-result-icon friend-avatar">
 
-                            ${profilePicture}
+                        ${profilePicture}
 
-                        </div>
+                    </div>
 
-                        <div class="friend-list-info">
+                    <div class="friend-list-info">
 
-                            <strong>
-                                ${escapeHtml(
-                                    friend.username
-                                )}
-                            </strong>
+                        <strong>
+                            ${escapeHtml(
+                                friend.username
+                            )}
+                        </strong>
 
-                            <span>
-                                ${escapeHtml(
-                                    friend.displayName || ""
-                                )}
-                            </span>
+                        <span>
+                            ${escapeHtml(
+                                friend.displayName || ""
+                            )}
+                        </span>
 
-                        </div>
+                    </div>
 
-                    `;
+                `;
 
 
-                    friendsList.appendChild(
-                        friendElement
-                    );
+                friendsList.appendChild(
+                    friendElement
+                );
 
-                }
-            );
+            });
 
 
         } catch (error) {
@@ -1213,11 +929,6 @@
 
     }
 
-
-    /* =========================================================
-       LOAD FRIENDS FOR NEW PssPss
-       ========================================================= */
-
     async function loadFriendsForNewChat() {
 
         const friendsList =
@@ -1225,11 +936,9 @@
                 "newChatFriendsList"
             );
 
-
         if (!friendsList) {
             return;
         }
-
 
         friendsList.innerHTML = `
             <div class="new-chat-loading">
@@ -1244,7 +953,6 @@
                 await fetch(
                     `${SERVER_URL}/api/friends?username=${encodeURIComponent(username)}`
                 );
-
 
             if (!response.ok) {
 
@@ -1283,110 +991,108 @@
                 `;
 
                 return;
-
             }
 
 
-            data.friends.forEach(
-                friend => {
+            data.friends.forEach(friend => {
 
-                    const friendElement =
-                        document.createElement(
-                            "div"
-                        );
+                const friendElement =
+                    document.createElement("div");
 
-
-                    friendElement.className =
-                        "new-chat-friend";
+                friendElement.className =
+                    "new-chat-friend";
 
 
-                    friendElement.dataset.username =
-                        friend.username;
+                friendElement.dataset.username =
+                    friend.username;
 
 
-                    const profilePicture =
-                        friend.profilePicture
-                            ? `
-                                <img
-                                    src="${SERVER_URL}${friend.profilePicture}"
-                                    alt="Profile picture"
-                                >
-                            `
-                            : `
-                                <span>?</span>
-                            `;
+                const profilePicture =
+                    friend.profilePicture
+                        ? `
+                            <img
+                                src="${SERVER_URL}${friend.profilePicture}"
+                                alt="Profile picture"
+                            >
+                        `
+                        : `
+                            <span>?</span>
+                        `;
 
 
-                    friendElement.innerHTML = `
+                friendElement.innerHTML = `
 
-                        <div class="new-chat-friend-avatar">
+                    <div class="new-chat-friend-avatar">
 
-                            ${profilePicture}
+                        ${profilePicture}
 
-                        </div>
-
-
-                        <div class="new-chat-friend-info">
-
-                            <span class="new-chat-friend-name">
-                                ${escapeHtml(
-                                    friend.displayName ||
-                                    friend.username
-                                )}
-                            </span>
-
-                            <span class="new-chat-friend-username">
-                                @${escapeHtml(
-                                    friend.username
-                                )}
-                            </span>
-
-                        </div>
-
-                    `;
+                    </div>
 
 
-                    friendElement.addEventListener(
-                        "click",
-                        () => {
+                    <div class="new-chat-friend-info">
 
-                            document
-                                .querySelectorAll(
-                                    ".new-chat-friend.selected"
-                                )
-                                .forEach(
-                                    element => {
+                        <span class="new-chat-friend-name">
+                            ${escapeHtml(
+                                friend.displayName ||
+                                friend.username
+                            )}
+                        </span>
 
-                                        element.classList.remove(
-                                            "selected"
-                                        );
+                        <span class="new-chat-friend-username">
+                            @${escapeHtml(
+                                friend.username
+                            )}
+                        </span>
 
-                                    }
-                                );
+                    </div>
+
+                `;
 
 
-                            friendElement.classList.add(
-                                "selected"
+                friendElement.addEventListener(
+                    "click",
+                    () => {
+
+                        /* Remove previous selection */
+
+                        document
+                            .querySelectorAll(
+                                ".new-chat-friend.selected"
+                            )
+                            .forEach(
+                                element => {
+                                    element.classList.remove(
+                                        "selected"
+                                    );
+                                }
                             );
 
 
-                            selectedNewChatFriend =
-                                friend.username;
+                        /* Select this friend */
+
+                        friendElement.classList.add(
+                            "selected"
+                        );
 
 
-                            startNewChatButton.disabled =
-                                false;
-
-                        }
-                    );
+                        selectedNewChatFriend =
+                            friend.username;
 
 
-                    friendsList.appendChild(
-                        friendElement
-                    );
+                        /* Enable Start Chat */
 
-                }
-            );
+                        startNewChatButton.disabled =
+                            false;
+
+                    }
+                );
+
+
+                friendsList.appendChild(
+                    friendElement
+                );
+
+            });
 
 
         } catch (error) {
@@ -1396,7 +1102,6 @@
                 error
             );
 
-
             friendsList.innerHTML = `
                 <div class="new-chat-error">
                     Could not load your friends.
@@ -1404,114 +1109,72 @@
             `;
 
         }
-
     }
 
-
-    /* =========================================================
-       CONVERSATIONS
-       ========================================================= */
-
     async function loadConversations() {
-
         if (!username) {
             return;
         }
 
-
         const conversationsList =
-            document.getElementById(
-                "conversationsList"
-            );
-
+            document.getElementById("conversationsList");
 
         const emptyConversations =
-            document.getElementById(
-                "emptyConversations"
-            );
+            document.getElementById("emptyConversations");
 
-
-        if (
-            !conversationsList ||
-            !emptyConversations
-        ) {
+        if (!conversationsList || !emptyConversations) {
             return;
         }
 
-
         try {
-
             const response =
                 await fetch(
                     `${SERVER_URL}/api/messages/conversations?username=${encodeURIComponent(username)}`
                 );
 
-
             if (!response.ok) {
-
                 throw new Error(
                     `HTTP ${response.status}`
                 );
-
             }
-
 
             const data =
                 await response.json();
 
-
             if (!data.success) {
-
                 throw new Error(
                     data.message ||
                     "Could not load conversations."
                 );
-
             }
-
 
             conversationsList.innerHTML = "";
 
-
+            // No conversations
             if (
                 !data.conversations ||
                 data.conversations.length === 0
             ) {
-
-                conversationsList.style.display =
-                    "none";
-
-                emptyConversations.style.display =
-                    "flex";
-
+                conversationsList.style.display = "none";
+                emptyConversations.style.display = "flex";
                 return;
-
             }
 
-
-            conversationsList.style.display =
-                "block";
-
-            emptyConversations.style.display =
-                "none";
-
+            // Conversations exist
+            conversationsList.style.display = "block";
+            emptyConversations.style.display = "none";
 
             data.conversations.forEach(
                 conversation => {
 
                     const conversationElement =
-                        document.createElement(
-                            "div"
-                        );
-
+                        document.createElement("div");
 
                     conversationElement.className =
                         "conversation-item";
 
-
                     conversationElement.dataset.username =
                         conversation.username;
-
 
                     const profilePicture =
                         conversation.profilePicture
@@ -1528,7 +1191,6 @@
                                 </span>
                             `;
 
-
                     conversationElement.innerHTML = `
 
                         <div class="conversation-avatar">
@@ -1536,7 +1198,6 @@
                             ${profilePicture}
 
                         </div>
-
 
                         <div class="conversation-info">
 
@@ -1557,7 +1218,6 @@
 
                             </div>
 
-
                             <div class="conversation-bottom-row">
 
                                 <span class="conversation-last-message">
@@ -1569,7 +1229,9 @@
                                 ${
                                     conversation.unreadCount > 0
                                         ? `
-                                            <span class="conversation-unread">
+                                            <span
+                                                class="conversation-unread"
+                                            >
                                                 ${conversation.unreadCount}
                                             </span>
                                         `
@@ -1582,7 +1244,6 @@
 
                     `;
 
-
                     conversationElement.addEventListener(
                         "click",
                         () => {
@@ -1594,14 +1255,11 @@
                         }
                     );
 
-
                     conversationsList.appendChild(
                         conversationElement
                     );
-
                 }
             );
-
 
         } catch (error) {
 
@@ -1611,35 +1269,23 @@
             );
 
         }
-
     }
 
-
-    function formatConversationTime(
-        dateString
-    ) {
+    function formatConversationTime(dateString) {
 
         const date =
             new Date(dateString);
 
-
-        if (
-            Number.isNaN(
-                date.getTime()
-            )
-        ) {
+        if (Number.isNaN(date.getTime())) {
             return "";
         }
-
 
         const now =
             new Date();
 
-
         const sameDay =
             date.toDateString() ===
             now.toDateString();
-
 
         if (sameDay) {
 
@@ -1653,7 +1299,6 @@
 
         }
 
-
         return date.toLocaleDateString(
             [],
             {
@@ -1661,667 +1306,633 @@
                 month: "short"
             }
         );
+    }
+
+function addPssPssMessageBubble(message) {
+    const container =
+        document.getElementById(
+            "mainPssPssMessages"
+        );
+
+    if (!container) {
+        return;
+    }
+
+    // Prevent duplicate messages
+    if (message.id != null) {
+        const existing =
+            container.querySelector(
+                `[data-message-id="${message.id}"]`
+            );
+
+        if (existing) {
+            return;
+        }
+    }
+
+    const emptyMessage =
+        container.querySelector(
+            ".psspss-no-messages"
+        );
+
+    if (emptyMessage) {
+        emptyMessage.remove();
+    }
+
+    const bubble =
+        document.createElement("div");
+
+    const isSent =
+        message.senderUsername.toLowerCase() ===
+        username.toLowerCase();
+
+    bubble.className =
+        "psspss-message " +
+        (
+            isSent
+                ? "sent"
+                : "received"
+        );
+
+    if (message.id != null) {
+        bubble.dataset.messageId =
+            message.id;
+    }
+
+    bubble.textContent =
+        message.content;
+
+    container.appendChild(bubble);
+
+    container.scrollTop =
+        container.scrollHeight;
+}
+
+/* =========================
+   PssPss
+   ========================= */
+
+let currentPssPssUser = null;
+
+async function markPssPssAsRead(friendUsername) {
+
+    if (!username || !friendUsername) {
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                `${SERVER_URL}/api/messages/read` +
+                `?username=${encodeURIComponent(username)}` +
+                `&with=${encodeURIComponent(friendUsername)}`,
+                {
+                    method: "POST"
+                }
+            );
+
+        if (!response.ok) {
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+        }
+
+        const data =
+            await response.json();
+
+        if (!data.success) {
+            throw new Error(
+                data.message ||
+                "Could not mark messages as read."
+            );
+        }
+
+        // Refresh the conversation list so
+        // the unread badge disappears.
+        await loadConversations();
+
+    } catch (error) {
+
+        console.error(
+            "Could not mark PssPss as read:",
+            error
+        );
+
+    }
+}
+
+
+async function openPssPss(friendUsername) {
+
+    console.log(
+        "Opening PssPss with:",
+        friendUsername
+    );
+
+    currentPssPssUser =
+        friendUsername;
+
+
+    const emptyChatState =
+        document.getElementById(
+            "emptyChatState"
+        );
+
+    const mainPssPss =
+        document.getElementById(
+            "mainPssPss"
+        );
+
+
+    if (!mainPssPss) {
+
+        console.error(
+            "mainPssPss not found!"
+        );
+
+        return;
+    }
+
+
+    /* Hide welcome screen */
+
+    if (emptyChatState) {
+
+        emptyChatState.classList.add(
+            "hidden"
+        );
 
     }
 
 
-    /* =========================================================
-       MESSAGE BUBBLE
-       ========================================================= */
+    /* Show chat */
 
-    function addPssPssMessageBubble(
-        message
-    ) {
+    mainPssPss.classList.remove(
+        "hidden"
+    );
 
-        const container =
-            document.getElementById(
-                "mainPssPssMessages"
+
+    /* On phone widths, swap the list view for the
+       full-screen chat view. No effect on desktop. */
+
+    openMobileChatView();
+
+
+    /* Header */
+
+    const name =
+        document.getElementById(
+            "mainPssPssName"
+        );
+
+    const user =
+        document.getElementById(
+            "mainPssPssUsername"
+        );
+
+    const avatar =
+        document.getElementById(
+            "mainPssPssAvatar"
+        );
+
+
+    if (name) {
+
+        name.textContent =
+            friendUsername;
+
+    }
+
+
+    if (user) {
+
+        user.textContent =
+            `@${friendUsername}`;
+
+    }
+
+
+    /* Load user's existing profile picture */
+
+    if (avatar) {
+
+        avatar.innerHTML = "?";
+
+        try {
+
+            const response =
+                await fetch(
+                    `${SERVER_URL}/api/users/profile?username=${encodeURIComponent(friendUsername)}`
+                );
+
+            if (response.ok) {
+
+                const data =
+                    await response.json();
+
+                if (
+                    data.success &&
+                    data.profilePicture
+                ) {
+
+                    avatar.innerHTML = "";
+
+                    const image =
+                        document.createElement(
+                            "img"
+                        );
+
+                    image.src =
+                        `${SERVER_URL}${data.profilePicture}`;
+
+                    image.alt =
+                        `${friendUsername}'s profile picture`;
+
+                    image.className =
+                        "main-psspss-avatar-image";
+
+                    avatar.appendChild(
+                        image
+                    );
+                }
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Could not load PssPss profile picture:",
+                error
+            );
+        }
+    }
+
+
+    /* Load conversation */
+
+    await loadPssPssMessages(
+        friendUsername
+    );
+
+
+    /* Mark Chat As Read */
+
+    await markPssPssAsRead(
+        friendUsername
+    );
+}
+
+
+/* =========================
+   Load PssPss Messages
+   ========================= */
+
+async function loadPssPssMessages(
+    friendUsername
+) {
+
+    console.log(
+        "Loading PssPss messages with:",
+        friendUsername
+    );
+
+
+    const container =
+        document.getElementById(
+            "mainPssPssMessages"
+        );
+
+
+    if (!container) {
+
+        console.error(
+            "mainPssPssMessages not found!"
+        );
+
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${SERVER_URL}/api/messages/conversation` +
+                `?username=${encodeURIComponent(username)}` +
+                `&with=${encodeURIComponent(friendUsername)}`
             );
 
 
-        if (!container) {
+        console.log(
+            "Conversation API status:",
+            response.status
+        );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            throw new Error(
+                data.message ||
+                "Could not load PssPss."
+            );
+
+        }
+
+
+        if (
+            !data.messages ||
+            data.messages.length === 0
+        ) {
+
+            container.innerHTML = `
+                <div class="psspss-no-messages">
+                    No messages yet.
+                </div>
+            `;
+
             return;
         }
 
 
-        if (message.id != null) {
-
-            const existing =
-                container.querySelector(
-                    `[data-message-id="${message.id}"]`
-                );
-
-
-            if (existing) {
-                return;
-            }
-
-        }
-
-
-        const emptyMessage =
-            container.querySelector(
-                ".psspss-no-messages"
-            );
-
-
-        if (emptyMessage) {
-            emptyMessage.remove();
-        }
-
-
-        const bubble =
-            document.createElement(
-                "div"
-            );
-
-
-        const isSent =
-            message.senderUsername.toLowerCase() ===
-            username.toLowerCase();
-
-
-        bubble.className =
-            "psspss-message " +
-            (
-                isSent
-                    ? "sent"
-                    : "received"
-            );
-
-
-        if (message.id != null) {
-
-            bubble.dataset.messageId =
-                message.id;
-
-        }
-
-
-        bubble.textContent =
-            message.content;
-
-
-        container.appendChild(
-            bubble
-        );
+data.messages.forEach(
+    addPssPssMessageBubble
+);
 
 
         container.scrollTop =
             container.scrollHeight;
 
+
+    } catch (error) {
+
+        console.error(
+            "Could not load PssPss messages:",
+            error
+        );
+
+
+        container.innerHTML = `
+            <div class="psspss-load-error">
+                Could not load this PssPss.
+            </div>
+        `;
+
+    }
+}
+/* =========================
+   Send PssPss Message
+   ========================= */
+
+async function sendPssPssMessage() {
+
+    const input =
+        document.getElementById(
+            "mainPssPssInput"
+        );
+
+    const sendButton =
+        document.getElementById(
+            "mainPssPssSendButton"
+        );
+
+    if (!input || !currentPssPssUser) {
+        return;
+    }
+
+    const content =
+        input.value.trim();
+
+    if (!content) {
+        return;
     }
 
 
-    /* =========================================================
-       PssPss STATE
-       ========================================================= */
+    /* Prevent double-sending */
 
-    let currentPssPssUser = null;
-
-
-    /* =========================================================
-       MARK READ
-       ========================================================= */
-
-    async function markPssPssAsRead(
-        friendUsername
-    ) {
-
-        if (
-            !username ||
-            !friendUsername
-        ) {
-            return;
-        }
+    if (sendButton) {
+        sendButton.disabled = true;
+    }
 
 
-        try {
+    try {
 
-            const response =
-                await fetch(
-                    `${SERVER_URL}/api/messages/read` +
-                    `?username=${encodeURIComponent(username)}` +
-                    `&with=${encodeURIComponent(friendUsername)}`,
-                    {
-                        method: "POST"
-                    }
-                );
+        const response =
+            await fetch(
+                `${SERVER_URL}/api/messages`,
+                {
+                    method: "POST",
 
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
-            if (!response.ok) {
+                    body: JSON.stringify({
 
-                throw new Error(
-                    `HTTP ${response.status}`
-                );
+                        senderUsername:
+                            username,
 
-            }
+                        receiverUsername:
+                            currentPssPssUser,
 
+                        content:
+                            content
 
-            const data =
-                await response.json();
-
-
-            if (!data.success) {
-
-                throw new Error(
-                    data.message ||
-                    "Could not mark messages as read."
-                );
-
-            }
-
-
-            await loadConversations();
-
-
-        } catch (error) {
-
-            console.error(
-                "Could not mark PssPss as read:",
-                error
+                    })
+                }
             );
 
-        }
 
-    }
+        const data =
+            await response.json();
 
-
-    /* =========================================================
-       OPEN PssPss
-       ========================================================= */
-
-    async function openPssPss(
-        friendUsername
-    ) {
 
         console.log(
-            "Opening PssPss with:",
-            friendUsername
+            "Send message response:",
+            data
         );
 
 
-        currentPssPssUser =
-            friendUsername;
+        if (!response.ok) {
 
-
-        /* Mobile full-screen mode */
-
-        document.body.classList.add(
-            "mobile-chat-open"
-        );
-
-        document.body.classList.remove(
-            "mobile-friends-open"
-        );
-
-
-        const emptyChatState =
-            document.getElementById(
-                "emptyChatState"
-            );
-
-
-        const mainPssPss =
-            document.getElementById(
-                "mainPssPss"
-            );
-
-
-        if (!mainPssPss) {
-
-            console.error(
-                "mainPssPss not found!"
-            );
-
-            return;
-
-        }
-
-
-        if (emptyChatState) {
-
-            emptyChatState.classList.add(
-                "hidden"
-            );
-
-        }
-
-
-        mainPssPss.classList.remove(
-            "hidden"
-        );
-
-
-        const name =
-            document.getElementById(
-                "mainPssPssName"
-            );
-
-
-        const user =
-            document.getElementById(
-                "mainPssPssUsername"
-            );
-
-
-        const avatar =
-            document.getElementById(
-                "mainPssPssAvatar"
-            );
-
-
-        if (name) {
-
-            name.textContent =
-                friendUsername;
-
-        }
-
-
-        if (user) {
-
-            user.textContent =
-                `@${friendUsername}`;
-
-        }
-
-
-        /* Profile picture */
-
-        if (avatar) {
-
-            avatar.innerHTML =
-                "?";
-
-
-            try {
-
-                const response =
-                    await fetch(
-                        `${SERVER_URL}/api/users/profile?username=${encodeURIComponent(friendUsername)}`
-                    );
-
-
-                if (response.ok) {
-
-                    const data =
-                        await response.json();
-
-
-                    if (
-                        data.success &&
-                        data.profilePicture
-                    ) {
-
-                        avatar.innerHTML =
-                            "";
-
-
-                        const image =
-                            document.createElement(
-                                "img"
-                            );
-
-
-                        image.src =
-                            `${SERVER_URL}${data.profilePicture}`;
-
-
-                        image.alt =
-                            `${friendUsername}'s profile picture`;
-
-
-                        avatar.appendChild(
-                            image
-                        );
-
-                    }
-
-                }
-
-
-            } catch (error) {
-
-                console.error(
-                    "Could not load PssPss profile picture:",
-                    error
-                );
-
-            }
-
-        }
-
-
-        await loadPssPssMessages(
-            friendUsername
-        );
-
-
-        await markPssPssAsRead(
-            friendUsername
-        );
-
-    }
-
-
-    /* =========================================================
-       LOAD PssPss MESSAGES
-       ========================================================= */
-
-    async function loadPssPssMessages(
-        friendUsername
-    ) {
-
-        const container =
-            document.getElementById(
-                "mainPssPssMessages"
-            );
-
-
-        if (!container) {
-            return;
-        }
-
-
-        container.innerHTML =
-            "";
-
-
-        try {
-
-            const response =
-                await fetch(
-                    `${SERVER_URL}/api/messages/conversation` +
-                    `?username=${encodeURIComponent(username)}` +
-                    `&with=${encodeURIComponent(friendUsername)}`
-                );
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    `HTTP ${response.status}`
-                );
-
-            }
-
-
-            const data =
-                await response.json();
-
-
-            if (!data.success) {
-
-                throw new Error(
-                    data.message ||
-                    "Could not load PssPss."
-                );
-
-            }
-
-
-            if (
-                !data.messages ||
-                data.messages.length === 0
-            ) {
-
-                container.innerHTML = `
-                    <div class="psspss-no-messages">
-                        No messages yet.
-                    </div>
-                `;
-
-                return;
-
-            }
-
-
-            data.messages.forEach(
-                addPssPssMessageBubble
-            );
-
-
-            container.scrollTop =
-                container.scrollHeight;
-
-
-        } catch (error) {
-
-            console.error(
-                "Could not load PssPss messages:",
-                error
-            );
-
-
-            container.innerHTML = `
-                <div class="psspss-load-error">
-                    Could not load this PssPss.
-                </div>
-            `;
-
-        }
-
-    }
-
-
-    /* =========================================================
-       SEND PssPss
-       ========================================================= */
-
-    async function sendPssPssMessage() {
-
-        const input =
-            document.getElementById(
-                "mainPssPssInput"
-            );
-
-
-        const sendButton =
-            document.getElementById(
-                "mainPssPssSendButton"
-            );
-
-
-        if (
-            !input ||
-            !currentPssPssUser
-        ) {
-            return;
-        }
-
-
-        const content =
-            input.value.trim();
-
-
-        if (!content) {
-            return;
-        }
-
-
-        if (sendButton) {
-
-            sendButton.disabled =
-                true;
-
-        }
-
-
-        try {
-
-            const response =
-                await fetch(
-                    `${SERVER_URL}/api/messages`,
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body: JSON.stringify({
-
-                            senderUsername:
-                                username,
-
-                            receiverUsername:
-                                currentPssPssUser,
-
-                            content:
-                                content
-
-                        })
-                    }
-                );
-
-
-            const data =
-                await response.json();
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    data.message ||
-                    "Could not send message."
-                );
-
-            }
-
-
-            input.value =
-                "";
-
-
-            await loadConversations();
-
-
-        } catch (error) {
-
-            console.error(
-                "Could not send PssPss message:",
-                error
-            );
-
-
-            alert(
-                error.message ||
+            throw new Error(
+                data.message ||
                 "Could not send message."
             );
 
-
-        } finally {
-
-            if (sendButton) {
-
-                sendButton.disabled =
-                    false;
-
-            }
-
-
-            input.focus();
-
         }
 
+
+        /* Clear input */
+
+        input.value = "";
+
+
+        /* Refresh conversation list */
+
+        loadConversations();
+
+
+    } catch (error) {
+
+        console.error(
+            "Could not send PssPss message:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Could not send message."
+        );
+
+    } finally {
+
+        if (sendButton) {
+            sendButton.disabled = false;
+        }
+
+        input.focus();
+
     }
+}
 
+const pssPssSendButton =
+    document.getElementById(
+        "mainPssPssSendButton"
+    );
 
-    document
-        .getElementById(
-            "mainPssPssSendButton"
-        )
-        .addEventListener(
-            "click",
-            sendPssPssMessage
-        );
+if (pssPssSendButton) {
 
+    pssPssSendButton.addEventListener(
+        "click",
+        sendPssPssMessage
+    );
 
-    document
-        .getElementById(
-            "mainPssPssInput"
-        )
-        .addEventListener(
-            "keydown",
-            function (event) {
+}
 
-                if (
-                    event.key === "Enter" &&
-                    !event.shiftKey
-                ) {
+const pssPssInput =
+    document.getElementById(
+        "mainPssPssInput"
+    );
 
-                    event.preventDefault();
+if (pssPssInput) {
 
-                    sendPssPssMessage();
+    pssPssInput.addEventListener(
+        "keydown",
+        function (event) {
 
-                }
+            if (
+                event.key === "Enter" &&
+                !event.shiftKey
+            ) {
 
-            }
-        );
+                event.preventDefault();
 
-
-    /* =========================================================
-       MOBILE CHAT BACK
-       ========================================================= */
-
-    document
-        .getElementById(
-            "mainPssPssBackButton"
-        )
-        .addEventListener(
-            "click",
-            function () {
-
-                document.body.classList.remove(
-                    "mobile-chat-open"
-                );
-
-
-                currentPssPssUser =
-                    null;
-
-
-                const mainPssPss =
-                    document.getElementById(
-                        "mainPssPss"
-                    );
-
-
-                const emptyChatState =
-                    document.getElementById(
-                        "emptyChatState"
-                    );
-
-
-                if (mainPssPss) {
-
-                    mainPssPss.classList.add(
-                        "hidden"
-                    );
-
-                }
-
-
-                if (emptyChatState) {
-
-                    emptyChatState.classList.remove(
-                        "hidden"
-                    );
-
-                }
-
-
-                loadConversations();
+                sendPssPssMessage();
 
             }
-        );
+
+        }
+    );
+
+}
+
+/* =========================
+   PssPss Back Button (sidebar view — unused on this layout,
+   kept wired for safety)
+   ========================= */
+
+const pssPssBackButton =
+    document.getElementById("pssPssBackButton");
+
+if (pssPssBackButton) {
+
+    pssPssBackButton.addEventListener(
+        "click",
+        function () {
+
+            const pssPssView =
+                document.getElementById("pssPssView");
+
+            const conversationListView =
+                document.getElementById("conversationListView");
+
+            if (pssPssView) {
+                pssPssView.classList.add("hidden");
+            }
+
+            if (conversationListView) {
+                conversationListView.classList.remove("hidden");
+            }
+
+            currentPssPssUser = null;
+
+            loadConversations();
+        }
+    );
+}
 
 
-    /* =========================================================
-       FRIEND SEARCH
-       ========================================================= */
+/* =========================
+   Main PssPss Back Button (the one actually shown on
+   phone widths, top-left of the open chat)
+   ========================= */
+
+const mainPssPssBackButton =
+    document.getElementById("mainPssPssBackButton");
+
+if (mainPssPssBackButton) {
+
+    mainPssPssBackButton.addEventListener(
+        "click",
+        function () {
+
+            const mainPssPss =
+                document.getElementById("mainPssPss");
+
+            const emptyChatState =
+                document.getElementById("emptyChatState");
+
+            if (mainPssPss) {
+                mainPssPss.classList.add("hidden");
+            }
+
+            if (emptyChatState) {
+                emptyChatState.classList.remove("hidden");
+            }
+
+            /* Back to the full-screen conversation list
+               on phone widths; no effect on desktop. */
+            closeMobileChatView();
+
+            currentPssPssUser = null;
+
+            loadConversations();
+        }
+    );
+}
+
+
+
+    /* =========================
+       Search Server
+       ========================= */
 
     async function searchForFriend() {
 
@@ -2339,14 +1950,11 @@
             friendSearchResult.textContent =
                 "Enter a username to search.";
 
-
             friendSearchResult.classList.add(
                 "visible"
             );
 
-
             return;
-
         }
 
 
@@ -2413,83 +2021,76 @@
 
                 `;
 
-
                 return;
-
             }
 
 
-            friendSearchResult.innerHTML = `
+    friendSearchResult.innerHTML = `
 
-                <div class="search-result-icon friend-avatar">
+        <div class="search-result-icon friend-avatar">
 
-                    ${
-                        data.profilePicture
-                            ? `
-                                <img
-                                    src="${SERVER_URL}${data.profilePicture}"
-                                    alt="Profile picture"
-                                    class="friend-avatar-image"
-                                >
-                            `
-                            : `
-                                <span>?</span>
-                            `
-                    }
+            ${
+                data.profilePicture
+                    ? `
+                        <img
+                            src="${SERVER_URL}${data.profilePicture}"
+                            alt="Profile picture"
+                            class="friend-avatar-image"
+                        >
+                    `
+                    : `
+                        <span>?</span>
+                    `
+            }
 
-                </div>
+        </div>
 
+        <div class="friend-result-info">
 
-                <div class="friend-result-info">
+            <strong>
+                ${escapeHtml(data.username)}
+            </strong>
 
-                    <strong>
-                        ${escapeHtml(
-                            data.username
-                        )}
-                    </strong>
+            <span>
+                ${escapeHtml(
+                    data.displayName || ""
+                )}
+            </span>
 
+            ${
+                data.alreadyFriends
+                    ? `
+                        <button
+                            class="send-friend-request-button"
+                            id="sendFriendRequestButton"
+                            disabled
+                        >
+                            Friended
+                        </button>
+                    `
+                    : data.friendRequestPending
+                    ? `
+                        <button
+                            class="send-friend-request-button"
+                            id="sendFriendRequestButton"
+                            disabled
+                        >
+                            Friend Request Pending
+                        </button>
+                    `
+                    : `
+                        <button
+                            class="send-friend-request-button"
+                            id="sendFriendRequestButton"
+                        >
+                            Add Friend
+                        </button>
+                    `
+            }
 
-                    <span>
-                        ${escapeHtml(
-                            data.displayName || ""
-                        )}
-                    </span>
+        </div>
 
-
-                    ${
-                        data.alreadyFriends
-                            ? `
-                                <button
-                                    class="send-friend-request-button"
-                                    id="sendFriendRequestButton"
-                                    disabled
-                                >
-                                    Friended
-                                </button>
-                            `
-                            : data.friendRequestPending
-                            ? `
-                                <button
-                                    class="send-friend-request-button"
-                                    id="sendFriendRequestButton"
-                                    disabled
-                                >
-                                    Friend Request Pending
-                                </button>
-                            `
-                            : `
-                                <button
-                                    class="send-friend-request-button"
-                                    id="sendFriendRequestButton"
-                                >
-                                    Add Friend
-                                </button>
-                            `
-                    }
-
-                </div>
-
-            `;
+    `;
 
 
             const sendButton =
@@ -2498,20 +2099,12 @@
                 );
 
 
-            if (sendButton) {
-
-                sendButton.addEventListener(
-                    "click",
-                    () => {
-
-                        sendFriendRequest(
-                            data.username
-                        );
-
-                    }
-                );
-
-            }
+            sendButton.addEventListener(
+                "click",
+                () => sendFriendRequest(
+                    data.username
+                )
+            );
 
 
         } catch (error) {
@@ -2541,9 +2134,9 @@
     }
 
 
-    /* =========================================================
-       SEND FRIEND REQUEST
-       ========================================================= */
+    /* =========================
+       Send Friend Request
+       ========================= */
 
     async function sendFriendRequest(
         receiverUsername
@@ -2558,7 +2151,6 @@
             `;
 
             return;
-
         }
 
 
@@ -2570,8 +2162,7 @@
 
         if (sendButton) {
 
-            sendButton.disabled =
-                true;
+            sendButton.disabled = true;
 
             sendButton.textContent =
                 "Sending...";
@@ -2593,13 +2184,11 @@
                         },
 
                         body: JSON.stringify({
-
                             senderUsername:
                                 username,
 
                             receiverUsername:
                                 receiverUsername
-
                         })
                     }
                 );
@@ -2613,13 +2202,17 @@
 
                 if (sendButton) {
 
-                    sendButton.disabled =
-                        false;
+                    sendButton.disabled = false;
 
                     sendButton.textContent =
                         "Add Friend";
 
                 }
+
+
+                const message =
+                    data.message ||
+                    "Unable to send friend request.";
 
 
                 friendSearchResult.innerHTML = `
@@ -2635,19 +2228,14 @@
                         </strong>
 
                         <span>
-                            ${escapeHtml(
-                                data.message ||
-                                "Unable to send friend request."
-                            )}
+                            ${escapeHtml(message)}
                         </span>
 
                     </div>
 
                 `;
 
-
                 return;
-
             }
 
 
@@ -2701,186 +2289,171 @@
     }
 
 
-    /* =========================================================
-       FRIEND REQUESTS
-       ========================================================= */
+/* =========================
+   Friend Requests
+   ========================= */
 
-    async function loadFriendRequests() {
+async function loadFriendRequests() {
 
-        if (!username) {
+    if (!username) {
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                `${SERVER_URL}/api/friends/requests?username=${encodeURIComponent(username)}`
+            );
+
+        if (!response.ok) {
             return;
         }
 
+        const data =
+            await response.json();
 
-        try {
+        if (!data.success) {
+            return;
+        }
 
-            const response =
-                await fetch(
-                    `${SERVER_URL}/api/friends/requests?username=${encodeURIComponent(username)}`
-                );
+        const existingRequests =
+            document.querySelector(
+                ".friend-requests"
+            );
 
+        if (data.requests.length === 0) {
 
-            if (!response.ok) {
-                return;
+            if (existingRequests) {
+                existingRequests.remove();
             }
 
+            return;
+        }
 
-            const data =
-                await response.json();
+        const request =
+            data.requests[0];
 
+        const requestCount =
+            data.requests.length;
 
-            if (!data.success) {
-                return;
-            }
+        const requestsHtml = `
 
+            <div class="friend-requests">
 
-            const existingRequests =
-                document.querySelector(
-                    ".friend-requests"
-                );
+                <h3>
+                    Friend Requests
+                </h3>
 
+                <div class="friend-request">
 
-            if (
-                data.requests.length === 0
-            ) {
+                    <div class="search-result-icon friend-avatar">
 
-                if (existingRequests) {
-                    existingRequests.remove();
-                }
+                        ${
+                            request.profilePicture
+                                ? `
+                                    <img
+                                        src="${SERVER_URL}${request.profilePicture}"
+                                        alt="Profile picture"
+                                        class="friend-avatar-image"
+                                    >
+                                `
+                                : `
+                                    <span>?</span>
+                                `
+                        }
 
-                return;
+                    </div>
 
-            }
+                    <div class="friend-request-info">
 
+                        <strong>
+                            ${escapeHtml(
+                                request.username
+                            )}
+                        </strong>
 
-            const request =
-                data.requests[0];
+                        <span>
+                            wants to be your friend
+                        </span>
 
+                        <div class="friend-request-actions">
 
-            const requestCount =
-                data.requests.length;
+                            <button
+                                class="accept-friend-button"
+                                onclick="respondToFriendRequest(
+                                    ${request.id},
+                                    'accept'
+                                )"
+                            >
+                                Accept
+                            </button>
 
-
-            const requestsHtml = `
-
-                <div class="friend-requests">
-
-                    <h3>
-                        Friend Requests
-                    </h3>
-
-
-                    <div class="friend-request">
-
-                        <div class="search-result-icon friend-avatar">
-
-                            ${
-                                request.profilePicture
-                                    ? `
-                                        <img
-                                            src="${SERVER_URL}${request.profilePicture}"
-                                            alt="Profile picture"
-                                            class="friend-avatar-image"
-                                        >
-                                    `
-                                    : `
-                                        <span>?</span>
-                                    `
-                            }
-
-                        </div>
-
-
-                        <div class="friend-request-info">
-
-                            <strong>
-                                ${escapeHtml(
-                                    request.username
-                                )}
-                            </strong>
-
-
-                            <span>
-                                wants to be your friend
-                            </span>
-
-
-                            <div class="friend-request-actions">
-
-                                <button
-                                    class="accept-friend-button"
-                                    onclick="respondToFriendRequest(${request.id}, 'accept')"
-                                >
-                                    Accept
-                                </button>
-
-
-                                <button
-                                    class="decline-friend-button"
-                                    onclick="respondToFriendRequest(${request.id}, 'decline')"
-                                >
-                                    Decline
-                                </button>
-
-                            </div>
+                            <button
+                                class="decline-friend-button"
+                                onclick="respondToFriendRequest(
+                                    ${request.id},
+                                    'decline'
+                                )"
+                            >
+                                Decline
+                            </button>
 
                         </div>
 
                     </div>
 
-
-                    ${
-                        requestCount > 1
-                            ? `
-                                <p class="request-count">
-                                    + ${requestCount - 1}
-                                    more friend request(s)
-                                </p>
-                            `
-                            : ""
-                    }
-
                 </div>
 
-            `;
+                ${
+                    requestCount > 1
+                        ? `
+                            <p class="request-count">
+                                + ${requestCount - 1}
+                                more friend request(s)
+                            </p>
+                        `
+                        : ""
+                }
 
+            </div>
 
-            if (existingRequests) {
+        `;
 
-                existingRequests.outerHTML =
-                    requestsHtml;
+        if (existingRequests) {
 
-            } else {
+            existingRequests.outerHTML =
+                requestsHtml;
 
-                const addButton =
-                    document.getElementById(
-                        "addFriendButton"
-                    );
+        } else {
 
-
-                addButton.insertAdjacentHTML(
-                    "beforebegin",
-                    requestsHtml
+            const addButton =
+                document.getElementById(
+                    "addFriendButton"
                 );
 
-            }
-
-
-        } catch (error) {
-
-            console.log(
-                "Could not load friend requests.",
-                error
+            addButton.insertAdjacentHTML(
+                "beforebegin",
+                requestsHtml
             );
 
         }
 
+    } catch (error) {
+
+        console.log(
+            "Could not load friend requests.",
+            error
+        );
+
     }
 
+}
 
-    /* =========================================================
-       RESPOND TO FRIEND REQUEST
-       ========================================================= */
+
+    /* =========================
+       Respond To Friend Request
+       ========================= */
 
     async function respondToFriendRequest(
         requestId,
@@ -2909,9 +2482,7 @@
                     "Unable to respond to friend request."
                 );
 
-
                 return;
-
             }
 
 
@@ -2930,30 +2501,26 @@
     }
 
 
-    /* =========================================================
-       HTML ESCAPE
-       ========================================================= */
+    /* =========================
+       HTML Escape
+       ========================= */
 
     function escapeHtml(text) {
 
         const div =
-            document.createElement(
-                "div"
-            );
-
+            document.createElement("div");
 
         div.textContent =
             text ?? "";
-
 
         return div.innerHTML;
 
     }
 
 
-    /* =========================================================
-       OWN PROFILE PICTURE
-       ========================================================= */
+    /* =========================
+       Load Own Profile Picture
+       ========================= */
 
     async function loadOwnProfilePicture() {
 
@@ -2993,31 +2560,24 @@
             }
 
 
-            avatar.innerHTML =
-                "";
+            avatar.innerHTML = "";
 
 
             const image =
-                document.createElement(
-                    "img"
-                );
+                document.createElement("img");
 
 
             image.src =
                 `${SERVER_URL}${data.profilePicture}`;
 
-
             image.className =
                 "user-avatar-image";
-
 
             image.alt =
                 "Profile picture";
 
 
-            avatar.appendChild(
-                image
-            );
+            avatar.appendChild(image);
 
 
         } catch (error) {
@@ -3032,12 +2592,42 @@
     }
 
 
-    /* =========================================================
-       NEW PssPss
-       ========================================================= */
+    /* =========================
+       Initial Load
+       ========================= */
 
-    let selectedNewChatFriend =
-        null;
+    loadOwnProfilePicture();
+
+
+    if (username) {
+
+        loadFriends();
+        loadFriendRequests();
+
+    }
+
+    /* =========================================================
+    Initial Chats Load
+    ========================================================= */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        async function () {
+
+            console.log(
+                "MurMur loaded — loading conversations..."
+            );
+
+            await loadConversations();
+
+        }
+    );
+
+    /* =========================================================
+    New PssPss
+    ========================================================= */
+
+    let selectedNewChatFriend = null;
 
 
     const newChatButton =
@@ -3045,18 +2635,15 @@
             "newChatButton"
         );
 
-
     const newChatModal =
         document.getElementById(
             "newChatModal"
         );
 
-
     const closeNewChatButton =
         document.getElementById(
             "closeNewChatButton"
         );
-
 
     const startNewChatButton =
         document.getElementById(
@@ -3070,7 +2657,6 @@
             "click",
             openNewChatModal
         );
-
     }
 
 
@@ -3080,7 +2666,6 @@
             "click",
             closeNewChatModal
         );
-
     }
 
 
@@ -3098,10 +2683,8 @@
                     closeNewChatModal();
 
                 }
-
             }
         );
-
     }
 
 
@@ -3111,7 +2694,6 @@
             "click",
             startNewPssPss
         );
-
     }
 
 
@@ -3121,22 +2703,15 @@
             return;
         }
 
+        selectedNewChatFriend = null;
 
-        selectedNewChatFriend =
-            null;
-
-
-        startNewChatButton.disabled =
-            true;
-
+        startNewChatButton.disabled = true;
 
         newChatModal.classList.remove(
             "hidden"
         );
 
-
         loadFriendsForNewChat();
-
     }
 
 
@@ -3146,82 +2721,18 @@
             return;
         }
 
-
         newChatModal.classList.add(
             "hidden"
         );
 
-
-        selectedNewChatFriend =
-            null;
-
+        selectedNewChatFriend = null;
     }
-
-
-    /* =========================================================
-       START NEW PssPss
-       ========================================================= */
-
-    async function startNewPssPss() {
-
-        if (!selectedNewChatFriend) {
-            return;
-        }
-
-
-        const friend =
-            selectedNewChatFriend;
-
-
-        closeNewChatModal();
-
-
-        await openPssPss(
-            friend
-        );
-
-    }
-
-
-    /* =========================================================
-       STARTUP
-       ========================================================= */
-
-    loadOwnProfilePicture();
-
-
-    if (username) {
-
-        loadFriends();
-        loadFriendRequests();
-
-    }
-
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        async function () {
-
-            console.log(
-                "MurMur mobile loaded — loading conversations..."
-            );
-
-
-            await loadConversations();
-
-        }
-    );
-
 
 </script>
 
-
-<!-- =============================================================
-     SERVER / OFFLINE MONITOR
-     ============================================================= -->
+<script src="https://cdn.jsdelivr.net/npm/@microsoft/signalr@8.0.7/dist/browser/signalr.min.js"></script>
 
 <script src="js/app.js"></script>
-
 
 </body>
 
