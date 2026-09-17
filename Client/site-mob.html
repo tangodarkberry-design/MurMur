@@ -2622,110 +2622,342 @@ async function loadFriendRequests() {
         }
     );
 
-    /* =========================================================
-    New PssPss
-    ========================================================= */
+/* =========================
+   New PssPss
+   ========================= */
 
-    let selectedNewChatFriend = null;
+let selectedNewChatFriend = null;
 
+const newChatButton =
+    document.getElementById("newChatButton");
 
-    const newChatButton =
-        document.getElementById(
-            "newChatButton"
-        );
+const newChatModal =
+    document.getElementById("newChatModal");
 
-    const newChatModal =
-        document.getElementById(
-            "newChatModal"
-        );
+const closeNewChatButton =
+    document.getElementById("closeNewChatButton");
 
-    const closeNewChatButton =
-        document.getElementById(
-            "closeNewChatButton"
-        );
+const startNewChatButton =
+    document.getElementById("startNewChatButton");
 
-    const startNewChatButton =
-        document.getElementById(
-            "startNewChatButton"
-        );
+const newChatFriendsList =
+    document.getElementById("newChatFriendsList");
 
 
-    if (newChatButton) {
+/* =========================
+   Open New Chat Modal
+   ========================= */
 
-        newChatButton.addEventListener(
-            "click",
-            openNewChatModal
-        );
-    }
-
-
-    if (closeNewChatButton) {
-
-        closeNewChatButton.addEventListener(
-            "click",
-            closeNewChatModal
-        );
-    }
-
-
-    if (newChatModal) {
-
-        newChatModal.addEventListener(
-            "click",
-            function (event) {
-
-                if (
-                    event.target ===
-                    newChatModal
-                ) {
-
-                    closeNewChatModal();
-
-                }
-            }
-        );
-    }
-
-
-    if (startNewChatButton) {
-
-        startNewChatButton.addEventListener(
-            "click",
-            startNewPssPss
-        );
-    }
-
-
-    function openNewChatModal() {
-
-        if (!newChatModal) {
-            return;
-        }
+newChatButton.addEventListener(
+    "click",
+    async function () {
 
         selectedNewChatFriend = null;
 
         startNewChatButton.disabled = true;
 
-        newChatModal.classList.remove(
-            "hidden"
-        );
+        newChatModal.classList.remove("hidden");
 
-        loadFriendsForNewChat();
+        await loadFriendsForNewChat();
+
     }
+);
 
 
-    function closeNewChatModal() {
+/* =========================
+   Close Modal
+   ========================= */
 
-        if (!newChatModal) {
+closeNewChatButton.addEventListener(
+    "click",
+    function () {
+
+        closeNewChatModal();
+
+    }
+);
+
+
+function closeNewChatModal() {
+
+    newChatModal.classList.add("hidden");
+
+    selectedNewChatFriend = null;
+
+    startNewChatButton.disabled = true;
+
+}
+
+
+/* =========================
+   Click Outside Modal
+   ========================= */
+
+newChatModal.addEventListener(
+    "click",
+    function (event) {
+
+        if (event.target === newChatModal) {
+
+            closeNewChatModal();
+
+        }
+
+    }
+);
+
+
+    /* =========================
+    Load Friends
+    ========================= */
+
+    async function loadFriendsForNewChat() {
+
+        if (!username) {
             return;
         }
 
-        newChatModal.classList.add(
-            "hidden"
-        );
+        newChatFriendsList.innerHTML = `
+            <div class="new-chat-loading">
+                Loading friends...
+            </div>
+        `;
 
-        selectedNewChatFriend = null;
+        try {
+
+            const response =
+                await fetch(
+                    `${SERVER_URL}/api/friends?username=${encodeURIComponent(username)}`
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok || !data.success) {
+
+                newChatFriendsList.innerHTML = `
+                    <div class="new-chat-loading">
+                        Unable to load friends.
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            const friends =
+                data.friends || [];
+
+
+            if (friends.length === 0) {
+
+                newChatFriendsList.innerHTML = `
+                    <div class="new-chat-loading">
+                        You don't have any friends yet.
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            newChatFriendsList.innerHTML = "";
+
+
+            friends.forEach(function (friend) {
+
+                const friendUsername =
+                    friend.username ||
+                    friend.Username;
+
+
+                const friendDisplayName =
+                    friend.displayName ||
+                    friend.DisplayName ||
+                    friendUsername;
+
+
+                const friendElement =
+                    document.createElement("button");
+
+
+                friendElement.type = "button";
+
+                friendElement.className =
+                    "new-chat-friend";
+
+
+                friendElement.dataset.username =
+                    friendUsername;
+
+
+                friendElement.innerHTML = `
+
+                    <div class="new-chat-friend-avatar">
+                        ?
+                    </div>
+
+                    <div class="new-chat-friend-info">
+
+                        <strong>
+                            ${escapeHtml(friendDisplayName)}
+                        </strong>
+
+                        <span>
+                            @${escapeHtml(friendUsername)}
+                        </span>
+
+                    </div>
+
+                `;
+
+
+                friendElement.addEventListener(
+                    "click",
+                    function () {
+
+                        selectNewChatFriend(
+                            friendUsername,
+                            friendElement
+                        );
+
+                    }
+                );
+
+
+                newChatFriendsList.appendChild(
+                    friendElement
+                );
+
+            });
+
+
+        } catch (error) {
+
+            console.error(
+                "Failed to load friends for new chat:",
+                error
+            );
+
+
+            newChatFriendsList.innerHTML = `
+                <div class="new-chat-loading">
+                    Unable to connect to MurMur.
+                </div>
+            `;
+
+        }
+
     }
+
+
+    /* =========================
+    Select Friend
+    ========================= */
+
+    function selectNewChatFriend(
+        friendUsername,
+        element
+    ) {
+
+        selectedNewChatFriend =
+            friendUsername;
+
+
+        document
+            .querySelectorAll(".new-chat-friend")
+            .forEach(function (friend) {
+
+                friend.classList.remove("selected");
+
+            });
+
+
+        element.classList.add("selected");
+
+
+        startNewChatButton.disabled =
+            false;
+
+    }
+
+
+    /* =========================
+    Start Chat
+    ========================= */
+
+    startNewChatButton.addEventListener(
+        "click",
+        async function () {
+
+            if (!selectedNewChatFriend) {
+                return;
+            }
+
+
+            const friendUsername =
+                selectedNewChatFriend;
+
+
+            startNewChatButton.disabled =
+                true;
+
+            startNewChatButton.textContent =
+                "Opening...";
+
+
+            try {
+
+                /*
+                * Close the modal first.
+                */
+
+                closeNewChatModal();
+
+
+                /*
+                * Open the PssPss.
+                *
+                * openPssPss() handles:
+                *
+                * - selecting the user
+                * - loading messages
+                * - loading their profile picture
+                * - opening the mobile chat view
+                * - marking messages as read
+                */
+
+                await openPssPss(
+                    friendUsername
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Failed to open PssPss:",
+                    error
+                );
+
+
+                alert(
+                    "Unable to start this PssPss."
+                );
+
+            } finally {
+
+                startNewChatButton.disabled =
+                    false;
+
+                startNewChatButton.textContent =
+                    "Start Chat";
+
+            }
+
+        }
+    );
 
 </script>
 
