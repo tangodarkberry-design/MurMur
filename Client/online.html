@@ -47,37 +47,8 @@
 
         setTimeout(function () {
 
-            /*
-             * Detect whether the device is primarily
-             * a mobile / tablet device.
-             */
-
-            const isMobile =
-                /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
-                    .test(
-                        navigator.userAgent
-                    );
-
-
-            if (isMobile) {
-
-                /*
-                 * Mobile / tablet
-                 */
-
-                window.location.href =
-                    "site-mob-login.html";
-
-            } else {
-
-                /*
-                 * Desktop / laptop
-                 */
-
-                window.location.href =
-                    "site-pc-login.html";
-
-            }
+            window.location.href =
+                "site-pc-login.html";
 
         }, 750);
 
