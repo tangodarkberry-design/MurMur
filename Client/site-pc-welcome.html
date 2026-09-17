@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MurMur — Welcome</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <main class="welcome-screen">
+
+        <div class="welcome-container">
+
+            <h1 id="welcomeTitle">
+                Welcome.
+            </h1>
+
+            <p class="welcome-message">
+                Tango has given you this account, but it could use some work.
+                First of all, set your own password instead of the password
+                that was given to you.
+            </p>
+
+            <form id="passwordForm">
+
+                <div class="input-group">
+
+                    <label for="newPassword">
+                        New password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="newPassword"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="confirmPassword">
+                        Confirm new password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                </div>
+
+                <button type="submit">
+                    Set Password
+                </button>
+
+                <p id="passwordError" class="login-error"></p>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <script>
+
+        const username =
+            sessionStorage.getItem("murmur_username");
+
+        const welcomeTitle =
+            document.getElementById("welcomeTitle");
+
+        const passwordForm =
+            document.getElementById("passwordForm");
+
+        const passwordError =
+            document.getElementById("passwordError");
+
+        const submitButton =
+            passwordForm.querySelector("button");
+
+
+        if (!username) {
+
+            window.location.href =
+                "site-pc-login.html";
+
+        }
+        else {
+
+            welcomeTitle.textContent =
+                `Welcome, ${username}.`;
+
+        }
+
+
+        passwordForm.addEventListener("submit", async function (event) {
+
+            event.preventDefault();
+
+            passwordError.textContent = "";
+
+            const newPassword =
+                document.getElementById("newPassword").value;
+
+            const confirmPassword =
+                document.getElementById("confirmPassword").value;
+
+
+            if (newPassword !== confirmPassword) {
+
+                passwordError.textContent =
+                    "The passwords do not match.";
+
+                return;
+            }
+
+
+            if (newPassword.length < 8) {
+
+                passwordError.textContent =
+                    "Password must be at least 8 characters.";
+
+                return;
+            }
+
+
+            submitButton.disabled = true;
+            submitButton.textContent = "Setting password...";
+
+
+            try {
+
+                const response = await fetch(
+                    "http://localhost:5175/api/change-password",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            username: username,
+                            newPassword: newPassword
+                        })
+                    }
+                );
+
+
+                const data = await response.json();
+
+
+                if (!response.ok || !data.success) {
+
+                    passwordError.textContent =
+                        data.message ||
+                        "Unable to change your password.";
+
+                    return;
+                }
+
+
+                sessionStorage.removeItem("murmur_username");
+
+                window.location.href =
+                    "site-pc.html";
+
+            }
+
+            catch {
+
+                passwordError.textContent =
+                    "Unable to connect to the MurMur server.";
+
+            }
+
+            finally {
+
+                submitButton.disabled = false;
+                submitButton.textContent = "Set Password";
+
+            }
+
+        });
+
+    </script>
+
+     <script src="js/app.js"></script>
+
+</body>
+
+</html>

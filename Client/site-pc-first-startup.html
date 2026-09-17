@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MurMur — Welcome</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <style>
+
+        .welcome-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .welcome-container {
+            width: 100%;
+            max-width: 560px;
+            text-align: center;
+        }
+
+        .welcome-step {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .welcome-step.active {
+            display: block;
+            animation: stepIn 0.45s ease forwards;
+        }
+
+        .welcome-step.leaving {
+            animation: stepOut 0.3s ease forwards;
+        }
+
+        @keyframes stepIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        @keyframes stepOut {
+
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+
+        }
+
+        .welcome-icon {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 28px;
+            border-radius: 24px;
+            background: #292a2e;
+            border: 1px solid #3d3e43;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 42px;
+            font-weight: 700;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.25);
+
+            animation:
+                iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+
+        }
+
+        .welcome-container h1 {
+            font-size: 34px;
+            margin-bottom: 14px;
+        }
+
+        .welcome-container h2 {
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .welcome-text {
+            color: #aaa;
+            font-size: 16px;
+            line-height: 1.7;
+            margin: 0 auto 30px;
+            max-width: 500px;
+        }
+
+        .welcome-highlight {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .welcome-button {
+            min-width: 150px;
+            padding: 13px 24px;
+            border: none;
+            border-radius: 10px;
+
+            background: #fff;
+            color: #18191c;
+
+            font-size: 15px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                opacity 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .welcome-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .welcome-button:active {
+            transform: translateY(0);
+        }
+
+        .welcome-button:disabled {
+            opacity: 0.5;
+            cursor: default;
+            transform: none;
+        }
+
+        /* =========================
+           WHOOPS IMAGE
+           ========================= */
+
+        .whoops-image-container {
+            width: 100%;
+            max-width: 460px;
+            margin: 0 auto 26px;
+
+            display: flex;
+            justify-content: center;
+        }
+
+        .whoops-image {
+            width: 100%;
+            max-height: 240px;
+
+            object-fit: contain;
+
+            border-radius: 12px;
+            border: 1px solid #3d3e43;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.3);
+
+            animation:
+                whoopsPop 0.5s ease forwards;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .whoops-image:hover {
+            transform: scale(1.02);
+
+            box-shadow:
+                0 18px 45px rgba(0, 0, 0, 0.4);
+        }
+
+        @keyframes whoopsPop {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    scale(0.92)
+                    translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    scale(1)
+                    translateY(0);
+            }
+
+        }
+
+        /* =========================
+           INPUTS
+           ========================= */
+
+        .welcome-input-group {
+            text-align: left;
+            margin: 0 auto 24px;
+            max-width: 380px;
+        }
+
+        .welcome-input-group label {
+            display: block;
+            margin-bottom: 8px;
+
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .welcome-input-group input {
+            width: 100%;
+            box-sizing: border-box;
+
+            padding: 13px 14px;
+
+            border-radius: 10px;
+            border: 1px solid #3d3e43;
+
+            background: #202125;
+            color: #fff;
+
+            font-size: 15px;
+            outline: none;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .welcome-input-group input:focus {
+            border-color: #666;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(255, 255, 255, 0.05);
+        }
+
+        .welcome-info {
+            color: #777;
+            font-size: 13px;
+            margin-top: 12px;
+        }
+
+        .welcome-error {
+            min-height: 20px;
+            margin-top: 15px;
+
+            color: #e57373;
+            font-size: 14px;
+        }
+
+        /* =========================
+           PROGRESS
+           ========================= */
+
+        .welcome-progress {
+            display: flex;
+            justify-content: center;
+
+            gap: 7px;
+            margin-top: 35px;
+        }
+
+        .progress-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+            background: #3d3e43;
+
+            transition:
+                width 0.3s ease,
+                background 0.3s ease;
+        }
+
+        .progress-dot.active {
+            width: 22px;
+            border-radius: 10px;
+            background: #aaa;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<main class="welcome-screen">
+
+<div class="welcome-container">
+
+
+<!-- =========================
+     STEP 1 — WELCOME
+     ========================= -->
+
+<section
+    class="welcome-step active"
+    data-step="1"
+>
+
+    <div class="welcome-icon">
+        M
+    </div>
+
+    <h1>
+        Welcome to MurMur.
+    </h1>
+
+    <p class="welcome-text">
+
+        Hey, if you're
+
+        <span class="welcome-highlight">
+            "lucky"
+        </span>
+
+        enough to be at this screen,
+
+        that means you're friends with
+
+        <span class="welcome-highlight">
+            Tango_Darkberry
+        </span>.
+
+        <br>
+        <br>
+
+        That's cool ig...
+
+        <br>
+        <br>
+
+        <strong>
+            ANYWAYS!
+        </strong>
+
+        Lemme show you around.
+
+    </p>
+
+    <button
+        class="welcome-button next-button"
+    >
+        Next
+    </button>
+
+</section>
+
+
+<!-- =========================
+     STEP 2 — WHOOPS
+     ========================= -->
+
+<section
+    class="welcome-step"
+    data-step="2"
+>
+
+    <div class="whoops-image-container">
+
+        <img
+            src="assets/Whoops.png"
+            alt="MurMur server unavailable screen"
+            class="whoops-image"
+        >
+
+    </div>
+
+    <h2>
+        Oh, and one more thing...
+    </h2>
+
+    <p class="welcome-text">
+
+        If you're
+
+        <span class="welcome-highlight">
+            lucky
+        </span>
+
+        enough...
+
+        <br>
+
+        Or
+
+        <span class="welcome-highlight">
+            unlucky
+        </span>
+
+        enough...
+
+        <br>
+        <br>
+
+        You'll eventually see this screen.
+
+        <br>
+        <br>
+
+        If this appears, don't worry.
+
+        <br>
+
+        <span class="welcome-highlight">
+            I'll fix it when I feel like it.
+        </span>
+
+    </p>
+
+    <button
+        class="welcome-button next-button"
+    >
+        Good to know
+    </button>
+
+</section>
+
+
+<!-- =========================
+     STEP 3 — SOME MORE THINGS
+     ========================= -->
+
+<section
+    class="welcome-step"
+    data-step="3"
+>
+
+    <div class="welcome-icon">
+        :3
+    </div>
+
+    <h2>
+        Some more things about MurMur.
+    </h2>
+
+    <p class="welcome-text">
+
+        <strong>
+            1.
+        </strong>
+
+        There is
+
+        <span class="welcome-highlight">
+            no file size or length limit.
+        </span>
+
+        <br>
+
+        However, there are time limits.
+
+        <br>
+
+        That's because I really don't want
+        my servers to
+
+        <span class="welcome-highlight">
+            fucking eat all the storage.
+        </span>
+
+        <br>
+        <br>
+
+        <strong>
+            2.
+        </strong>
+
+        I Love you babe
+
+        <span class="welcome-highlight">
+            ❤️
+        </span>
+
+        <br>
+        <br>
+
+        <strong>
+            3.
+        </strong>
+
+        Fuck you solvi.
+
+    </p>
+
+    <button
+        class="welcome-button next-button"
+    >
+        okay?
+    </button>
+
+</section>
+
+
+<!-- =========================
+     STEP 4 — FIRST THINGS FIRST
+     ========================= -->
+
+<section
+    class="welcome-step"
+    data-step="4"
+>
+
+    <div class="welcome-icon">
+        👋
+    </div>
+
+    <h2>
+        First things first.
+    </h2>
+
+    <p class="welcome-text">
+
+        Before you get thrown into the chaos,
+        let's get your profile sorted.
+
+        <br>
+        <br>
+
+        You'll have a
+
+        <span class="welcome-highlight">
+            username
+        </span>
+
+        that identifies your account...
+
+        and a
+
+        <span class="welcome-highlight">
+            display name
+        </span>
+
+        that everyone else gets to see.
+
+    </p>
+
+    <button
+        class="welcome-button next-button"
+    >
+        Got it
+    </button>
+
+</section>
+
+
+<!-- =========================
+     STEP 5 — PROFILE
+     ========================= -->
+
+<section
+    class="welcome-step"
+    data-step="5"
+>
+
+    <div class="welcome-icon">
+        ✨
+    </div>
+
+    <h2>
+        Let's set you up.
+    </h2>
+
+    <p class="welcome-text">
+
+        Your username is permanent,
+        but your display name is what
+        people will see around MurMur.
+
+    </p>
+
+    <div class="welcome-input-group">
+
+        <label>
+            Username
+        </label>
+
+        <input
+            type="text"
+            id="username"
+            readonly
+        >
+
+    </div>
+
+    <div class="welcome-input-group">
+
+        <label for="displayName">
+            Display Name
+        </label>
+
+        <input
+            type="text"
+            id="displayName"
+            maxlength="32"
+            autocomplete="off"
+            placeholder="What should people call you?"
+        >
+
+    </div>
+
+    <p class="welcome-info">
+        1–32 characters
+    </p>
+
+    <p
+        id="startupError"
+        class="welcome-error"
+    ></p>
+
+    <button
+        id="finishButton"
+        class="welcome-button"
+    >
+        Finish Setup
+    </button>
+
+</section>
+
+
+<!-- =========================
+     STEP 6 — FINISHED
+     ========================= -->
+
+<section
+    class="welcome-step"
+    data-step="6"
+>
+
+    <div class="welcome-icon">
+        ✓
+    </div>
+
+    <h1>
+        You're all set.
+    </h1>
+
+    <p class="welcome-text">
+
+        Your profile is ready.
+
+        <br>
+        <br>
+
+        Welcome to MurMur,
+
+        <span
+            class="welcome-highlight"
+            id="finalDisplayName"
+        >
+            friend
+        </span>.
+
+        <br>
+        <br>
+
+        Try not to break anything.
+
+        <br>
+
+        <span style="color:#666;">
+            (No promises from us either.)
+        </span>
+
+    </p>
+
+    <button
+        id="enterButton"
+        class="welcome-button"
+    >
+        Enter MurMur
+    </button>
+
+</section>
+
+
+<!-- =========================
+     PROGRESS
+     ========================= -->
+
+<div class="welcome-progress">
+
+    <span
+        class="progress-dot active"
+        data-dot="1"
+    ></span>
+
+    <span
+        class="progress-dot"
+        data-dot="2"
+    ></span>
+
+    <span
+        class="progress-dot"
+        data-dot="3"
+    ></span>
+
+    <span
+        class="progress-dot"
+        data-dot="4"
+    ></span>
+
+    <span
+        class="progress-dot"
+        data-dot="5"
+    ></span>
+
+    <span
+        class="progress-dot"
+        data-dot="6"
+    ></span>
+
+</div>
+
+</div>
+
+</main>
+
+
+<script>
+
+    const SERVER_URL =
+        "http://localhost:5175";
+
+
+    const username =
+        sessionStorage.getItem(
+            "murmur_username"
+        );
+
+
+    const currentDisplayName =
+        sessionStorage.getItem(
+            "murmur_display_name"
+        );
+
+
+    const dots =
+        document.querySelectorAll(
+            ".progress-dot"
+        );
+
+
+    const usernameInput =
+        document.getElementById(
+            "username"
+        );
+
+
+    const displayNameInput =
+        document.getElementById(
+            "displayName"
+        );
+
+
+    const finishButton =
+        document.getElementById(
+            "finishButton"
+        );
+
+
+    const startupError =
+        document.getElementById(
+            "startupError"
+        );
+
+
+    const finalDisplayName =
+        document.getElementById(
+            "finalDisplayName"
+        );
+
+
+    let currentStep = 1;
+
+
+    if (!username) {
+
+        window.location.href =
+            "site-pc-login.html";
+
+    }
+
+
+    usernameInput.value =
+        username || "";
+
+
+    if (currentDisplayName) {
+
+        displayNameInput.value =
+            currentDisplayName;
+
+    }
+
+
+    function showStep(stepNumber) {
+
+        if (
+            stepNumber < 1 ||
+            stepNumber > 6
+        ) {
+            return;
+        }
+
+
+        const current =
+            document.querySelector(
+                `.welcome-step[data-step="${currentStep}"]`
+            );
+
+
+        const next =
+            document.querySelector(
+                `.welcome-step[data-step="${stepNumber}"]`
+            );
+
+
+        if (!current || !next) {
+            return;
+        }
+
+
+        if (current === next) {
+            return;
+        }
+
+
+        current.classList.remove(
+            "active"
+        );
+
+        current.classList.add(
+            "leaving"
+        );
+
+
+        setTimeout(() => {
+
+            current.classList.remove(
+                "leaving"
+            );
+
+            next.classList.add(
+                "active"
+            );
+
+        }, 250);
+
+
+        dots.forEach(dot => {
+
+            const dotStep =
+                Number(
+                    dot.dataset.dot
+                );
+
+
+            dot.classList.toggle(
+                "active",
+                dotStep === stepNumber
+            );
+
+        });
+
+
+        currentStep =
+            stepNumber;
+
+    }
+
+
+    document
+        .querySelectorAll(
+            ".next-button"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    showStep(
+                        currentStep + 1
+                    );
+
+                }
+            );
+
+        });
+
+
+    finishButton.addEventListener(
+        "click",
+        async function () {
+
+            startupError.textContent =
+                "";
+
+
+            const displayName =
+                displayNameInput.value.trim();
+
+
+            if (!displayName) {
+
+                startupError.textContent =
+                    "Please enter a display name.";
+
+                return;
+
+            }
+
+
+            if (
+                displayName.length < 1 ||
+                displayName.length > 32
+            ) {
+
+                startupError.textContent =
+                    "Display name must be between 1 and 32 characters.";
+
+                return;
+
+            }
+
+
+            finishButton.disabled =
+                true;
+
+
+            finishButton.textContent =
+                "Setting things up...";
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${SERVER_URL}/api/first-startup`,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+
+                                username:
+                                    username,
+
+                                displayName:
+                                    displayName
+
+                            })
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (
+                    !response.ok ||
+                    !data.success
+                ) {
+
+                    startupError.textContent =
+                        data.message ||
+                        "Unable to set up your profile.";
+
+                    return;
+
+                }
+
+
+                sessionStorage.setItem(
+                    "murmur_display_name",
+                    data.displayName
+                );
+
+
+                finalDisplayName.textContent =
+                    data.displayName;
+
+
+                showStep(6);
+
+            }
+
+
+            catch (error) {
+
+                startupError.textContent =
+                    "Unable to connect to the MurMur server.";
+
+            }
+
+
+            finally {
+
+                finishButton.disabled =
+                    false;
+
+                finishButton.textContent =
+                    "Finish Setup";
+
+            }
+
+        }
+    );
+
+
+    document
+        .getElementById(
+            "enterButton"
+        )
+        .addEventListener(
+            "click",
+            function () {
+
+                window.location.href =
+                    "site-pc.html";
+
+            }
+        );
+
+
+    displayNameInput.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (event.key === "Enter") {
+
+                finishButton.click();
+
+            }
+
+        }
+    );
+
+
+
+</script>
+
+ <script src="js/app.js"></script>
+
+</body>
+
+</html>

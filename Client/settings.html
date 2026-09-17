@@ -1,0 +1,1099 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MurMur — Settings</title>
+
+    <link
+        rel="stylesheet"
+        href="css/settings.css"
+    >
+</head>
+
+<body>
+
+    <div class="settings-app">
+
+        <header class="settings-header">
+
+            <button
+                class="back-button"
+                onclick="window.location.href='site-pc.html'"
+            >
+                ←
+            </button>
+
+            <div class="settings-title">
+                <span>MurMur</span>
+                <h1>Settings</h1>
+            </div>
+
+        </header>
+
+
+        <main class="settings-content">
+
+            <!-- Profile -->
+
+            <section class="settings-section">
+
+                <div class="section-heading">
+                    <h2>Profile</h2>
+                    <p>
+                        Manage how you appear to other people.
+                    </p>
+                </div>
+
+
+                <div class="profile-card">
+
+                    <div
+                        class="profile-picture"
+                        id="profilePicturePreview"
+                    >
+                        <span>?</span>
+                    </div>
+
+
+                    <div class="profile-info">
+
+                        <strong id="displayName">
+                            Loading...
+                        </strong>
+
+                        <span id="username">
+                            @loading
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        class="secondary-button"
+                        id="changePfpButton"
+                    >
+                        Change picture
+                    </button>
+
+
+                    <input
+                        type="file"
+                        id="profilePictureInput"
+                        accept="image/png,image/jpeg,image/webp"
+                        hidden
+                    >
+
+                </div>
+
+
+                <div class="setting-item">
+
+                    <div class="setting-text">
+
+                        <strong>
+                            Display name
+                        </strong>
+
+                        <span>
+                            The name other people see.
+                        </span>
+
+                    </div>
+
+                    <button
+                        class="secondary-button"
+                        id="changeDisplayNameButton"
+                    >
+                        Change
+                    </button>
+
+                </div>
+
+
+                <div class="setting-item">
+
+                    <div class="setting-text">
+
+                        <strong>
+                            Username
+                        </strong>
+
+                        <span>
+                            Your unique MurMur username.
+                        </span>
+
+                    </div>
+
+                    <span
+                        class="setting-value"
+                        id="usernameSetting"
+                    >
+                        Loading...
+                    </span>
+
+                </div>
+
+            </section>
+
+
+            <!-- Account -->
+
+            <section class="settings-section">
+
+                <div class="section-heading">
+
+                    <h2>
+                        Account
+                    </h2>
+
+                    <p>
+                        Manage your MurMur account.
+                    </p>
+
+                </div>
+
+
+                <div class="setting-item">
+
+                    <div class="setting-text">
+
+                        <strong>
+                            Password
+                        </strong>
+
+                        <span>
+                            Change your MurMur password.
+                        </span>
+
+                    </div>
+
+                    <button
+                        class="secondary-button"
+                        id="changePasswordButton"
+                    >
+                        Change
+                    </button>
+
+                </div>
+
+
+                <div class="setting-item">
+
+                    <div class="setting-text">
+
+                        <strong>
+                            Account status
+                        </strong>
+
+                        <span>
+                            Your MurMur account is currently active.
+                        </span>
+
+                    </div>
+
+                    <span class="status-badge">
+                        Active
+                    </span>
+
+                </div>
+
+            </section>
+
+
+            <!-- Appearance -->
+
+            <section class="settings-section">
+
+                <div class="section-heading">
+
+                    <h2>
+                        Appearance
+                    </h2>
+
+                    <p>
+                        Customize how MurMur looks.
+                    </p>
+
+                </div>
+
+
+                <div class="setting-item">
+
+                    <div class="setting-text">
+
+                        <strong>
+                            Theme
+                        </strong>
+
+                        <span>
+                            Choose how MurMur looks.
+                        </span>
+
+                    </div>
+
+                    <select class="settings-select">
+
+                        <option selected>
+                            Dark
+                        </option>
+
+                        <option>
+                            Light
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="setting-item">
+
+                    <div class="setting-text">
+
+                        <strong>
+                            Animations
+                        </strong>
+
+                        <span>
+                            Enable interface animations.
+                        </span>
+
+                    </div>
+
+
+                    <label class="toggle">
+
+                        <input
+                            type="checkbox"
+                            checked
+                        >
+
+                        <span class="toggle-slider"></span>
+
+                    </label>
+
+                </div>
+
+            </section>
+
+
+            <!-- Danger Zone -->
+
+            <section
+                class="settings-section danger-section"
+            >
+
+                <div class="section-heading">
+
+                    <h2>
+                        Danger zone
+                    </h2>
+
+                    <p>
+                        These actions can affect your account.
+                    </p>
+
+                </div>
+
+
+                <div class="setting-item">
+
+                    <div class="setting-text">
+
+                        <strong>
+                            Log out
+                        </strong>
+
+                        <span>
+                            Sign out of MurMur on this device.
+                        </span>
+
+                    </div>
+
+                    <button
+                        class="danger-button"
+                        id="logoutButton"
+                    >
+                        Log out
+                    </button>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- Profile Picture Modal -->
+
+    <div
+        class="murmur-modal-overlay"
+        id="pfpModal"
+        hidden
+    >
+
+        <div class="murmur-modal">
+
+            <div class="murmur-modal-header">
+
+                <div>
+
+                    <span class="murmur-modal-app">
+                        MurMur
+                    </span>
+
+                    <h2 id="pfpModalTitle">
+                        Change profile picture
+                    </h2>
+
+                </div>
+
+                <button
+                    class="murmur-modal-close"
+                    id="pfpModalClose"
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="murmur-modal-content">
+
+                <div
+                    class="pfp-modal-preview"
+                    id="pfpModalPreview"
+                >
+                    <span>
+                        ?
+                    </span>
+                </div>
+
+
+                <p id="pfpModalMessage">
+                    Choose an image to use as your MurMur profile picture.
+                </p>
+
+            </div>
+
+
+            <div class="murmur-modal-actions">
+
+                <button
+                    class="secondary-button"
+                    id="pfpCancelButton"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    class="secondary-button"
+                    id="pfpChooseButton"
+                >
+                    Choose image
+                </button>
+
+                <button
+                    class="primary-button"
+                    id="pfpUploadButton"
+                    hidden
+                >
+                    Upload picture
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Message Modal -->
+
+    <div
+        class="murmur-modal-overlay"
+        id="messageModal"
+        hidden
+    >
+
+        <div class="murmur-modal">
+
+            <div class="murmur-modal-header">
+
+                <div>
+
+                    <span class="murmur-modal-app">
+                        MurMur
+                    </span>
+
+                    <h2 id="messageModalTitle">
+                        Profile picture
+                    </h2>
+
+                </div>
+
+                <button
+                    class="murmur-modal-close"
+                    id="messageModalClose"
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="murmur-modal-content">
+
+                <p id="messageModalText"></p>
+
+            </div>
+
+
+            <div class="murmur-modal-actions">
+
+                <button
+                    class="primary-button"
+                    id="messageModalButton"
+                >
+                    OK
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+<script>
+
+const SERVER_URL =
+    "http://localhost:5175";
+
+const username =
+    sessionStorage.getItem("murmur_username");
+
+
+/* =========================================================
+   Profile Loading
+   ========================================================= */
+
+async function loadProfile() {
+
+    if (!username) {
+
+        window.location.href =
+            "site-pc-login.html";
+
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                `${SERVER_URL}/api/users/profile?username=${encodeURIComponent(username)}`
+            );
+
+        console.log(
+            "Profile response:",
+            response.status
+        );
+
+        const data =
+            await response.json();
+
+        console.log(
+            "Profile data:",
+            data
+        );
+
+        if (!response.ok || !data.success) {
+
+            console.log(
+                "Could not load profile:",
+                data.message
+            );
+
+            return;
+        }
+
+        document.getElementById(
+            "displayName"
+        ).textContent =
+            data.displayName;
+
+        document.getElementById(
+            "username"
+        ).textContent =
+            "@" + data.username;
+
+        document.getElementById(
+            "usernameSetting"
+        ).textContent =
+            data.username;
+
+
+        const profilePicture =
+            document.getElementById(
+                "profilePicturePreview"
+            );
+
+
+        if (data.profilePicture) {
+
+            profilePicture.innerHTML = "";
+
+            const image =
+                document.createElement("img");
+
+            image.src =
+                `${SERVER_URL}${data.profilePicture}`;
+
+            image.alt =
+                "Profile picture";
+
+            image.className =
+                "profile-picture-image";
+
+            image.onerror =
+                () => {
+
+                    console.error(
+                        "Profile picture failed to load:",
+                        image.src
+                    );
+
+                };
+
+            profilePicture.appendChild(
+                image
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Could not connect to MurMur server:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   Profile Picture Modal
+   ========================================================= */
+
+const changePfpButton =
+    document.getElementById(
+        "changePfpButton"
+    );
+
+const profilePictureInput =
+    document.getElementById(
+        "profilePictureInput"
+    );
+
+const pfpModal =
+    document.getElementById(
+        "pfpModal"
+    );
+
+const pfpModalTitle =
+    document.getElementById(
+        "pfpModalTitle"
+    );
+
+const pfpModalMessage =
+    document.getElementById(
+        "pfpModalMessage"
+    );
+
+const pfpModalPreview =
+    document.getElementById(
+        "pfpModalPreview"
+    );
+
+const pfpChooseButton =
+    document.getElementById(
+        "pfpChooseButton"
+    );
+
+const pfpUploadButton =
+    document.getElementById(
+        "pfpUploadButton"
+    );
+
+const pfpCancelButton =
+    document.getElementById(
+        "pfpCancelButton"
+    );
+
+const pfpModalClose =
+    document.getElementById(
+        "pfpModalClose"
+    );
+
+let selectedProfilePicture =
+    null;
+
+
+/* =========================================================
+   Open / Close Modal
+   ========================================================= */
+
+function openPfpModal() {
+
+    pfpModal.hidden =
+        false;
+
+    document.body.classList.add(
+        "modal-open"
+    );
+
+}
+
+
+function closePfpModal() {
+
+    pfpModal.hidden =
+        true;
+
+    document.body.classList.remove(
+        "modal-open"
+    );
+
+}
+
+
+/* =========================================================
+   Reset Modal
+   ========================================================= */
+
+function resetPfpModal() {
+
+    selectedProfilePicture =
+        null;
+
+    pfpModalTitle.textContent =
+        "Change profile picture";
+
+    pfpModalMessage.textContent =
+        "Choose an image to use as your MurMur profile picture.";
+
+    pfpModalPreview.innerHTML =
+        "<span>?</span>";
+
+    pfpChooseButton.hidden =
+        false;
+
+    pfpUploadButton.hidden =
+        true;
+
+}
+
+
+/* =========================================================
+   Change Picture
+   ========================================================= */
+
+changePfpButton.addEventListener(
+    "click",
+    () => {
+
+        resetPfpModal();
+
+        openPfpModal();
+
+    }
+);
+
+
+/* =========================================================
+   Choose Image
+   ========================================================= */
+
+pfpChooseButton.addEventListener(
+    "click",
+    () => {
+
+        profilePictureInput.click();
+
+    }
+);
+
+
+/* =========================================================
+   File Selected
+   ========================================================= */
+
+profilePictureInput.addEventListener(
+    "change",
+    () => {
+
+        const file =
+            profilePictureInput.files[0];
+
+        if (!file) {
+            return;
+        }
+
+
+        if (!file.type.startsWith("image/")) {
+
+            pfpModalTitle.textContent =
+                "Invalid image";
+
+            pfpModalMessage.textContent =
+                "That file isn't a supported image. Please choose a PNG, JPEG or WebP image.";
+
+            return;
+        }
+
+
+        selectedProfilePicture =
+            file;
+
+
+        const imageURL =
+            URL.createObjectURL(file);
+
+
+        pfpModalPreview.innerHTML =
+            "";
+
+
+        const previewImage =
+            document.createElement("img");
+
+
+        previewImage.src =
+            imageURL;
+
+
+        previewImage.alt =
+            "Selected profile picture";
+
+
+        pfpModalPreview.appendChild(
+            previewImage
+        );
+
+
+        pfpModalTitle.textContent =
+            "Use this picture?";
+
+
+        pfpModalMessage.textContent =
+            `${file.name} is ready to use as your MurMur profile picture.`;
+
+
+        pfpChooseButton.hidden =
+            true;
+
+
+        pfpUploadButton.hidden =
+            false;
+
+    }
+);
+
+
+/* =========================================================
+   Upload
+   ========================================================= */
+
+pfpUploadButton.addEventListener(
+    "click",
+    async () => {
+
+        if (!selectedProfilePicture) {
+            return;
+        }
+
+
+        const formData =
+            new FormData();
+
+
+        formData.append(
+            "username",
+            username
+        );
+
+
+        formData.append(
+            "profilePicture",
+            selectedProfilePicture
+        );
+
+
+        pfpUploadButton.disabled =
+            true;
+
+        pfpCancelButton.disabled =
+            true;
+
+        pfpUploadButton.textContent =
+            "Uploading...";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${SERVER_URL}/api/users/profile-picture`,
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok || !data.success) {
+
+                pfpUploadButton.disabled =
+                    false;
+
+                pfpCancelButton.disabled =
+                    false;
+
+                pfpUploadButton.textContent =
+                    "Upload picture";
+
+
+                showMessage(
+                    "Couldn't update picture",
+                    data.message ||
+                    "MurMur couldn't update your profile picture."
+                );
+
+                return;
+            }
+
+
+            closePfpModal();
+
+
+            showMessage(
+                "Picture updated",
+                "Your profile picture has been updated successfully."
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Profile picture upload failed:",
+                error
+            );
+
+
+            pfpUploadButton.disabled =
+                false;
+
+            pfpCancelButton.disabled =
+                false;
+
+            pfpUploadButton.textContent =
+                "Upload picture";
+
+
+            showMessage(
+                "Connection error",
+                "MurMur couldn't connect to the server. Please try again."
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   Cancel / Close
+   ========================================================= */
+
+pfpCancelButton.addEventListener(
+    "click",
+    () => {
+
+        profilePictureInput.value =
+            "";
+
+        resetPfpModal();
+
+        closePfpModal();
+
+    }
+);
+
+
+pfpModalClose.addEventListener(
+    "click",
+    () => {
+
+        profilePictureInput.value =
+            "";
+
+        resetPfpModal();
+
+        closePfpModal();
+
+    }
+);
+
+
+pfpModal.addEventListener(
+    "click",
+    (event) => {
+
+        if (event.target === pfpModal) {
+
+            profilePictureInput.value =
+                "";
+
+            resetPfpModal();
+
+            closePfpModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   Message Modal
+   ========================================================= */
+
+const messageModal =
+    document.getElementById(
+        "messageModal"
+    );
+
+const messageModalTitle =
+    document.getElementById(
+        "messageModalTitle"
+    );
+
+const messageModalText =
+    document.getElementById(
+        "messageModalText"
+    );
+
+const messageModalClose =
+    document.getElementById(
+        "messageModalClose"
+    );
+
+const messageModalButton =
+    document.getElementById(
+        "messageModalButton"
+    );
+
+
+function showMessage(
+    title,
+    message
+) {
+
+    messageModalTitle.textContent =
+        title;
+
+    messageModalText.textContent =
+        message;
+
+    messageModal.hidden =
+        false;
+
+    document.body.classList.add(
+        "modal-open"
+    );
+
+}
+
+
+function closeMessage() {
+
+    const wasSuccessful =
+        messageModalTitle.textContent ===
+        "Picture updated";
+
+
+    messageModal.hidden =
+        true;
+
+    document.body.classList.remove(
+        "modal-open"
+    );
+
+
+    if (wasSuccessful) {
+
+        window.location.reload();
+
+    }
+
+}
+
+
+messageModalClose.addEventListener(
+    "click",
+    closeMessage
+);
+
+
+messageModalButton.addEventListener(
+    "click",
+    closeMessage
+);
+
+
+messageModal.addEventListener(
+    "click",
+    (event) => {
+
+        if (event.target === messageModal) {
+
+            closeMessage();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   Start
+   ========================================================= */
+
+loadProfile();
+
+</script>
+
+ <script src="js/app.js"></script>
+
+</body>
+
+</html>

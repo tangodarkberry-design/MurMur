@@ -1,0 +1,562 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+
+    background: #393a41;
+    color: #eee;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+main {
+    text-align: left;
+}
+
+.error-screen {
+    width: min(90%, 650px);
+    padding: 60px;
+    margin-left: 8%;
+}
+
+
+/* =========================
+   Globe + Magnifying Glass
+   ========================= */
+
+.search-icon {
+    position: relative;
+
+    width: 90px;
+    height: 80px;
+
+    margin-bottom: 30px;
+
+    animation: hover 3s ease-in-out infinite;
+}
+
+
+/* Globe */
+
+.globe {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 58px;
+    height: 58px;
+
+    border: 3px solid #777;
+    border-radius: 50%;
+}
+
+
+/* Globe vertical longitude */
+
+.globe::before {
+    content: "";
+
+    position: absolute;
+
+    left: 13px;
+    right: 13px;
+    top: -3px;
+    bottom: -3px;
+
+    border-left: 2px solid #666;
+    border-right: 2px solid #666;
+
+    border-radius: 50%;
+}
+
+
+/* Globe horizontal latitude */
+
+.globe::after {
+    content: "";
+
+    position: absolute;
+
+    left: 3px;
+    right: 3px;
+    top: 20px;
+
+    height: 12px;
+
+    border-top: 2px solid #666;
+    border-bottom: 2px solid #666;
+
+    border-radius: 50%;
+}
+
+
+/* Magnifying glass */
+
+.magnifier {
+    position: absolute;
+
+    width: 32px;
+    height: 32px;
+
+    top: 0;
+    right: 5px;
+
+    border: 5px solid #999;
+    border-radius: 50%;
+
+    background: #393a41;
+
+    animation: searchPulse 2s ease-in-out infinite;
+}
+
+
+/* Magnifying glass handle */
+
+.magnifier::after {
+    content: "";
+
+    position: absolute;
+
+    width: 23px;
+    height: 5px;
+
+    background: #999;
+
+    right: -18px;
+    bottom: -11px;
+
+    border-radius: 3px;
+
+    transform: rotate(45deg);
+}
+
+
+/* =========================
+   Text
+   ========================= */
+
+h1 {
+    margin: 0;
+
+    font-size: 52px;
+    font-weight: 700;
+
+    letter-spacing: -1px;
+}
+
+h2 {
+    margin: 10px 0 14px;
+
+    font-size: 26px;
+    font-weight: 600;
+
+    color: #eee;
+}
+
+.error-message {
+    margin: 0;
+
+    max-width: 500px;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    color: #aaa;
+
+    line-height: 1.6;
+}
+
+.error-code {
+    margin-top: 28px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #666;
+}
+
+.error-code strong {
+    color: #aaa;
+    font-weight: 700;
+}
+
+
+/* =========================
+   Connection Status
+   ========================= */
+
+.connection-status {
+    margin-top: 35px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #777;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #888;
+
+    animation: statusPulse 1.8s ease-in-out infinite;
+}
+
+
+/* =========================
+   Animations
+   ========================= */
+
+@keyframes hover {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes searchPulse {
+
+    0%,
+    100% {
+        transform: rotate(0deg) scale(1);
+        opacity: 0.65;
+    }
+
+    50% {
+        transform: rotate(-8deg) scale(1.08);
+        opacity: 1;
+    }
+}
+
+@keyframes statusPulse {
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 0.9;
+    }
+}
+
+/* =========================
+   Loading Screen
+   ========================= */
+
+.loading-screen {
+    width: min(90%, 650px);
+    padding: 60px;
+    margin-left: 8%;
+}
+
+.loading-screen h1 {
+    margin: 0;
+
+    font-size: 52px;
+    font-weight: 700;
+
+    letter-spacing: -1px;
+}
+
+.loading-screen p {
+    margin: 10px 0 0;
+
+    font-size: 18px;
+    font-weight: 500;
+
+    color: #aaa;
+}
+
+
+/* Loading dots */
+
+.loading-icon {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    height: 20px;
+
+    margin-bottom: 25px;
+}
+
+.loading-icon span {
+    width: 9px;
+    height: 9px;
+
+    background: #888;
+
+    border-radius: 50%;
+
+    animation: loadingDot 1.4s ease-in-out infinite;
+}
+
+.loading-icon span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loading-icon span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes loadingDot {
+
+    0%,
+    60%,
+    100% {
+        opacity: 0.25;
+        transform: translateY(0);
+    }
+
+    30% {
+        opacity: 1;
+        transform: translateY(-5px);
+    }
+}
+
+/* =========================
+   Login Screen
+   ========================= */
+
+.login-screen {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #393a41;
+}
+
+
+/* Login container */
+
+.login-container {
+    width: min(90%, 400px);
+
+    padding: 45px;
+
+    text-align: left;
+}
+
+
+/* Logo */
+
+.login-container h1 {
+    margin: 0;
+
+    font-size: 48px;
+    font-weight: 700;
+
+    letter-spacing: -1px;
+}
+
+
+/* Subtitle */
+
+.login-subtitle {
+    margin: 8px 0 35px;
+
+    color: #999;
+
+    font-size: 16px;
+}
+
+
+/* Input groups */
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+
+/* Labels */
+
+.input-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #aaa;
+}
+
+
+/* Inputs */
+
+.input-group input {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border: 1px solid #555;
+    border-radius: 6px;
+
+    outline: none;
+
+    background: #303137;
+    color: #eee;
+
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+
+    transition:
+        border-color 0.15s ease,
+        background 0.15s ease;
+}
+
+
+.input-group input:focus {
+    border-color: #888;
+
+    background: #34353b;
+}
+
+
+/* Login button */
+
+.login-container button {
+    width: 100%;
+
+    margin-top: 8px;
+
+    padding: 13px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: #eee;
+    color: #303137;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        transform 0.1s ease;
+}
+
+
+.login-container button:hover {
+    background: #fff;
+}
+
+
+.login-container button:active {
+    transform: scale(0.99);
+}
+
+
+/* Login error */
+
+.login-error {
+    min-height: 18px;
+
+    margin: 15px 0 0;
+
+    font-size: 13px;
+
+    color: #999;
+}
+
+
+/* Create account */
+
+.create-account {
+    margin-top: 28px;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    color: #777;
+}
+
+
+.create-account a {
+    color: #aaa;
+
+    text-decoration: none;
+
+    font-weight: 600;
+}
+
+
+.create-account a:hover {
+    color: #eee;
+}
+
+/* =========================
+   Welcome / Password Setup
+   ========================= */
+
+.welcome-screen {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #393a41;
+}
+
+
+.welcome-container {
+    width: min(90%, 500px);
+
+    padding: 45px;
+
+    text-align: left;
+}
+
+
+.welcome-container h1 {
+    margin: 0;
+
+    font-size: 42px;
+    font-weight: 700;
+
+    letter-spacing: -1px;
+}
+
+
+.welcome-message {
+    margin: 15px 0 35px;
+
+    color: #aaa;
+
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+

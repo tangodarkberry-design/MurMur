@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MurMur — Login</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <main class="login-screen">
+
+        <div class="login-container">
+
+            <h1>MurMur</h1>
+
+            <p class="login-subtitle">
+                Welcome back.
+            </p>
+
+            <form id="loginForm">
+
+                <div class="input-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+                <button type="submit">
+                    Log In
+                </button>
+
+                <p id="loginError" class="login-error"></p>
+
+            </form>
+
+            <p class="create-account">
+                Don't have an account?
+                <a href="#">Create one</a>
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        const SERVER_URL =
+            "http://localhost:5175";
+
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+
+        const loginError =
+            document.getElementById("loginError");
+
+
+        const loginButton =
+            loginForm.querySelector("button");
+
+
+        loginForm.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                loginError.textContent = "";
+
+
+                loginButton.disabled = true;
+
+                loginButton.textContent =
+                    "Logging in...";
+
+
+                const username =
+                    document
+                        .getElementById("username")
+                        .value
+                        .trim();
+
+
+                const password =
+                    document
+                        .getElementById("password")
+                        .value;
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            `${SERVER_URL}/api/login`,
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+                                    username: username,
+                                    password: password
+                                })
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (
+                        !response.ok ||
+                        !data.success
+                    ) {
+
+                        loginError.textContent =
+                            data.message ||
+                            "Invalid username or password.";
+
+                        return;
+                    }
+
+
+                    /*
+                     * Store account information
+                     * for the current MurMur session.
+                     */
+
+                    sessionStorage.setItem(
+                        "murmur_username",
+                        data.username
+                    );
+
+
+                    sessionStorage.setItem(
+                        "murmur_display_name",
+                        data.displayName
+                    );
+
+
+                    /*
+                     * First-time password setup
+                     */
+
+                    if (data.mustChangePassword) {
+
+                        window.location.href =
+                            "site-pc-welcome.html";
+
+                        return;
+                    }
+
+
+                    /*
+                     * First-time profile setup
+                     */
+
+                    if (data.firstStartup) {
+
+                        window.location.href =
+                            "site-pc-first-startup.html";
+
+                        return;
+                    }
+
+
+                    /*
+                     * Normal login
+                     */
+
+                    window.location.href =
+                        "site-pc.html";
+
+                }
+
+                catch (error) {
+
+                    loginError.textContent =
+                        "Unable to connect to the MurMur server.";
+
+                }
+
+                finally {
+
+                    loginButton.disabled = false;
+
+                    loginButton.textContent =
+                        "Log In";
+
+                }
+
+            }
+        );
+
+    </script>
+
+ <script src="js/app.js"></script>
+
+</body>
+
+</html>

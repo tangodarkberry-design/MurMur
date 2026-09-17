@@ -1,0 +1,826 @@
+/* =========================================================
+   MurMur Settings
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            #35363b 0%,
+            #25262a 45%,
+            #1c1d20 100%
+        );
+
+    color: #eeeeee;
+
+    font-family: Arial, sans-serif;
+}
+
+
+/* =========================================================
+   App
+   ========================================================= */
+
+.settings-app {
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   Header
+   ========================================================= */
+
+.settings-header {
+    height: 76px;
+
+    padding: 0 28px;
+
+    background: rgba(25, 26, 29, 0.88);
+
+    border-bottom: 1px solid #35363c;
+
+    display: flex;
+    align-items: center;
+    gap: 17px;
+
+    backdrop-filter: blur(12px);
+}
+
+
+.back-button {
+    width: 40px;
+    height: 40px;
+
+    border: 1px solid #3d3e44;
+    border-radius: 11px;
+
+    background: #292a2f;
+    color: #aaaaaf;
+
+    font-size: 23px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.back-button:hover {
+    background: #37383e;
+    color: #ffffff;
+
+    transform: translateX(-2px);
+}
+
+
+.settings-title {
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-title span {
+    color: #777980;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.settings-title h1 {
+    margin: 2px 0 0;
+
+    color: #eeeeee;
+
+    font-size: 20px;
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   Content
+   ========================================================= */
+
+.settings-content {
+    width: min(850px, calc(100% - 40px));
+
+    margin: 0 auto;
+
+    padding: 35px 0 70px;
+}
+
+
+/* =========================================================
+   Sections
+   ========================================================= */
+
+.settings-section {
+    margin-bottom: 24px;
+
+    border: 1px solid #35363c;
+    border-radius: 15px;
+
+    background: rgba(34, 35, 39, 0.88);
+
+    overflow: hidden;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.14);
+}
+
+
+.section-heading {
+    padding: 20px 22px 17px;
+
+    border-bottom: 1px solid #303137;
+}
+
+.section-heading h2 {
+    margin: 0;
+
+    color: #eeeeee;
+
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.section-heading p {
+    margin: 5px 0 0;
+
+    color: #777980;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   Profile Card
+   ========================================================= */
+
+.profile-card {
+    min-height: 95px;
+
+    padding: 17px 20px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    border-bottom: 1px solid #303137;
+}
+
+
+.profile-picture {
+    width: 58px;
+    height: 58px;
+
+    flex-shrink: 0;
+
+    border: 1px solid #505158;
+    border-radius: 50%;
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #45464c,
+            #303137
+        );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #dddddd;
+
+    font-size: 20px;
+    font-weight: 900;
+
+    box-shadow:
+        0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+.profile-info {
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+.profile-info strong {
+    overflow: hidden;
+
+    color: #eeeeee;
+
+    font-size: 15px;
+    font-weight: 900;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+.profile-info span {
+    margin-top: 4px;
+
+    color: #777980;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   Setting Items
+   ========================================================= */
+
+.setting-item {
+    min-height: 70px;
+
+    padding: 15px 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    border-bottom: 1px solid #2f3035;
+
+    transition:
+        background 0.15s ease;
+}
+
+.setting-item:last-child {
+    border-bottom: none;
+}
+
+.setting-item:hover {
+    background: rgba(255, 255, 255, 0.018);
+}
+
+
+.setting-text {
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+.setting-text strong {
+    color: #dddddd;
+
+    font-size: 13px;
+    font-weight: 900;
+}
+
+
+.setting-text span {
+    margin-top: 4px;
+
+    color: #707178;
+
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   Buttons
+   ========================================================= */
+
+.secondary-button {
+    flex-shrink: 0;
+
+    padding: 8px 12px;
+
+    border: 1px solid #414249;
+    border-radius: 8px;
+
+    background: #303137;
+    color: #cccccc;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.secondary-button:hover {
+    background: #3b3c42;
+    color: #ffffff;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   Setting Value
+   ========================================================= */
+
+.setting-value {
+    color: #777980;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   Status
+   ========================================================= */
+
+.status-badge {
+    padding: 5px 9px;
+
+    border: 1px solid #3e4741;
+    border-radius: 7px;
+
+    background: #29302b;
+    color: #9eb5a3;
+
+    font-size: 10px;
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   Select
+   ========================================================= */
+
+.settings-select {
+    min-width: 110px;
+
+    padding: 8px 10px;
+
+    border: 1px solid #414249;
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #303137;
+    color: #cccccc;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   Toggle
+   ========================================================= */
+
+.toggle {
+    position: relative;
+
+    width: 42px;
+    height: 23px;
+
+    flex-shrink: 0;
+
+    cursor: pointer;
+}
+
+.toggle input {
+    opacity: 0;
+
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: 20px;
+
+    background: #3a3b40;
+
+    transition:
+        background 0.2s ease;
+}
+
+.toggle-slider::before {
+    content: "";
+
+    position: absolute;
+
+    width: 17px;
+    height: 17px;
+
+    left: 3px;
+    top: 3px;
+
+    border-radius: 50%;
+
+    background: #aaaaaf;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.toggle input:checked + .toggle-slider {
+    background: #eeeeee;
+}
+
+.toggle input:checked + .toggle-slider::before {
+    transform: translateX(19px);
+
+    background: #25262a;
+}
+
+
+/* =========================================================
+   Danger Zone
+   ========================================================= */
+
+.danger-section {
+    border-color: #493538;
+}
+
+.danger-section .section-heading {
+    border-bottom-color: #403034;
+}
+
+.danger-section .section-heading h2 {
+    color: #d99b9b;
+}
+
+
+.danger-button {
+    flex-shrink: 0;
+
+    padding: 8px 13px;
+
+    border: 1px solid #593c40;
+    border-radius: 8px;
+
+    background: #35272a;
+    color: #d99595;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.danger-button:hover {
+    background: #4a2e33;
+    color: #ffb0b0;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   Scrollbar
+   ========================================================= */
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #3d3e44 transparent;
+}
+
+*::-webkit-scrollbar {
+    width: 7px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #3d3e44;
+    border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: #505158;
+}
+
+
+/* =========================================================
+   Mobile-ish Width Protection
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    .settings-header {
+        padding: 0 18px;
+    }
+
+    .settings-content {
+        width: calc(100% - 24px);
+        padding-top: 20px;
+    }
+
+    .profile-card {
+        flex-wrap: wrap;
+    }
+
+    .profile-card .secondary-button {
+        width: 100%;
+    }
+
+    .setting-item {
+        align-items: flex-start;
+    }
+
+}
+.profile-picture {
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.profile-picture-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+}
+
+
+/* =========================================================
+   MurMur Custom Modals
+   ========================================================= */
+
+body.modal-open {
+    overflow: hidden;
+}
+
+
+.murmur-modal-overlay {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.65);
+
+    backdrop-filter: blur(8px);
+
+    z-index: 9999;
+}
+
+
+.murmur-modal-overlay[hidden] {
+    display: none;
+}
+
+
+.murmur-modal {
+    width: min(440px, 100%);
+
+    background: #15151b;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.55);
+
+    overflow: hidden;
+
+    animation:
+        murmurModalIn 0.18s ease-out;
+}
+
+
+@keyframes murmurModalIn {
+
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+
+}
+
+
+.murmur-modal-header {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    padding: 22px 22px 16px;
+}
+
+
+.murmur-modal-app {
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+
+    opacity: 0.45;
+}
+
+
+.murmur-modal-header h2 {
+    margin: 0;
+
+    font-size: 20px;
+
+    font-weight: 650;
+}
+
+
+.murmur-modal-close {
+    width: 34px;
+    height: 34px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, 0.06);
+
+    color: inherit;
+
+    font-size: 23px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
+}
+
+
+.murmur-modal-close:hover {
+    background: rgba(255, 255, 255, 0.11);
+
+    transform: scale(1.05);
+}
+
+
+.murmur-modal-content {
+    padding: 6px 22px 22px;
+}
+
+
+.murmur-modal-content p {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.62);
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+.pfp-modal-preview {
+    width: 150px;
+    height: 150px;
+
+    margin: 4px auto 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.06);
+
+    border: 2px solid rgba(255, 255, 255, 0.08);
+
+    font-size: 42px;
+
+    color: rgba(255, 255, 255, 0.35);
+}
+
+
+.pfp-modal-preview img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+
+.murmur-modal-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    padding: 16px 22px 22px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+
+.murmur-modal-actions button {
+    min-width: 110px;
+}
+
+
+.primary-button {
+    border: none;
+
+    border-radius: 9px;
+
+    padding: 10px 16px;
+
+    background: #ffffff;
+
+    color: #111111;
+
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        opacity 0.15s ease,
+        transform 0.15s ease;
+}
+
+
+.primary-button:hover {
+    opacity: 0.88;
+
+    transform: translateY(-1px);
+}
+
+
+.primary-button:disabled {
+    opacity: 0.5;
+
+    cursor: default;
+
+    transform: none;
+}
+
+
+.murmur-modal-actions button:disabled {
+    opacity: 0.45;
+
+    cursor: default;
+}
+

@@ -1,0 +1,20 @@
+# .NET
+**/bin/
+**/obj/
+
+# Database
+**/Database/*.db
+**/Database/*.db-shm
+**/Database/*.db-wal
+
+# User uploads
+Server/MurMur.Server/uploads/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# OS
+Thumbs.db
+.DS_Store
