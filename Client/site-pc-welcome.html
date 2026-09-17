@@ -119,13 +119,27 @@
 
 
         /* =========================================================
-           Check Login
-           ========================================================= */
+        Check Login / First Startup
+        ========================================================= */
+
+        const firstStartup =
+            sessionStorage.getItem(
+                "firstStartup"
+            );
+
 
         if (!username) {
 
             window.location.href =
                 "site-pc-login.html";
+
+        }
+        else if (
+            firstStartup === "1"
+        ) {
+
+            window.location.href =
+                "site-pc-first-startup.html";
 
         }
         else {
