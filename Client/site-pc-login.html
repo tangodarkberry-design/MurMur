@@ -275,21 +275,16 @@
 
                     /*
                      * First-time password setup.
+                     *
+                     * This ALWAYS uses the PC
+                     * welcome page, regardless
+                     * of device.
                      */
 
                     if (data.mustChangePassword) {
 
-                        if (isMobile) {
-
-                            window.location.href =
-                                "site-mob-welcome.html";
-
-                        } else {
-
-                            window.location.href =
-                                "site-pc-welcome.html";
-
-                        }
+                        window.location.href =
+                            "site-pc-welcome.html";
 
                         return;
                     }
