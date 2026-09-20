@@ -1060,18 +1060,21 @@
 
 
     document
-        .getElementById(
-            "enterButton"
-        )
-        .addEventListener(
-            "click",
-            function () {
+        .getElementById("enterButton")
+        .addEventListener("click", function () {
 
-                window.location.href =
-                    "site-pc.html";
+            const isMobile =
+                /Android|iPhone|iPad|iPod|Windows Phone/i.test(
+                    navigator.userAgent
+                );
 
+            if (isMobile) {
+                window.location.href = "site-mob.html";
+            } else {
+                window.location.href = "site-pc.html";
             }
-        );
+
+        });
 
 
     displayNameInput.addEventListener(
