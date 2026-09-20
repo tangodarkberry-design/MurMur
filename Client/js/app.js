@@ -5,9 +5,6 @@
 const MURMUR_SERVER_URL =
     "https://introduce-attacks-involving-tiny.trycloudflare.com";
 
-const SERVER_URL =
-    MURMUR_SERVER_URL;
-
 let redirecting = false;
 
 
