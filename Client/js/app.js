@@ -3,7 +3,7 @@
    ========================================================= */
 
 const MURMUR_SERVER_URL =
-    "https://elections-gratis-these-satin.trycloudflare.com";
+    "https://randy-bill-charter-workshop.trycloudflare.com";
 
 const SERVER_URL =
     MURMUR_SERVER_URL;
