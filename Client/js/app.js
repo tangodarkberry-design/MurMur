@@ -3,7 +3,7 @@
    ========================================================= */
 
 const MURMUR_SERVER_URL =
-    "https://picked-suggested-prisoner-yard.trycloudflare.com";
+    " https://shaw-genius-ctrl-men.trycloudflare.com";
 
 let redirecting = false;
 
