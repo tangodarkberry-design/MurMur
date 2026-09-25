@@ -928,188 +928,6 @@
 
     }
 
-    async function loadFriendsForNewChat() {
-
-        const friendsList =
-            document.getElementById(
-                "newChatFriendsList"
-            );
-
-        if (!friendsList) {
-            return;
-        }
-
-        friendsList.innerHTML = `
-            <div class="new-chat-loading">
-                Loading friends...
-            </div>
-        `;
-
-
-        try {
-
-            const response =
-                await fetch(
-                    `${SERVER_URL}/api/friends?username=${encodeURIComponent(username)}`
-                );
-
-            if (!response.ok) {
-
-                throw new Error(
-                    `HTTP ${response.status}`
-                );
-
-            }
-
-
-            const data =
-                await response.json();
-
-
-            if (!data.success) {
-
-                throw new Error(
-                    "Could not load friends."
-                );
-
-            }
-
-
-            friendsList.innerHTML = "";
-
-
-            if (
-                !data.friends ||
-                data.friends.length === 0
-            ) {
-
-                friendsList.innerHTML = `
-                    <div class="new-chat-empty">
-                        You don't have any friends yet.
-                    </div>
-                `;
-
-                return;
-            }
-
-
-            data.friends.forEach(friend => {
-
-                const friendElement =
-                    document.createElement("div");
-
-                friendElement.className =
-                    "new-chat-friend";
-
-
-                friendElement.dataset.username =
-                    friend.username;
-
-
-                const profilePicture =
-                    friend.profilePicture
-                        ? `
-                            <img
-                                src="${SERVER_URL}${friend.profilePicture}"
-                                alt="Profile picture"
-                            >
-                        `
-                        : `
-                            <span>?</span>
-                        `;
-
-
-                friendElement.innerHTML = `
-
-                    <div class="new-chat-friend-avatar">
-
-                        ${profilePicture}
-
-                    </div>
-
-
-                    <div class="new-chat-friend-info">
-
-                        <span class="new-chat-friend-name">
-                            ${escapeHtml(
-                                friend.displayName ||
-                                friend.username
-                            )}
-                        </span>
-
-                        <span class="new-chat-friend-username">
-                            @${escapeHtml(
-                                friend.username
-                            )}
-                        </span>
-
-                    </div>
-
-                `;
-
-
-                friendElement.addEventListener(
-                    "click",
-                    () => {
-
-                        /* Remove previous selection */
-
-                        document
-                            .querySelectorAll(
-                                ".new-chat-friend.selected"
-                            )
-                            .forEach(
-                                element => {
-                                    element.classList.remove(
-                                        "selected"
-                                    );
-                                }
-                            );
-
-
-                        /* Select this friend */
-
-                        friendElement.classList.add(
-                            "selected"
-                        );
-
-
-                        selectedNewChatFriend =
-                            friend.username;
-
-
-                        /* Enable Start Chat */
-
-                        startNewChatButton.disabled =
-                            false;
-
-                    }
-                );
-
-
-                friendsList.appendChild(
-                    friendElement
-                );
-
-            });
-
-
-        } catch (error) {
-
-            console.error(
-                "Could not load friends for new PssPss:",
-                error
-            );
-
-            friendsList.innerHTML = `
-                <div class="new-chat-error">
-                    Could not load your friends.
-                </div>
-            `;
-
-        }
-    }
-
     async function loadConversations() {
         if (!username) {
             return;
@@ -2793,10 +2611,28 @@ newChatModal.addEventListener(
                     friendUsername;
 
 
+                const profilePicture =
+                    friend.profilePicture ||
+                    friend.ProfilePicture;
+
                 friendElement.innerHTML = `
 
                     <div class="new-chat-friend-avatar">
-                        ?
+
+                        ${
+                            profilePicture
+                                ? `
+                                    <img
+                                        src="${SERVER_URL}${profilePicture}"
+                                        alt="Profile picture"
+                                        class="new-chat-friend-avatar-image"
+                                    >
+                                `
+                                : `
+                                    <span>?</span>
+                                `
+                        }
+
                     </div>
 
                     <div class="new-chat-friend-info">
