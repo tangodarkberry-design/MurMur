@@ -3,7 +3,7 @@
    ========================================================= */
 
 const MURMUR_SERVER_URL =
-    "https://introduce-attacks-involving-tiny.trycloudflare.com";
+    "https://picked-suggested-prisoner-yard.trycloudflare.com";
 
 let redirecting = false;
 

@@ -76,16 +76,16 @@
     <script>
 
         /* =========================================================
-           MurMur Server
-           ========================================================= */
+        MurMur Server
+        ========================================================= */
 
         const SERVER_URL =
-            "https://introduce-attacks-involving-tiny.trycloudflare.com";
+            "https://picked-suggested-prisoner-yard.trycloudflare.com";
 
 
         /* =========================================================
-           Session
-           ========================================================= */
+        Session
+        ========================================================= */
 
         const username =
             sessionStorage.getItem(
@@ -94,8 +94,8 @@
 
 
         /* =========================================================
-           Elements
-           ========================================================= */
+        Elements
+        ========================================================= */
 
         const welcomeTitle =
             document.getElementById(
@@ -117,32 +117,40 @@
                 "button"
             );
 
+        const newPasswordInput =
+            document.getElementById(
+                "newPassword"
+            );
 
-        /* =========================================================
-        Check Login / First Startup
-        ========================================================= */
-
-        const firstStartup =
-            sessionStorage.getItem(
-                "firstStartup"
+        const confirmPasswordInput =
+            document.getElementById(
+                "confirmPassword"
             );
 
 
+        /* =========================================================
+        Check Login
+        ========================================================= */
+
         if (!username) {
+
+            /*
+            * There is no logged-in username.
+            * Send the user back to the login page.
+            */
 
             window.location.href =
                 "site-pc-login.html";
 
         }
-        else if (
-            firstStartup === "1"
-        ) {
-
-            window.location.href =
-                "site-pc-first-startup.html";
-
-        }
         else {
+
+            /*
+            * User is logged in.
+            * This page is specifically the first-startup
+            * password-change page, so there is no reason to
+            * redirect based on firstStartup here.
+            */
 
             welcomeTitle.textContent =
                 `Welcome, ${username}.`;
@@ -151,8 +159,8 @@
 
 
         /* =========================================================
-           Change Password
-           ========================================================= */
+        Change Password
+        ========================================================= */
 
         passwordForm.addEventListener(
             "submit",
@@ -160,23 +168,42 @@
 
                 event.preventDefault();
 
+
+                /* -------------------------------------------------
+                Clear Previous Error
+                ------------------------------------------------- */
+
                 passwordError.textContent = "";
 
 
-                const newPassword =
-                    document.getElementById(
-                        "newPassword"
-                    ).value;
+                /* -------------------------------------------------
+                Make Sure User Is Logged In
+                ------------------------------------------------- */
 
-                const confirmPassword =
-                    document.getElementById(
-                        "confirmPassword"
-                    ).value;
+                if (!username) {
+
+                    passwordError.textContent =
+                        "You are not logged in.";
+
+                    return;
+
+                }
 
 
                 /* -------------------------------------------------
-                   Password Match
-                   ------------------------------------------------- */
+                Get Passwords
+                ------------------------------------------------- */
+
+                const newPassword =
+                    newPasswordInput.value;
+
+                const confirmPassword =
+                    confirmPasswordInput.value;
+
+
+                /* -------------------------------------------------
+                Password Match
+                ------------------------------------------------- */
 
                 if (
                     newPassword !==
@@ -192,8 +219,8 @@
 
 
                 /* -------------------------------------------------
-                   Password Length
-                   ------------------------------------------------- */
+                Password Length
+                ------------------------------------------------- */
 
                 if (
                     newPassword.length < 8
@@ -208,18 +235,42 @@
 
 
                 /* -------------------------------------------------
-                   Disable Button
-                   ------------------------------------------------- */
+                Prevent Empty / Whitespace Password
+                ------------------------------------------------- */
 
-                submitButton.disabled = true;
+                if (
+                    newPassword.trim().length < 8
+                ) {
+
+                    passwordError.textContent =
+                        "Password must be at least 8 characters.";
+
+                    return;
+
+                }
+
+
+                /* -------------------------------------------------
+                Disable Form
+                ------------------------------------------------- */
+
+                submitButton.disabled =
+                    true;
 
                 submitButton.textContent =
                     "Setting password...";
 
 
+                newPasswordInput.disabled =
+                    true;
+
+                confirmPasswordInput.disabled =
+                    true;
+
+
                 /* -------------------------------------------------
-                   Send Request
-                   ------------------------------------------------- */
+                Send Password Change Request
+                ------------------------------------------------- */
 
                 try {
 
@@ -236,23 +287,47 @@
 
                                 body:
                                     JSON.stringify({
+
                                         username:
                                             username,
 
                                         newPassword:
                                             newPassword
+
                                     })
                             }
                         );
 
 
-                    const data =
-                        await response.json();
+                    /* -------------------------------------------------
+                    Try To Read Server Response
+                    ------------------------------------------------- */
+
+                    let data = {};
+
+                    try {
+
+                        data =
+                            await response.json();
+
+                    }
+                    catch {
+
+                        data = {};
+
+                    }
+
+
+                    console.log(
+                        "Change password response:",
+                        response.status,
+                        data
+                    );
 
 
                     /* -------------------------------------------------
-                       Server Response
-                       ------------------------------------------------- */
+                    Server Rejected Request
+                    ------------------------------------------------- */
 
                     if (
                         !response.ok ||
@@ -268,19 +343,54 @@
                     }
 
 
-                    /* -------------------------------------------------
-                       Password Changed
-                       ------------------------------------------------- */
+                    /* =================================================
+                    Password Successfully Changed
+                    ================================================= */
 
-                    sessionStorage.removeItem(
-                        "murmur_username"
+                    /*
+                    * IMPORTANT:
+                    *
+                    * Keep murmur_username because site-pc.html
+                    * uses it to know who is logged in.
+                    */
+
+                    sessionStorage.setItem(
+                        "murmur_username",
+                        username
                     );
 
+
+                    /*
+                    * The temporary-password / first-startup
+                    * state has now been completed.
+                    */
+
+                    sessionStorage.removeItem(
+                        "firstStartup"
+                    );
+
+
+                    /*
+                    * Clear the password fields.
+                    */
+
+                    newPasswordInput.value = "";
+                    confirmPasswordInput.value = "";
+
+
+                    /*
+                    * Enter MurMur.
+                    */
 
                     window.location.href =
                         "site-pc.html";
 
                 }
+
+
+                /* -------------------------------------------------
+                Connection Error
+                ------------------------------------------------- */
 
                 catch (error) {
 
@@ -294,6 +404,11 @@
 
                 }
 
+
+                /* -------------------------------------------------
+                Re-enable Form
+                ------------------------------------------------- */
+
                 finally {
 
                     submitButton.disabled =
@@ -302,13 +417,19 @@
                     submitButton.textContent =
                         "Set Password";
 
+                    newPasswordInput.disabled =
+                        false;
+
+                    confirmPasswordInput.disabled =
+                        false;
+
                 }
 
             }
         );
 
-    </script>
 
+    </script>
 
     <!-- MurMur global JavaScript -->
 
